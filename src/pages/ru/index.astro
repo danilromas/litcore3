@@ -34,13 +34,8 @@ const t = HOME.ru;
       lead={t.hero.lead}
       primary={t.hero.primary}
       secondary={t.hero.secondary}
+      trust={t.trust}
     />
-
-    <section class="trust" aria-label={t.trust.aria} data-plx="0.03">
-      <div class="container mono">
-        {t.trust.items.map((item) => <span>{item}</span>)}
-      </div>
-    </section>
 
     <BentoServices
       kicker={t.services.kicker}
@@ -52,7 +47,7 @@ const t = HOME.ru;
 
     <section class="section section--tight section--warm" id="dlya-postavshchikov">
       <div class="container">
-        <h2 class="display noise-hover">{t.proveedores.h2}</h2>
+        <h2 class="display">{t.proveedores.h2}</h2>
         <p class="lead">{t.proveedores.text}</p>
         <a class="btn btn--ghost-accent" href={t.proveedores.cta.href}>{t.proveedores.cta.label}</a>
       </div>
@@ -63,11 +58,11 @@ const t = HOME.ru;
     <section class="section section--alt" id="otrasli">
       <div class="container">
         <p class="kicker">{t.sectores.kicker}</p>
-        <h2 class="display noise-hover">{t.sectores.h2}</h2>
+        <h2 class="display">{t.sectores.h2}</h2>
         <div class="grid grid--3">
           {
             t.sectores.cards.map((card) => (
-              <article class="card ind-card reveal" data-plx="0.05">
+              <article class="card ind-card reveal">
                 <h3>
                   <a href={card.href}>{card.title}</a>
                 </h3>
@@ -85,7 +80,7 @@ const t = HOME.ru;
     <section class="section" id="demo">
       <div class="container">
         <p class="kicker">{t.demos.kicker}</p>
-        <h2 class="display noise-hover">{t.demos.h2}</h2>
+        <h2 class="display">{t.demos.h2}</h2>
         <div class="grid grid--3">
           {
             t.demos.cards.map((card) => (
@@ -105,7 +100,7 @@ const t = HOME.ru;
     <section class="section section--tight" id="process">
       <div class="container">
         <p class="kicker">{t.proceso.kicker}</p>
-        <h2 class="display noise-hover">{t.proceso.h2}</h2>
+        <h2 class="display">{t.proceso.h2}</h2>
         <div style="margin:32px 0 0">
           <Steps steps={t.proceso.steps} activeIndex={0} />
         </div>
@@ -115,7 +110,7 @@ const t = HOME.ru;
     <section class="section section--warm" id="tseny">
       <div class="container">
         <p class="kicker">{t.precios.kicker}</p>
-        <h2 class="display noise-hover">{t.precios.h2}</h2>
+        <h2 class="display">{t.precios.h2}</h2>
         <div class="grid grid--3" style="margin-top:36px">
           {
             t.precios.cards.map((card) => (
@@ -141,7 +136,7 @@ const t = HOME.ru;
     <section class="section section--tight">
       <div class="container">
         <div class="cta-band">
-          <h2 class="display noise-hover" set:html={t.cta.h2Html} />
+          <h2 class="display" set:html={t.cta.h2Html} />
           <div class="tag-row">
             <a class="btn btn--primary btn--lg" href={t.cta.primary.href}>{t.cta.primary.label}</a>
             <a
@@ -157,19 +152,6 @@ const t = HOME.ru;
 </Layout>
 
 <style is:global>
-  .page-home .trust {
-    border-block: 1px solid var(--lc-line);
-    padding: 16px 0;
-    background: var(--lc-bg);
-  }
-  .page-home .trust .container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px 18px;
-    justify-content: center;
-    color: var(--lc-ink-soft);
-    text-align: center;
-  }
   .page-home .ind-card .flow {
     margin: 0;
     color: var(--lc-ink-soft);

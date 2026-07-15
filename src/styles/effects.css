@@ -110,18 +110,19 @@
   }
 }
 
-/* ---------- Kinetic headline ---------- */
+/* ---------- Kinetic headline (мягкий fade, без скачков кегля) ---------- */
 .kinetic-headline {
-  font-variation-settings: 'wght' var(--kinetic-wght, 800);
-  will-change: font-variation-settings;
+  font-variation-settings: 'wght' 800;
+  opacity: var(--kinetic-opacity, 1);
+  will-change: opacity;
 }
 @media (prefers-reduced-motion: reduce) {
   .kinetic-headline {
-    font-variation-settings: 'wght' 800 !important;
+    opacity: 1 !important;
   }
 }
 
-/* ---------- Hero: текст по центру, ядро за текстом ---------- */
+/* ---------- Hero: единый шаблон ES/RU/EN по токенам шкалы ---------- */
 .hero-core {
   position: relative;
   isolation: isolate;
@@ -129,11 +130,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  min-height: 0;
   background:
-    radial-gradient(ellipse 55% 50% at 50% 42%, rgba(232, 163, 61, 0.12), transparent 65%),
-    linear-gradient(180deg, #0F151B 0%, #121920 58%, #F6F4EF 100%);
+    radial-gradient(ellipse 48% 55% at 50% 38%, rgba(232, 163, 61, 0.16), transparent 68%),
+    linear-gradient(180deg, #0F151B 0%, #121920 72%, #F6F4EF 100%);
   color: var(--lc-glow-light);
-  min-height: min(88vh, 860px);
   padding-block: 0;
   text-align: center;
 }
@@ -141,25 +142,25 @@
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(color-mix(in srgb, var(--lc-canvas-line) 50%, transparent) 1px, transparent 1px),
-    linear-gradient(90deg, color-mix(in srgb, var(--lc-canvas-line) 50%, transparent) 1px, transparent 1px);
-  background-size: 56px 56px;
-  mask-image: radial-gradient(ellipse 70% 65% at 50% 45%, #000 18%, transparent 75%);
+    linear-gradient(color-mix(in srgb, var(--lc-canvas-line) 45%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--lc-canvas-line) 45%, transparent) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse 65% 60% at 50% 40%, #000 20%, transparent 72%);
   pointer-events: none;
-  opacity: 0.4;
+  opacity: 0.35;
   z-index: 0;
 }
+/* Ядро — декоративный акцент за текстом; без transform:scale на всём блоке */
 .hero-core__stage {
   position: absolute;
   left: 50%;
-  top: 42%;
+  top: 38%;
   transform: translate(-50%, -50%);
-  width: min(560px, 72vw);
+  width: min(240px, 42vw);
   aspect-ratio: 1;
   z-index: 1;
   pointer-events: none;
-  opacity: 0.55;
-  filter: saturate(1.05);
+  opacity: 0.7;
 }
 .hero-core__canvas,
 .hero-core__poster {
@@ -171,11 +172,10 @@
 }
 .hero-core__poster {
   background:
-    radial-gradient(circle at 45% 40%, #E8A33D 0%, #8F5015 28%, #1C2830 58%, #0F151B 78%),
-    radial-gradient(circle at 70% 70%, rgba(232, 163, 61, 0.35), transparent 45%);
+    radial-gradient(circle at 42% 38%, #E8A33D 0%, #8F5015 32%, #1C2830 62%, #0F151B 82%);
   box-shadow:
-    0 0 60px rgba(232, 163, 61, 0.22),
-    inset 0 0 60px rgba(15, 21, 27, 0.5);
+    0 0 28px rgba(232, 163, 61, 0.45),
+    0 0 0 1px color-mix(in srgb, var(--lc-accent) 35%, transparent);
   transition: opacity 400ms var(--lc-ease);
 }
 .hero-core__canvas {
@@ -191,35 +191,74 @@
 .hero-core__content {
   position: relative;
   z-index: 2;
-  max-width: 720px;
+  max-width: 40rem;
   margin-inline: auto;
-  padding-block: clamp(96px, 14vw, 168px) clamp(112px, 14vw, 180px);
+  padding-block: var(--lc-space-6) var(--lc-space-5);
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 0;
 }
 .hero-core .kicker {
   color: var(--lc-accent);
   justify-content: center;
+  margin-bottom: var(--lc-space-3);
 }
+/* Бюджет ≤3 строки: --lc-size-hero (не --lc-size-h1 и не scale) */
 .hero-core .display {
   color: var(--lc-glow-light);
-  max-width: 18ch;
+  max-width: min(16em, 92vw);
+  font-size: var(--lc-size-hero);
+  line-height: var(--lc-lh-display);
+  font-weight: 900;
+  margin: 0 0 var(--lc-space-3);
   text-shadow:
-    0 2px 24px rgba(15, 21, 27, 0.85),
-    0 0 40px rgba(15, 21, 27, 0.55);
+    0 2px 18px rgba(15, 21, 27, 0.9),
+    0 0 28px rgba(15, 21, 27, 0.55);
 }
 .hero-core .lead {
   color: var(--lc-canvas-muted);
-  max-width: 46ch;
-  margin-inline: auto;
-  text-shadow: 0 1px 16px rgba(15, 21, 27, 0.75);
+  max-width: 44ch;
+  margin: 0 auto var(--lc-space-4);
+  font-size: var(--lc-size-lead);
+  line-height: var(--lc-lh-body);
+  text-shadow: 0 1px 12px rgba(15, 21, 27, 0.75);
 }
 .hero-core .accent-word {
   color: var(--lc-accent);
 }
 .hero-core .tag-row {
+  display: flex;
+  flex-wrap: wrap;
   justify-content: center;
+  gap: var(--lc-space-3);
+  margin: 0;
+  width: 100%;
+}
+.hero-core .tag-row .btn {
+  min-height: 48px;
+}
+/* Единый инфо-ряд (ES/RU/EN) */
+.hero-core__facts {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0;
+  row-gap: 6px;
+  margin: var(--lc-space-4) 0 0;
+  max-width: 40ch;
+  color: color-mix(in srgb, var(--lc-canvas-muted) 90%, transparent);
+  font-size: var(--lc-size-mono);
+  font-weight: 400;
+  letter-spacing: var(--lc-track-mono);
+  text-transform: uppercase;
+  line-height: 1.35;
+}
+.hero-core__facts-sep {
+  margin-inline: 0.5em;
+  opacity: 0.5;
+  flex: none;
 }
 .hero-core .btn--ghost {
   color: var(--lc-glow-light);
@@ -232,22 +271,24 @@
   color: var(--lc-accent);
 }
 .hero-core .btn--primary {
-  box-shadow: 0 8px 28px rgba(15, 21, 27, 0.35);
+  box-shadow: 0 6px 20px rgba(15, 21, 27, 0.3);
 }
 
-@media (max-width: 700px) {
-  .hero-core {
-    min-height: auto;
+@media (max-width: 640px) {
+  .hero-core__content {
+    padding-block: var(--lc-space-5) var(--lc-space-4);
   }
   .hero-core__stage {
-    width: min(420px, 88vw);
-    opacity: 0.4;
+    width: min(180px, 48vw);
+    opacity: 0.55;
+    top: 30%;
   }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hero-core__stage {
-    opacity: 0.35;
+  .hero-core .tag-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .hero-core .tag-row .btn {
+    width: 100%;
   }
 }
 
@@ -264,13 +305,17 @@
   background: var(--lc-card);
   padding: 28px;
   box-shadow: none;
-  transition: border-color var(--lc-dur-fast) var(--lc-ease),
-    transform var(--lc-dur-fast) var(--lc-ease);
+  transition: border-color var(--lc-dur-fast) var(--lc-ease);
 }
 .bento__item:hover {
-  border-color: color-mix(in srgb, var(--lc-accent-deep) 45%, var(--lc-line));
-  transform: translateY(-2px);
+  /* только тонкая edge-подсветка — без scale/grain/тени */
+  border-color: color-mix(in srgb, var(--lc-accent-deep) 40%, var(--lc-line));
   box-shadow: none;
+  transform: none;
+}
+.page-home .bento__item.card:hover {
+  box-shadow: none;
+  transform: none;
 }
 .bento__item:nth-child(1) {
   grid-column: span 5;

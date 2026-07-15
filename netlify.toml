@@ -23,3 +23,64 @@
   from = "/en"
   to = "/en/"
   status = 301
+
+# Временные редиректы: хабы из инвентаря ещё не собраны → якоря главной
+[[redirects]]
+  from = "/es/servicios"
+  to = "/es/#servicios"
+  status = 302
+
+[[redirects]]
+  from = "/es/servicios/"
+  to = "/es/#servicios"
+  status = 302
+
+[[redirects]]
+  from = "/es/servicios/automatizacion"
+  to = "/es/#servicios"
+  status = 302
+
+[[redirects]]
+  from = "/es/servicios/automatizacion/"
+  to = "/es/#servicios"
+  status = 302
+
+[[redirects]]
+  from = "/es/demos"
+  to = "/es/#demos"
+  status = 302
+
+[[redirects]]
+  from = "/es/demos/"
+  to = "/es/#demos"
+  status = 302
+
+[[redirects]]
+  from = "/ru/uslugi"
+  to = "/ru/#servicios"
+  status = 302
+
+[[redirects]]
+  from = "/ru/uslugi/"
+  to = "/ru/#servicios"
+  status = 302
+
+[[redirects]]
+  from = "/ru/uslugi/avtomatizaciya"
+  to = "/ru/#servicios"
+  status = 302
+
+[[redirects]]
+  from = "/ru/uslugi/avtomatizaciya/"
+  to = "/ru/#servicios"
+  status = 302
+
+[[redirects]]
+  from = "/ru/demo"
+  to = "/ru/#demo"
+  status = 302
+
+[[redirects]]
+  from = "/ru/demo/"
+  to = "/ru/#demo"
+  status = 302

@@ -10,7 +10,7 @@ interface Props {
 const { steps, activeIndex = 0 } = Astro.props;
 ---
 
-<ol class="steps" style="list-style:none;margin:0;padding:0">
+<ol class="steps">
   {steps.map((step, i) => (
     <li class:list={['step', { 'is-active': i === activeIndex }]}>
       <span class="dot">{i === activeIndex ? <Core sm /> : i + 1}</span>

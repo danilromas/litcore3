@@ -9,7 +9,7 @@
 .fil-section{position:relative;overflow:hidden}
 .fil-headrow{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;
   flex-wrap:wrap;margin-bottom:clamp(24px,4vw,44px)}
-.fil-hint{color:var(--lc-canvas-muted);font-size:var(--lc-size-small);max-width:46ch;margin:0}
+.fil-hint{color:var(--lc-canvas-muted);font-size:var(--lc-size-small);max-width:46ch;margin:0;opacity:.85}
 
 /* ---------- Обёртка сцены (Astro): резервирует высоту до гидратации острова
    (CLS = 0); на мобиле и при no-JS скрывается — остров возвращает null ---------- */
@@ -48,7 +48,8 @@
 
 /* ---------- Узлы (кнопки) ---------- */
 .fil-node{position:absolute;transform:translate(-50%,-50%);border:0;background:none;
-  padding:6px;margin:0;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:8px;
+  padding:14px;margin:0;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:8px;
+  min-width:44px;min-height:44px;
   font-family:var(--lc-font-mono);font-size:.68rem;font-weight:500;letter-spacing:.09em;
   text-transform:uppercase;color:var(--lc-glow-light);border-radius:10px;
   /* дрейф ±6px; длительность 12–16с задаётся инлайном через --dd */
@@ -145,8 +146,8 @@
 /* ---------- Светлый грид «Все отрасли» (SEO / параллельная навигация) ---------- */
 .sector-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
 @media (max-width:960px){.sector-grid{grid-template-columns:repeat(3,1fr)}}
-@media (max-width:640px){.sector-grid{grid-template-columns:repeat(2,1fr)}}
-.sector-grid a{display:flex;align-items:center;gap:10px;padding:16px 18px;
+@media (max-width:640px){.sector-grid{grid-template-columns:1fr}}
+.sector-grid a{display:flex;align-items:center;gap:10px;padding:16px 18px;min-height:48px;
   background:var(--lc-card);border:1px solid var(--lc-line);border-radius:var(--lc-radius-card);
   color:var(--lc-ink);text-decoration:none;font-weight:600;font-size:.95rem;
   transition:border-color var(--lc-dur-fast) var(--lc-ease),box-shadow var(--lc-dur-fast) var(--lc-ease)}

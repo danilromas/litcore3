@@ -1,22 +1,26 @@
 import { TELEGRAM_URL } from '../config/site';
 import type { Lang } from '../config/site';
 
-/** Навигация шапки — состав ЗАФИКСИРОВАН в kit/KIT-README.md. Не добавлять пункты «от себя». */
+/**
+ * Навигация шапки — состав ЗАФИКСИРОВАН в kit/KIT-README.md.
+ * Куда указывают ссылки: хабы услуг/демо в Фазе 1 ещё не собраны как страницы
+ * (дают 404) → ведём на якоря главной / существующие хабы, без смены состава пунктов.
+ */
 export const NAV: Record<Lang, { label: string; href: string }[]> = {
   es: [
-    { label: 'Automatización', href: '/es/servicios/automatizacion/' },
-    { label: 'Servicios', href: '/es/servicios/' },
+    { label: 'Automatización', href: '/es/#servicios' },
+    { label: 'Servicios', href: '/es/#servicios' },
     { label: 'Sectores', href: '/es/soluciones/' },
-    { label: 'Demos', href: '/es/demos/' },
+    { label: 'Demos', href: '/es/#demos' },
     { label: 'Precios', href: '/es/precios/' },
     { label: 'Contacto', href: '/es/contacto/' },
   ],
   ru: [
-    { label: 'Автоматизация', href: '/ru/uslugi/avtomatizaciya/' },
-    { label: 'Услуги', href: '/ru/uslugi/' },
+    { label: 'Автоматизация', href: '/ru/#servicios' },
+    { label: 'Услуги', href: '/ru/#servicios' },
     { label: 'Отрасли', href: '/ru/resheniya/' },
     { label: 'Для поставщиков', href: '/ru/dlya-postavshchikov/' }, // пункт 1-го уровня!
-    { label: 'Демо', href: '/ru/demo/' },
+    { label: 'Демо', href: '/ru/#demo' },
     { label: 'Цены', href: '/ru/tseny/' },
     { label: 'Контакты', href: '/ru/kontakty/' },
   ],
@@ -60,8 +64,8 @@ export const AI_BADGE: Record<Lang, string> = {
   en: 'You are talking to AI · AI Act art. 50',
 };
 
-export const NAV_ARIA: Record<Lang, { main: string; lang: string; crumbs: string }> = {
-  es: { main: 'Principal', lang: 'Idioma', crumbs: 'Migas de pan' },
-  ru: { main: 'Основная навигация', lang: 'Язык', crumbs: 'Хлебные крошки' },
-  en: { main: 'Main', lang: 'Language', crumbs: 'Breadcrumbs' },
+export const NAV_ARIA: Record<Lang, { main: string; lang: string; crumbs: string; menu: string; close: string }> = {
+  es: { main: 'Principal', lang: 'Idioma', crumbs: 'Migas de pan', menu: 'Abrir menú', close: 'Cerrar menú' },
+  ru: { main: 'Основная навигация', lang: 'Язык', crumbs: 'Хлебные крошки', menu: 'Открыть меню', close: 'Закрыть меню' },
+  en: { main: 'Main', lang: 'Language', crumbs: 'Breadcrumbs', menu: 'Open menu', close: 'Close menu' },
 };

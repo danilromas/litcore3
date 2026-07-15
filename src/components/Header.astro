@@ -1,5 +1,5 @@
 ---
-/** Шапка по KIT-README: бренд с ядром, меню из i18n (RU — свой состав), язык, CTA. */
+/** Шапка: бренд, меню, язык, CTA + мобильный drawer (гамбургер). */
 import Core from './Core.astro';
 import { NAV, HEADER_CTA, HOME_HREF, NAV_ARIA } from '../i18n/ui';
 import type { Lang } from '../config/site';
@@ -13,26 +13,91 @@ interface Props {
 }
 const { lang, currentPath, alternates = {} } = Astro.props;
 
-// Активный пункт: currentPath начинается с href; берём самое длинное совпадение
+// Активный пункт: совпадение path (без якорей на главной — иначе все #секции «активны»)
+const pathOnly = currentPath.split('#')[0] || currentPath;
+const home = HOME_HREF[lang];
 const active = NAV[lang]
-  .filter((item) => currentPath.startsWith(item.href))
-  .sort((a, b) => b.href.length - a.href.length)[0];
+  .filter((item) => {
+    const hrefPath = item.href.split('#')[0] || '';
+    if (!hrefPath) return false;
+    // Якоря на главной не помечаем как current по path главной
+    if (hrefPath === home || hrefPath === home.replace(/\/$/, '')) return false;
+    return pathOnly === hrefPath || pathOnly.startsWith(hrefPath);
+  })
+  .sort((a, b) => b.href.split('#')[0].length - a.href.split('#')[0].length)[0];
 
 const LANGS: Lang[] = ['es', 'ru', 'en'];
 const cta = HEADER_CTA[lang];
+const aria = NAV_ARIA[lang];
 ---
 
-<header class="site-header"><div class="container nav">
-  <a class="brand" href={HOME_HREF[lang]}><Core sm text />litcore<span class="tld">.ai</span></a>
-  <nav class="nav-links" aria-label={NAV_ARIA[lang].main}>
-    {NAV[lang].map((item) => (
-      <a href={item.href} aria-current={item === active ? 'page' : undefined}>{item.label}</a>
-    ))}
-  </nav>
-  <div class="lang" aria-label={NAV_ARIA[lang].lang}>
-    {LANGS.map((l) => (
-      <a href={alternates[l] ?? HOME_HREF[l]} aria-current={l === lang ? 'true' : undefined}>{l.toUpperCase()}</a>
-    ))}
+<header class="site-header" data-close-label={aria.close}>
+  <div class="container nav">
+    <a class="brand" href={HOME_HREF[lang]}
+      ><Core sm text />litcore<span class="tld">.ai</span></a
+    >
+
+    <nav class="nav-links" aria-label={aria.main} data-nav-panel>
+      {
+        NAV[lang].map((item) => (
+          <a href={item.href} aria-current={item === active ? 'page' : undefined}>
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <div class="lang" aria-label={aria.lang} data-nav-lang>
+      {
+        LANGS.map((l) => (
+          <a
+            href={alternates[l] ?? HOME_HREF[l]}
+            aria-current={l === lang ? 'true' : undefined}
+            hreflang={l}
+          >
+            {l.toUpperCase()}
+          </a>
+        ))
+      }
+    </div>
+
+    <a class="btn btn--primary nav-cta" href={cta.href}>{cta.label}</a>
+
+    <button
+      type="button"
+      class="nav-toggle"
+      aria-expanded="false"
+      aria-controls="nav-drawer"
+      aria-label={aria.menu}
+      data-nav-toggle
+    >
+      <span class="nav-toggle__bars" aria-hidden="true"></span>
+    </button>
   </div>
-  <a class="btn btn--primary" href={cta.href}>{cta.label}</a>
-</div></header>
+
+  <div class="nav-drawer" id="nav-drawer" hidden data-nav-drawer>
+    <nav class="nav-drawer__links" aria-label={aria.main}>
+      {
+        NAV[lang].map((item) => (
+          <a href={item.href} aria-current={item === active ? 'page' : undefined}>
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+    <div class="nav-drawer__lang" aria-label={aria.lang}>
+      {
+        LANGS.map((l) => (
+          <a
+            href={alternates[l] ?? HOME_HREF[l]}
+            aria-current={l === lang ? 'true' : undefined}
+            hreflang={l}
+          >
+            {l.toUpperCase()}
+          </a>
+        ))
+      }
+    </div>
+    <a class="btn btn--primary nav-drawer__cta" href={cta.href}>{cta.label}</a>
+  </div>
+</header>

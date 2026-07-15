@@ -32,13 +32,8 @@ const t = HOME.en;
       lead={t.hero.lead}
       primary={t.hero.primary}
       secondary={t.hero.secondary}
+      trust={t.trust}
     />
-
-    <section class="trust" aria-label={t.trust.aria} data-plx="0.03">
-      <div class="container mono">
-        {t.trust.items.map((item) => <span>{item}</span>)}
-      </div>
-    </section>
 
     <BentoServices kicker={t.services.kicker} h2={t.services.h2} cards={t.services.cards} />
 
@@ -47,7 +42,7 @@ const t = HOME.en;
     <section class="section section--alt" id="models">
       <div class="container">
         <p class="kicker">{t.models.kicker}</p>
-        <h2 class="display noise-hover">{t.models.h2}</h2>
+        <h2 class="display">{t.models.h2}</h2>
         <div class="grid grid--3">
           {
             t.models.cards.map((card) => (
@@ -65,7 +60,7 @@ const t = HOME.en;
     <section class="section section--tight">
       <div class="container">
         <CtaBand cta={t.cta.cta}>
-          <h2 class="display noise-hover">{t.cta.h2}</h2>
+          <h2 class="display">{t.cta.h2}</h2>
         </CtaBand>
       </div>
     </section>
@@ -73,19 +68,6 @@ const t = HOME.en;
 </Layout>
 
 <style is:global>
-  .page-home .trust {
-    border-block: 1px solid var(--lc-line);
-    padding: 16px 0;
-    background: var(--lc-bg);
-  }
-  .page-home .trust .container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px 18px;
-    justify-content: center;
-    color: var(--lc-ink-soft);
-    text-align: center;
-  }
   .page-home .more-link {
     margin-top: 26px;
   }

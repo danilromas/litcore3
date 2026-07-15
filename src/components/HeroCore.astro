@@ -1,10 +1,9 @@
 ---
 /**
- * Тёмный hero: центрированный текст поверх ядра (ядро — фон, не конкурирует с копи).
- * Одинаков на ES/RU/EN.
+ * Единый hero ES/RU/EN: высота от контентного бюджета,
+ * типографика через --lc-size-hero / --lc-size-lead (не scale).
  */
 import CoreScene from './core/CoreScene';
-import KineticHeadline from './effects/KineticHeadline';
 
 interface Props {
   kicker: string;
@@ -12,26 +11,65 @@ interface Props {
   lead: string;
   primary: { label: string; href: string };
   secondary: { label: string; href: string };
+  /** Ровно 3–4 коротких факта — один ряд на всех языках */
+  trust?: { aria: string; items: string[] };
 }
 
-const { kicker, h1Html, lead, primary, secondary } = Astro.props;
+const { kicker, h1Html, lead, primary, secondary, trust } = Astro.props;
+const facts = trust?.items.slice(0, 4) ?? [];
 ---
 
 <section class="hero-core section">
-  <div class="hero-core__grid" aria-hidden="true" data-plx="0.03"></div>
+  <div class="hero-core__grid" aria-hidden="true"></div>
 
-  <div class="hero-core__stage" aria-hidden="true" data-plx="0.08">
+  <div class="hero-core__stage" aria-hidden="true" data-plx="0.05">
     <div class="hero-core__poster"></div>
     <CoreScene client:visible />
   </div>
 
   <div class="container hero-core__content">
-    <p class="kicker noise-hover">{kicker}</p>
-    <KineticHeadline client:idle html={h1Html} />
+    <p class="kicker">{kicker}</p>
+    <h1 class="display kinetic-headline noise-hover" set:html={h1Html} data-kinetic></h1>
     <p class="lead">{lead}</p>
     <div class="tag-row">
       <a class="btn btn--primary btn--lg" href={primary.href}>{primary.label}</a>
       <a class="btn btn--ghost btn--lg" href={secondary.href}>{secondary.label}</a>
     </div>
+    {
+      facts.length > 0 && (
+        <p class="hero-core__facts mono" aria-label={trust!.aria}>
+          {facts.map((item, i) => (
+            <Fragment>
+              {i > 0 && <span class="hero-core__facts-sep" aria-hidden="true">·</span>}
+              <span>{item}</span>
+            </Fragment>
+          ))}
+        </p>
+      )
+    }
   </div>
 </section>
+
+<script>
+  (() => {
+    const el = document.querySelector('[data-kinetic]');
+    if (!el || !(el instanceof HTMLElement)) return;
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    let raf = 0;
+    const update = () => {
+      const r = el.getBoundingClientRect();
+      const vh = innerHeight || 1;
+      const leave = Math.min(Math.max(-r.top / (vh * 0.55), 0), 1);
+      el.style.setProperty('--kinetic-opacity', String(1 - leave * 0.08));
+      raf = 0;
+    };
+    addEventListener(
+      'scroll',
+      () => {
+        if (!raf) raf = requestAnimationFrame(update);
+      },
+      { passive: true },
+    );
+    update();
+  })();
+</script>

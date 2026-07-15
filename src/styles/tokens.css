@@ -48,6 +48,8 @@
   --lc-font-mono:     'JetBrains Mono', 'Consolas', monospace;
 
   --lc-size-h1:       clamp(3.2rem, 8vw, 6.8rem);
+  /* Hero multi-line (≤3 строки): отдельная ступень шкалы, не scale() от h1 */
+  --lc-size-hero:     clamp(2.5rem, 5.2vw, 3.75rem);
   --lc-size-h2:       clamp(2.1rem, 4.2vw, 3.4rem);
   --lc-size-h3:       clamp(1.3rem, 2.1vw, 1.65rem);
   --lc-size-lead:     clamp(1.05rem, 1.55vw, 1.22rem);

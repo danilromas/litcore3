@@ -34,11 +34,12 @@ export const HOME = {
       h1Html: 'Tu rutina, automatizada.<br>Tu negocio, <span class="accent-word">encendido.</span>',
       lead: 'Citas, presupuestos, facturas, WhatsApp: la IA se encarga del proceso y tú recuperas horas y ventas. Proceso → automatización → resultado.',
       primary: { label: 'Pedir propuesta', href: '/es/contacto/' },
-      secondary: { label: 'Ver demos', href: '/es/demos/' },
+      secondary: { label: 'Ver demos', href: '/es/#demos' },
     },
     trust: {
       aria: 'Dónde y cómo trabajamos',
-      items: ['Asturias · Madrid · Barcelona', 'ES / RU / EN', 'AI Act ready · GDPR', 'Un equipo · todo el ciclo'],
+      /* Единый формат hero-фактов: ровно 4 коротких атома в один ряд (ES/RU/EN) */
+      items: ['Asturias · Norte', 'ES / RU / EN', 'GDPR · AI Act', 'Ciclo completo'],
     },
     services: {
       kicker: 'Servicios · el núcleo',
@@ -175,17 +176,17 @@ export const HOME = {
         {
           title: 'Bot-recepción',
           text: 'Escríbele como si fueras un paciente: agenda una cita de prueba y mira cómo responde.',
-          link: { label: 'Probar demo →', href: '/es/demos/' },
+          link: { label: 'Probar demo →', href: '/es/#demos' },
         },
         {
           title: 'Generador de presupuestos',
           text: 'Dale los datos de una obra o un pedido y recibe un presupuesto listo para enviar.',
-          link: { label: 'Probar demo →', href: '/es/demos/' },
+          link: { label: 'Probar demo →', href: '/es/#demos' },
         },
         {
           title: 'Lector de correo',
           text: 'Pega un email de cliente y mira cómo lo convierte en tarea, respuesta y registro en el CRM.',
-          link: { label: 'Probar demo →', href: '/es/demos/' },
+          link: { label: 'Probar demo →', href: '/es/#demos' },
         },
       ],
     },
@@ -253,17 +254,12 @@ export const HOME = {
       h1Html: 'Рутину — ИИ. Бизнес — <span class="accent-word">вам.</span>',
       lead: 'Вы в Испании и всё тащите сами: заявки в WhatsApp по вечерам, счета, запись клиентов. Мы ставим ИИ-ботов, документы и CRM под ключ — на русском, быстро, здесь. Запуск за дни.',
       primary: { label: 'Обсудить в Telegram', href: TELEGRAM_URL }, // Telegram подтверждён владельцем: litcore_ai
-      secondary: { label: 'Посмотреть демо-бота', href: '/ru/demo/' },
+      secondary: { label: 'Посмотреть демо-бота', href: '/ru/#demo' },
     },
     trust: {
       aria: 'Где и как работаем',
-      items: [
-        'Мы в Испании: Астурия (Овьедо, Хихон)',
-        'работаем по всей стране',
-        'договор ЕС, оплата в евро',
-        'RU / ES / EN',
-        'GDPR · ИИ помечен честно (AI Act)',
-      ],
+      /* Единый формат: 4 коротких атома в один ряд */
+      items: ['Астурия · Испания', 'RU / ES / EN', 'GDPR · AI Act', 'Под ключ'],
     },
     services: {
       kicker: 'Услуги',
@@ -407,17 +403,17 @@ export const HOME = {
         {
           title: 'Бот-ресепшн клиники',
           text: 'Напишите ему как пациент: запишет, переспросит, напомнит. По-русски и по-испански.',
-          link: { label: 'Попробовать демо →', href: '/ru/demo/' },
+          link: { label: 'Попробовать демо →', href: '/ru/#demo' },
         },
         {
           title: 'Генератор смет и КП',
           text: 'Дайте вводные — получите готовый документ.',
-          link: { label: 'Попробовать демо →', href: '/ru/demo/' },
+          link: { label: 'Попробовать демо →', href: '/ru/#demo' },
         },
         {
           title: 'Разбор письма',
           text: 'Вставьте письмо клиента: бот превратит его в задачу, ответ и запись в CRM.',
-          link: { label: 'Попробовать демо →', href: '/ru/demo/' },
+          link: { label: 'Попробовать демо →', href: '/ru/#demo' },
         },
       ],
       upsellHtml: `Такой же бот — для вашего бизнеса. <a href="${TELEGRAM_URL}">Обсудим в Telegram.</a>`,
@@ -489,15 +485,15 @@ export const HOME = {
     },
     hero: {
       kicker: 'Automation · Engineering · EU',
-      h1Html:
-        'AI process automation and full-cycle engineering <span class="accent-word">teams</span> for EU companies',
-      lead: 'One team covers the whole cycle: process analysis, AI automation, web and app interfaces, support. Based in Spain, built for EU compliance.',
+      /* Короче: бюджет ≤3 строки в общем hero (patch-promt2) */
+      h1Html: 'AI automation,<br>engineered for the <span class="accent-word">EU.</span>',
+      lead: 'One team covers the cycle: process analysis, AI automation, web and app interfaces, support. Based in Spain, built for EU compliance.',
       primary: { label: 'Book an intro call', href: '/en/contact/' },
       secondary: { label: 'See collaboration models', href: '/en/about/' },
     },
     trust: {
       aria: 'Where and how we work',
-      items: ['Spain, EU', 'GDPR & EU AI Act ready', 'Data processed in the EU', 'EN / ES / RU'],
+      items: ['Spain · EU', 'EN / ES / RU', 'GDPR · AI Act', 'Full cycle'],
     },
     services: {
       kicker: 'Services',

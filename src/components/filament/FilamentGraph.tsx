@@ -89,8 +89,9 @@ function FilamentScene({ nodes, lang }: { nodes: FilamentNode[]; lang: FilamentL
     target: wrapRef,
     offset: ['start end', 'end start'],
   });
-  const yOutMv = useTransform(scrollYProgress, [0, 1], [14, -14]);
-  const yInMv = useTransform(scrollYProgress, [0, 1], [28, -28]);
+  /* Сдержанный сдвиг слоёв (патч: меньше шума, механика узлов не трогаем) */
+  const yOutMv = useTransform(scrollYProgress, [0, 1], [6, -6]);
+  const yInMv = useTransform(scrollYProgress, [0, 1], [10, -10]);
   const yOut = reduce ? 0 : yOutMv;
   const yIn = reduce ? 0 : yInMv;
 
@@ -202,12 +203,12 @@ function FilamentScene({ nodes, lang }: { nodes: FilamentNode[]; lang: FilamentL
       >
         {/* внутреннее кольцо (решения) — ПЕРВЫМ в DOM: порядок Tab = 6 решений →
             8 отраслей (spec §7); поверх рёбер через z-index (filament.css) */}
-        <motion.div className="fil-layer fil-layer--in" style={{ y: yIn }} data-plx="0.08">
+        <motion.div className="fil-layer fil-layer--in" style={{ y: yIn }}>
           {sols.map((n, i) => renderNode(n, i))}
         </motion.div>
 
-        {/* слой рёбер + внешнее кольцо (отрасли): глубина 0.04 */}
-        <motion.div className="fil-layer" style={{ y: yOut }} data-plx="0.04">
+        {/* слой рёбер + внешнее кольцо (отрасли) */}
+        <motion.div className="fil-layer" style={{ y: yOut }}>
           <svg
             className="fil-edges"
             viewBox="0 0 100 100"

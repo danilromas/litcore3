@@ -40,4 +40,42 @@
       revs.forEach(function (el) { io.observe(el); });
     }
   }
+
+  /* Мобильный drawer навигации */
+  var header = document.querySelector('.site-header');
+  var toggle = document.querySelector('[data-nav-toggle]');
+  var drawer = document.querySelector('[data-nav-drawer]');
+  if (header && toggle && drawer) {
+    var labels = {
+      open: toggle.getAttribute('aria-label') || 'Open menu',
+      close: header.getAttribute('data-close-label') || 'Close menu',
+    };
+    var setOpen = function (open) {
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.setAttribute('aria-label', open ? labels.close : labels.open);
+      drawer.hidden = !open;
+      document.body.classList.toggle('nav-open', open);
+    };
+    toggle.addEventListener('click', function (e) {
+      e.stopPropagation();
+      setOpen(toggle.getAttribute('aria-expanded') !== 'true');
+    });
+    drawer.addEventListener('click', function (e) {
+      if (e.target && e.target.closest && e.target.closest('a')) setOpen(false);
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
+    document.addEventListener('click', function (e) {
+      if (toggle.getAttribute('aria-expanded') !== 'true') return;
+      if (header.contains(e.target)) return;
+      setOpen(false);
+    });
+    matchMedia('(min-width: 1101px)').addEventListener('change', function (e) {
+      if (e.matches) setOpen(false);
+    });
+  }
 })();
