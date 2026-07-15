@@ -1,0 +1,25 @@
+# Netlify — litcore.ai (Astro static)
+# Publish MUST be dist/ (результат `astro build`), не корень репозитория.
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# Красивые URL со trailing slash (astro trailingSlash: 'always')
+[[redirects]]
+  from = "/es"
+  to = "/es/"
+  status = 301
+
+[[redirects]]
+  from = "/ru"
+  to = "/ru/"
+  status = 301
+
+[[redirects]]
+  from = "/en"
+  to = "/en/"
+  status = 301
