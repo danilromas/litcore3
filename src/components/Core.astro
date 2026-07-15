@@ -1,0 +1,18 @@
+---
+/** Мотив «ядро / núcleo»: кольцо + точка + узел на орбите (kit.css .core). Чисто декоративный. */
+interface Props {
+  /** Размер кольца, напр. '120px' → --core-size */
+  size?: string;
+  /** .core--sm — 22px, в тексте и плашках */
+  sm?: boolean;
+  /** .core--text — выравнивание в строке (бренд) */
+  text?: boolean;
+  class?: string;
+}
+const { size, sm = false, text = false, class: className } = Astro.props;
+---
+
+<span
+  class:list={['core', { 'core--sm': sm, 'core--text': text }, className]}
+  style={size ? `--core-size:${size}` : undefined}
+  aria-hidden="true"><span class="orbit"></span></span>

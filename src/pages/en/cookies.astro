@@ -1,0 +1,121 @@
+---
+/**
+ * P-legal: Cookie policy (EN). Заполнена по аудит-пакету (перевод; испанская версия
+ * приоритетна). Кнопка отзыва согласия — через [data-cc-open] (C4/G2). Индексируется.
+ */
+import Layout from '../../layouts/Layout.astro';
+import Crumbs from '../../components/Crumbs.astro';
+import { OWNER, LEGAL_UPDATED_HUMAN } from '../../config/site';
+import { ROUTES } from '../../lib/routes';
+---
+
+<Layout
+  lang="en"
+  title="Cookie policy | litcore.ai"
+  description="Cookies used by litcore.ai: one technical cookie only; analytics only with consent. How to change or withdraw your choice."
+  path="/en/cookies/"
+  alternates={ROUTES.cookies}
+>
+  <section class="section section--tight">
+    <div class="container legal-page">
+      <Crumbs lang="en" items={[{ label: 'HOME', href: '/en/' }, { label: 'COOKIES' }]} />
+      <h1>Cookie policy</h1>
+      <p class="lead">
+        We use essential cookies only. Analytics runs only if you accept it in the banner.
+      </p>
+      <p class="mono small muted">Last updated: {LEGAL_UPDATED_HUMAN.en}</p>
+
+      <p class="muted small">
+        This is an English translation. The legally binding version is the Spanish{' '}
+        <a href="/es/cookies/">Política de Cookies</a>.
+      </p>
+
+      <h2>1. What cookies are</h2>
+      <p>
+        A cookie is a small file a website stores on your device to remember information about
+        your visit. This policy explains which cookies litcore.ai uses and how to manage them,
+        under art. 22.2 of Spain's LSSI, the GDPR and the AEPD cookie guidance.
+      </p>
+
+      <h2>2. Cookies we set today</h2>
+      <p>
+        The site currently sets <strong>one first-party technical cookie</strong> that remembers
+        your banner choice. <strong>No analytics, advertising or third-party cookies.</strong>
+      </p>
+      <table class="lc">
+        <thead>
+          <tr>
+            <th>Cookie</th>
+            <th>Owner</th>
+            <th>Type</th>
+            <th>Purpose</th>
+            <th>Duration</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="mono">lc_consent</span></td>
+            <td>litcore.ai (first-party)</td>
+            <td>Technical / necessary</td>
+            <td>
+              Stores your cookie-banner choice (accept / decline). Exempt from consent as strictly
+              necessary (art. 22.2 LSSI).
+            </td>
+            <td>180 days</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>3. Analytics and third-party cookies</h2>
+      <p>There are <strong>none</strong> today. If we ever add analytics or other non-technical cookies:</p>
+      <ul>
+        <li>they will run <strong>only after your consent</strong> in the banner (never before);</li>
+        <li>
+          we will list them in the table above (owner, purpose, duration) and, for providers
+          outside the EEA, disclose the international transfer and its safeguard (see the{' '}
+          <a href="/en/privacy/">Privacy policy</a>);
+        </li>
+        <li>you will be able to accept or decline them <strong>granularly</strong> (per purpose).</li>
+      </ul>
+
+      <h2>4. Legal basis</h2>
+      <p>
+        Non-technical cookies are set only with your <strong>consent</strong> (GDPR art. 6(1)(a)),
+        given through a clear affirmative action in the banner. Continuing to browse or scrolling
+        does <strong>not</strong> count as consent.
+      </p>
+
+      <h2>5. Changing or withdrawing your choice</h2>
+      <p>
+        <strong>On the site:</strong> change your choice at any time with the button below or via
+        the “Cookie settings” link in the footer. Withdrawing consent is as easy as giving it.
+      </p>
+      <p>
+        <button type="button" class="btn btn--ghost" data-cc-open>Cookie settings</button>
+      </p>
+      <p>
+        <strong>In your browser:</strong> you can block or delete cookies in your browser
+        settings. If you delete the <span class="mono">lc_consent</span> cookie, the banner will
+        appear again.
+      </p>
+
+      <h2>6. Consent duration</h2>
+      <p>
+        We remember your choice for 180 days, then ask again. We will also ask again if purposes
+        change or new cookies are added.
+      </p>
+
+      <h2>7. International transfers</h2>
+      <p>
+        While only the first-party technical cookie is used, there are <strong>no</strong>{' '}
+        cookie-related international transfers. If providers outside the EEA are added, this will
+        be disclosed here and in the Privacy policy.
+      </p>
+
+      <h2>8. Contact</h2>
+      <p>
+        Questions about cookies or data: <a href={`mailto:${OWNER.email}`}>{OWNER.email}</a>.
+      </p>
+    </div>
+  </section>
+</Layout>

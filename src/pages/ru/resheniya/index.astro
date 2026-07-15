@@ -1,0 +1,19 @@
+---
+/** RU — хаб «Отрасли» (ссылка шапки/футера; ранее 404). */
+import Layout from '../../../layouts/Layout.astro';
+import SchemaOrg from '../../../components/seo/SchemaOrg.astro';
+import SectorsHub from '../../../components/sector/SectorsHub.astro';
+import { ROUTES } from '../../../lib/routes';
+import { breadcrumb } from '../../../lib/schema';
+---
+
+<Layout
+  lang="ru"
+  title="Отрасли — ИИ-решения по индустриям | litcore.ai"
+  description="ИИ-автоматизация по отраслям: строительство и ремонт, медицина и стоматология. Конкретные услуги с ценами «от», настроенные под ваш бизнес в Испании, на русском и испанском."
+  path={ROUTES.sectores.ru!}
+  alternates={ROUTES.sectores}
+>
+  <SchemaOrg slot="head" data={breadcrumb([{ name: 'Отрасли', path: ROUTES.sectores.ru! }])} />
+  <SectorsHub lang="ru" />
+</Layout>

@@ -1,0 +1,398 @@
+---
+/**
+ * Под-страница услуги маркетплейса (общая для es/ru/en и всех 14 услуг).
+ * Редизайн 14.07.2026 («Строительство — редизайн карточки…»), порядок:
+ * hero (оффер + «от X €» + CTA) → какой процесс закрываем (руками → мы) →
+ * как это работает (схема вход → ИИ → выход, тёмная вставка) → что входит →
+ * технологии/ограничения честно → внедрение (5 шагов + сроки/SLA + тест/обучение) →
+ * результат (измеримо) → демо → цена и тарифы → другие услуги → CTA.
+ * Контент — строго из data/sectores/* (каталог Промта A, 14.07.2026).
+ */
+import Core from '../Core.astro';
+import Crumbs from '../Crumbs.astro';
+import PriceCard from '../PriceCard.astro';
+import Steps from '../Steps.astro';
+import DarkSection from '../DarkSection.astro';
+import ServiceIcon from './ServiceIcon.astro';
+import type { Lang } from '../../config/site';
+import { CONSTRUCCION_PAGE, SECTOR_PATHS, SECTOR_UI } from '../../data/sectores/construccion-page';
+import { ALL_SERVICES, servicePath } from '../../data/sectores/construccion';
+import type { SectorService } from '../../data/sectores/types';
+
+interface Props {
+  lang: Lang;
+  svc: SectorService;
+}
+const { lang, svc } = Astro.props;
+const c = svc.copy[lang];
+const ui = SECTOR_UI[lang];
+const page = CONSTRUCCION_PAGE[lang];
+
+const crumbs = [
+  ...page.crumbs.slice(0, 1),
+  { label: page.crumbs[1].label, href: SECTOR_PATHS[lang] },
+  { label: c.title.toUpperCase() },
+];
+
+// Перелинковка: следующие 3 услуги каталога (циклически).
+const idx = ALL_SERVICES.findIndex((s) => s.id === svc.id);
+const others = [1, 2, 3].map((k) => ALL_SERVICES[(idx + k) % ALL_SERVICES.length]);
+
+const tierCols = c.tiers.length >= 3 ? 'grid--3' : 'grid--2';
+const closesLead = c.closes ? c.closes.charAt(0).toUpperCase() + c.closes.slice(1) + '.' : '';
+---
+
+<div class="page-svc">
+  <!-- ================= 1 · HERO ================= -->
+  <section class="section section--tight hero" style="position:relative">
+    <div class="hero-decor" aria-hidden="true">
+      <div class="blob" data-plx="0.06" style="width:460px;height:460px;right:-160px;top:-140px"></div>
+      <span class="core" data-plx="0.14" style="--core-size:110px;position:absolute;right:10%;top:18%"><span class="orbit"></span></span>
+    </div>
+    <div class="container hero-content">
+      <Crumbs items={crumbs} lang={lang} />
+      <p class="kicker"><Core sm />{page.hero.kicker}</p>
+      <div class="svc-hero-icon" aria-hidden="true"><ServiceIcon id={svc.id} size={44} /></div>
+      <h1 class="display" style="max-width:22ch">{c.title}</h1>
+      <p class="lead">{c.offer}</p>
+      <div class="tag-row" style="margin-bottom:22px">
+        <span class="badge badge--accent">{c.priceFrom}</span>
+        {c.badge && <span class="badge">{c.badge}</span>}
+        <span class="badge">{c.priceNote}</span>
+      </div>
+      <div class="tag-row">
+        <a class="btn btn--primary btn--lg" href={page.hero.ctaPrimary.href}>{c.cta}</a>
+        <a class="btn btn--ghost btn--lg" href={lang === 'ru' ? page.demo.cta.href : ui.messengerCta.href}>{lang === 'ru' ? ui.contactCta : ui.messengerCta.label}</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 2 · КАКОЙ ПРОЦЕСС ЗАКРЫВАЕМ ================= -->
+  <section class="section section--alt section--tight">
+    <div class="container">
+      <p class="kicker"><Core sm />{ui.closesH}</p>
+      {closesLead && <h2 class="display" style="font-size:var(--lc-size-h3);max-width:30ch">{closesLead}</h2>}
+      <div class="grid grid--2" style="margin-top:30px">
+        <article class="card reveal">
+          <span class="mono svc-k">{ui.wasLabel}</span>
+          <p>{c.pain}</p>
+        </article>
+        <article class="card card--will reveal">
+          <span class="mono svc-k svc-k--res">{ui.willLabel}</span>
+          <p>{c.make}</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 3 · КАК ЭТО РАБОТАЕТ (вход → ИИ → выход) ================= -->
+  {c.flow && (
+    <DarkSection class="section--tight svc-flow-band">
+      <div class="container">
+        <p class="kicker">{ui.howH}</p>
+        <div class="svc-flow">
+          <div class="svc-fnode reveal">
+            <span class="mono svc-fk">{ui.flowIn}</span>
+            <p>{c.flow.input}</p>
+          </div>
+          <span class="svc-fedge" aria-hidden="true"></span>
+          <div class="svc-fnode svc-fnode--ai reveal">
+            <span class="mono svc-fk"><Core sm />{ui.flowAi}</span>
+            <p>{c.flow.ai}</p>
+          </div>
+          <span class="svc-fedge" aria-hidden="true"></span>
+          <div class="svc-fnode svc-fnode--out reveal">
+            <span class="mono svc-fk">{ui.flowOut}</span>
+            <p>{c.flow.output}</p>
+          </div>
+        </div>
+      </div>
+    </DarkSection>
+  )}
+
+  <!-- ================= 4 · ЧТО ВХОДИТ ================= -->
+  <section class="section section--tight">
+    <div class="container">
+      <p class="kicker"><Core sm />{ui.includesH}</p>
+      <ul class="inc-list">
+        {c.includes.map((item) => <li>{item}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <!-- ================= 4b · ТЕХНОЛОГИИ + ОГРАНИЧЕНИЯ ================= -->
+  <section class="section section--warm section--tight">
+    <div class="container">
+      <div class="grid grid--2">
+        <article class="card reveal">
+          <h3 style="font-size:1.05rem">{ui.techH}</h3>
+          <p class="muted" style="margin:0">{c.tech}</p>
+        </article>
+        <article class="card card--limits reveal">
+          <h3 style="font-size:1.05rem">{ui.limitsH}</h3>
+          <p class="muted" style="margin:0">{c.limits}</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 5 · ВНЕДРЕНИЕ ================= -->
+  <section class="section section--tight">
+    <div class="container">
+      <p class="kicker"><Core sm />{ui.processH}</p>
+      <div style="margin-top:34px">
+        <Steps steps={c.process} />
+      </div>
+      <p class="mono" style="margin-top:26px;color:var(--lc-accent-deep)">
+        {c.timeline}{c.sla && <Fragment> · {ui.slaLabel}: {c.sla}</Fragment>}
+      </p>
+      <div class="card quality-card reveal" style="margin-top:26px">
+        <h3 style="font-size:1.05rem">{ui.qualityH}</h3>
+        <p class="muted" style="margin:0">{c.quality}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 6 · РЕЗУЛЬТАТ — ИЗМЕРИМО ================= -->
+  <section class="section section--alt section--tight">
+    <div class="container">
+      <p class="kicker"><Core sm />{ui.resultH}</p>
+      <p class="svc-result reveal">{c.result}</p>
+    </div>
+  </section>
+
+  <!-- ================= 7 · ДЕМО ================= -->
+  <section class="section section--tight">
+    <div class="container">
+      <div class="card demo-card reveal">
+        <span class="badge badge--accent">{page.demo.badge}</span>
+        <h2 style="font-size:var(--lc-size-h3);margin-top:14px">{page.demo.h2}</h2>
+        <p class="demo-disclaimer">{page.demo.disclaimer}</p>
+        <a class="btn btn--primary" href={page.demo.cta.href}>{page.demo.cta.label}</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 8 · ЦЕНА И ТАРИФЫ ================= -->
+  <section class="section section--warm section--tight" id="precios">
+    <div class="container">
+      <p class="kicker"><Core sm />{ui.tiersH}</p>
+      <div class:list={['grid', tierCols]} style="margin-top:30px;max-width:960px">
+        {c.tiers.map((tier) => (
+          <PriceCard
+            plan={tier.plan}
+            price={tier.price}
+            cur={tier.cur}
+            note={tier.note}
+            items={tier.items}
+            featured={tier.featured}
+            recommendLabel={page.bundles.recommendLabel}
+            cta={{ label: ui.tierCta, href: page.demo.cta.href }}
+          />
+        ))}
+      </div>
+      <p class="small muted" style="margin-top:16px">{ui.priceIvaNote}</p>
+    </div>
+  </section>
+
+  <!-- ================= 9 · ДРУГИЕ УСЛУГИ ================= -->
+  <section class="section section--tight">
+    <div class="container">
+      <p class="kicker"><Core sm />{ui.otherServicesH}</p>
+      <div class="grid grid--3" style="margin-top:26px">
+        {others.map((s) => (
+          <a class="card other-card reveal" href={servicePath(lang, s)}>
+            <span class="other-icon"><ServiceIcon id={s.id} size={24} /></span>
+            <h3 style="font-size:1.02rem">{s.copy[lang].title}</h3>
+            <span class="other-price">{s.copy[lang].priceFrom}</span>
+          </a>
+        ))}
+      </div>
+      <p style="margin-top:22px"><a href={SECTOR_PATHS[lang]}>{ui.backToSector}</a></p>
+    </div>
+  </section>
+
+  <!-- ================= CTA ================= -->
+  <section class="section section--tight">
+    <div class="container">
+      <div class="cta-band">
+        <h2 class="display" style="font-size:var(--lc-size-h2)">
+          {page.ctaBand.h2Pre}<span class="accent-word">{page.ctaBand.h2Accent}</span>
+        </h2>
+        <div class="tag-row">
+          <a class="btn btn--primary btn--lg" href={page.ctaBand.primary.href}>{page.ctaBand.primary.label}</a>
+          <a
+            class="btn btn--ghost btn--lg"
+            style="color:var(--lc-bg);border-color:color-mix(in srgb,var(--lc-bg) 40%,transparent)"
+            href={page.ctaBand.ghost.href}>{page.ctaBand.ghost.label}</a
+          >
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<style is:global>
+  /* ---- Под-страница услуги маркетплейса (префикс .page-svc) ---- */
+  .page-svc .svc-hero-icon {
+    color: var(--lc-accent-deep);
+    margin: 4px 0 14px;
+  }
+  .page-svc .svc-k {
+    color: var(--lc-ink-soft);
+    display: inline-block;
+    margin-bottom: 10px;
+  }
+  .page-svc .svc-k--res {
+    color: var(--lc-accent-deep);
+  }
+  .page-svc .card p {
+    margin: 0;
+    font-size: 0.95rem;
+  }
+  .page-svc .card--will {
+    border-color: var(--lc-accent);
+  }
+  .page-svc .card--limits {
+    border-style: dashed;
+  }
+
+  /* Схема «вход → ИИ → выход» (тёмная вставка «Филамент») */
+  .page-svc .svc-flow {
+    display: flex;
+    align-items: stretch;
+    gap: 14px 0;
+    margin-top: 34px;
+  }
+  .page-svc .svc-fnode {
+    flex: 1 1 0;
+    padding: 18px 20px;
+    border: 1.5px solid var(--lc-canvas-line);
+    border-radius: var(--lc-radius-card);
+    background: var(--lc-canvas-2);
+  }
+  .page-svc .svc-fnode p {
+    margin: 10px 0 0;
+    font-size: 0.92rem;
+    color: var(--lc-glow-light);
+  }
+  .page-svc .svc-fk {
+    color: var(--lc-canvas-muted);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .page-svc .svc-fnode--ai {
+    border-color: color-mix(in srgb, var(--lc-glow-cyan) 55%, transparent);
+    box-shadow: var(--lc-shadow-glow);
+  }
+  .page-svc .svc-fnode--ai .svc-fk {
+    color: var(--lc-glow-cyan);
+  }
+  .page-svc .svc-fnode--out {
+    border-color: color-mix(in srgb, var(--lc-glow-cyan) 30%, transparent);
+  }
+  .page-svc .svc-fnode--out .svc-fk {
+    color: var(--lc-glow-light);
+  }
+  .page-svc .svc-fedge {
+    flex: 0 0 34px;
+    align-self: center;
+    height: 1.5px;
+    background: var(--lc-canvas-line);
+  }
+  @media (max-width: 860px) {
+    .page-svc .svc-flow {
+      flex-direction: column;
+    }
+    .page-svc .svc-fedge {
+      flex-basis: auto;
+      width: 1.5px;
+      height: 26px;
+      margin-left: 32px;
+      align-self: flex-start;
+    }
+  }
+
+  .page-svc .inc-list {
+    margin: 26px 0 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px 28px;
+    max-width: 960px;
+  }
+  .page-svc .inc-list li {
+    padding-left: 24px;
+    position: relative;
+    font-size: 0.96rem;
+  }
+  .page-svc .inc-list li::before {
+    content: '';
+    position: absolute;
+    left: 2px;
+    top: 0.5em;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--lc-accent);
+  }
+  @media (max-width: 720px) {
+    .page-svc .inc-list {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .page-svc .quality-card {
+    max-width: 820px;
+  }
+
+  /* Результат — крупно и измеримо */
+  .page-svc .svc-result {
+    margin: 18px 0 0;
+    max-width: 30ch;
+    font-family: var(--lc-font-display);
+    font-weight: 800;
+    font-size: clamp(1.5rem, 3.2vw, 2.3rem);
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+
+  .page-svc .demo-card {
+    max-width: 640px;
+    margin-inline: auto;
+  }
+  .page-svc .demo-disclaimer {
+    font-size: 0.85rem;
+    color: var(--lc-ink-soft);
+    margin: 10px 0 18px;
+  }
+
+  .page-svc .other-card {
+    text-decoration: none;
+    color: var(--lc-ink);
+    display: flex;
+    flex-direction: column;
+    transition:
+      box-shadow var(--lc-dur-fast) var(--lc-ease),
+      border-color var(--lc-dur-fast) var(--lc-ease);
+  }
+  .page-svc .other-card:hover {
+    color: var(--lc-ink);
+    border-color: var(--lc-accent);
+  }
+  .page-svc .other-icon {
+    color: var(--lc-accent-deep);
+    display: inline-flex;
+    margin-bottom: 10px;
+  }
+  .page-svc .other-price {
+    margin-top: auto;
+    font-family: var(--lc-font-display);
+    font-weight: 800;
+    font-size: 1.2rem;
+    color: var(--lc-accent-deep);
+  }
+</style>

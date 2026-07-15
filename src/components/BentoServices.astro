@@ -1,0 +1,110 @@
+---
+/**
+ * Асимметричная bento-сетка услуг A0–A5 (Stone & Signal).
+ */
+interface Card {
+  tag?: string;
+  title: string;
+  href: string;
+  text: string;
+}
+
+interface Props {
+  kicker: string;
+  h2: string;
+  lead?: string;
+  cards: Card[];
+  subrowHead?: string;
+  minis?: { title: string; href: string; text: string }[];
+}
+
+const { kicker, h2, lead, cards, subrowHead, minis = [] } = Astro.props;
+---
+
+<section class="section" id="servicios">
+  <div class="container">
+    <p class="kicker">{kicker}</p>
+    <h2 class="display noise-hover">{h2}</h2>
+    {lead && <p class="lead">{lead}</p>}
+
+    <div class="bento" style="margin-top:36px">
+      {
+        cards.map((card) => (
+          <article class="bento__item card svc-card reveal">
+            {card.tag && <span class="svc-tag mono">{card.tag}</span>}
+            <h3>
+              <a href={card.href}>{card.title}</a>
+            </h3>
+            <p>{card.text}</p>
+          </article>
+        ))
+      }
+    </div>
+
+    {
+      minis.length > 0 && (
+        <>
+          {subrowHead && <h3 class="subrow-head mono muted">{subrowHead}</h3>}
+          <div class:list={['grid', minis.length >= 4 ? 'grid--4' : 'grid--3']}>
+            {minis.map((mini) => (
+              <article class="card card--mini reveal">
+                <h3>
+                  <a href={mini.href}>{mini.title}</a>
+                </h3>
+                <p>{mini.text}</p>
+              </article>
+            ))}
+          </div>
+        </>
+      )
+    }
+  </div>
+</section>
+
+<style is:global>
+  .page-home .svc-tag {
+    display: block;
+    color: var(--lc-ink-soft);
+    margin-bottom: 10px;
+  }
+  .page-home .svc-card h3 {
+    font-family: var(--lc-font-display);
+    font-weight: 800;
+    font-size: 1.45rem;
+    letter-spacing: 0;
+  }
+  .page-home .svc-card h3 a {
+    color: inherit;
+    text-decoration: none;
+  }
+  .page-home .svc-card h3 a:hover {
+    color: var(--lc-accent);
+  }
+  .page-home .svc-card p {
+    margin: 0;
+    color: var(--lc-ink-soft);
+    font-size: 0.95rem;
+  }
+  .page-home .card--mini {
+    padding: 18px 20px;
+  }
+  .page-home .card--mini h3 {
+    font-size: 1.02rem;
+    font-weight: 700;
+    font-family: var(--lc-font-text);
+    margin: 0 0 4px;
+  }
+  .page-home .card--mini h3 a {
+    color: inherit;
+    text-decoration: none;
+  }
+  .page-home .card--mini h3 a:hover {
+    color: var(--lc-accent-deep);
+  }
+  .page-home .card--mini p {
+    font-size: 0.86rem;
+  }
+  .page-home .subrow-head {
+    margin: 44px 0 16px;
+  }
+</style>

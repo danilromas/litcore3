@@ -1,0 +1,92 @@
+---
+/**
+ * P04 — Главная EN (/en/). Тот же UX (HeroCore + Filament + bento), копи Фазы 2.
+ */
+import Layout from '../../layouts/Layout.astro';
+import HeroCore from '../../components/HeroCore.astro';
+import BentoServices from '../../components/BentoServices.astro';
+import Filament from '../../components/Filament.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import SchemaOrg from '../../components/seo/SchemaOrg.astro';
+import { ROUTES } from '../../lib/routes';
+import { organization, localBusiness } from '../../lib/schema';
+import { HOME } from '../../data/home';
+
+const t = HOME.en;
+---
+
+<Layout
+  lang="en"
+  title={t.seo.title}
+  description={t.seo.description}
+  path={ROUTES.home.en!}
+  alternates={ROUTES.home}
+  customCursor
+>
+  <SchemaOrg slot="head" data={[organization(), localBusiness()]} />
+
+  <div class="page-home">
+    <HeroCore
+      kicker={t.hero.kicker}
+      h1Html={t.hero.h1Html}
+      lead={t.hero.lead}
+      primary={t.hero.primary}
+      secondary={t.hero.secondary}
+    />
+
+    <section class="trust" aria-label={t.trust.aria} data-plx="0.03">
+      <div class="container mono">
+        {t.trust.items.map((item) => <span>{item}</span>)}
+      </div>
+    </section>
+
+    <BentoServices kicker={t.services.kicker} h2={t.services.h2} cards={t.services.cards} />
+
+    <Filament lang="en" intro={{ kicker: t.mapa.kicker, h2Html: t.mapa.h2Html, text: t.mapa.text }} />
+
+    <section class="section section--alt" id="models">
+      <div class="container">
+        <p class="kicker">{t.models.kicker}</p>
+        <h2 class="display noise-hover">{t.models.h2}</h2>
+        <div class="grid grid--3">
+          {
+            t.models.cards.map((card) => (
+              <article class="card reveal">
+                <h3>{card.title}</h3>
+                <p class="muted">{card.text}</p>
+              </article>
+            ))
+          }
+        </div>
+        <p class="more-link small muted" set:html={t.models.footHtml} />
+      </div>
+    </section>
+
+    <section class="section section--tight">
+      <div class="container">
+        <CtaBand cta={t.cta.cta}>
+          <h2 class="display noise-hover">{t.cta.h2}</h2>
+        </CtaBand>
+      </div>
+    </section>
+  </div>
+</Layout>
+
+<style is:global>
+  .page-home .trust {
+    border-block: 1px solid var(--lc-line);
+    padding: 16px 0;
+    background: var(--lc-bg);
+  }
+  .page-home .trust .container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 18px;
+    justify-content: center;
+    color: var(--lc-ink-soft);
+    text-align: center;
+  }
+  .page-home .more-link {
+    margin-top: 26px;
+  }
+</style>

@@ -1,0 +1,87 @@
+---
+/**
+ * P-legal: Legal notice (EN). Новая страница (A3 аудита: ссылка обязана быть и в
+ * EN-футере). Перевод-резюме испанского Aviso Legal; испанская версия приоритетна.
+ */
+import Layout from '../../layouts/Layout.astro';
+import Crumbs from '../../components/Crumbs.astro';
+import { OWNER, LEGAL_UPDATED_HUMAN } from '../../config/site';
+import { ROUTES } from '../../lib/routes';
+---
+
+<Layout
+  lang="en"
+  title="Legal notice | litcore.ai"
+  description="Legal notice for litcore.ai: site owner identification (art. 10 of Spain's LSSI-CE) and terms of use."
+  path="/en/legal-notice/"
+  alternates={ROUTES['aviso-legal']}
+>
+  <section class="section section--tight">
+    <div class="container legal-page">
+      <Crumbs lang="en" items={[{ label: 'HOME', href: '/en/' }, { label: 'LEGAL NOTICE' }]} />
+      <h1>Legal notice</h1>
+      <p class="lead">Site owner identification and terms of use for litcore.ai.</p>
+      <p class="mono small muted">Last updated: {LEGAL_UPDATED_HUMAN.en}</p>
+
+      <p class="muted small">
+        This is an English summary. The legally binding version is the Spanish{' '}
+        <a href="/es/aviso-legal/">Aviso legal</a>.
+      </p>
+
+      <h2>1. Site owner (art. 10 LSSI-CE)</h2>
+      <p>
+        In compliance with article 10 of Spanish Law 34/2002 (LSSI-CE), the owner of this website
+        is:
+      </p>
+      <ul>
+        <li><strong>Owner:</strong> {OWNER.name} (sole trader — autónoma)</li>
+        <li><strong>Tax ID (NIF):</strong> {OWNER.nif}</li>
+        <li><strong>Address:</strong> {OWNER.address}</li>
+        <li>
+          <strong>Email:</strong> <a href={`mailto:${OWNER.email}`}>{OWNER.email}</a>
+        </li>
+        <li>
+          <strong>Phone:</strong> <a href={OWNER.phoneHref}>{OWNER.phone}</a>
+        </li>
+        <li>
+          <strong>Activity:</strong> information-technology and AI services (process automation,
+          assistants and bots, software integration, web and app design).
+        </li>
+        <li><strong>Domain:</strong> litcore.ai</li>
+      </ul>
+
+      <h2>2. Use of the site</h2>
+      <p>
+        Access to the site is free and implies acceptance of these terms. Users agree to use the
+        site lawfully and not to carry out activities that could damage or overload it.
+      </p>
+
+      <h2>3. Intellectual property</h2>
+      <p>
+        All site content (text, images, design, source code, logos, the “litcore.ai” name) belongs
+        to {OWNER.displayName} or to third parties who authorised its use, and is protected by
+        intellectual-property law. Reproduction or distribution without the owner's permission is
+        prohibited except where legally allowed.
+      </p>
+
+      <h2>4. Liability</h2>
+      <p>
+        The owner keeps the site operational and its information up to date but does not guarantee
+        continuous availability or absence of errors. The site may link to third-party services
+        (e.g. messaging apps); the owner is not responsible for their content or policies.
+      </p>
+
+      <h2>5. Personal data</h2>
+      <p>
+        Personal data processing is governed by the <a href="/en/privacy/">Privacy policy</a> and
+        the <a href="/en/cookies/">Cookie policy</a>.
+      </p>
+
+      <h2>6. Governing law</h2>
+      <p>
+        These terms are governed by Spanish law. Where the user is a consumer, the mandatory forum
+        of the consumer's domicile applies.
+      </p>
+    </div>
+  </section>
+</Layout>

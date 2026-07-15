@@ -1,0 +1,37 @@
+---
+/**
+ * Тёмный hero: центрированный текст поверх ядра (ядро — фон, не конкурирует с копи).
+ * Одинаков на ES/RU/EN.
+ */
+import CoreScene from './core/CoreScene';
+import KineticHeadline from './effects/KineticHeadline';
+
+interface Props {
+  kicker: string;
+  h1Html: string;
+  lead: string;
+  primary: { label: string; href: string };
+  secondary: { label: string; href: string };
+}
+
+const { kicker, h1Html, lead, primary, secondary } = Astro.props;
+---
+
+<section class="hero-core section">
+  <div class="hero-core__grid" aria-hidden="true" data-plx="0.03"></div>
+
+  <div class="hero-core__stage" aria-hidden="true" data-plx="0.08">
+    <div class="hero-core__poster"></div>
+    <CoreScene client:visible />
+  </div>
+
+  <div class="container hero-core__content">
+    <p class="kicker noise-hover">{kicker}</p>
+    <KineticHeadline client:idle html={h1Html} />
+    <p class="lead">{lead}</p>
+    <div class="tag-row">
+      <a class="btn btn--primary btn--lg" href={primary.href}>{primary.label}</a>
+      <a class="btn btn--ghost btn--lg" href={secondary.href}>{secondary.label}</a>
+    </div>
+  </div>
+</section>

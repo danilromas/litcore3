@@ -1,0 +1,92 @@
+---
+/**
+ * Базовый layout litcore.ai — скелет страницы из kit/KIT-README.md.
+ * Токены и кит подключаются глобально; шрифты самохостятся (@fontsource, кириллица).
+ * Stone & Signal: Geologica / Onest / JetBrains Mono.
+ */
+import '@fontsource-variable/geologica/wght.css';
+import '@fontsource/onest/400.css';
+import '@fontsource/onest/500.css';
+import '@fontsource/onest/600.css';
+import '@fontsource/onest/700.css';
+import '@fontsource/onest/800.css';
+import '@fontsource/jetbrains-mono/400.css';
+import '@fontsource/jetbrains-mono/500.css';
+import '@fontsource/jetbrains-mono/600.css';
+import '../styles/tokens.css';
+import '../styles/kit.css';
+import '../styles/effects.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import CookieConsent from '../components/seo/CookieConsent.astro';
+import CustomCursor from '../components/effects/CustomCursor';
+import { SITE_URL, LOCALES, type Lang } from '../config/site';
+import { SKIP_LINK } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+  title: string;
+  description: string;
+  /** Путь текущей страницы, напр. '/es/precios/' — для canonical */
+  path: string;
+  /** Пути языковых альтернатив (включая текущий язык), напр. { es: '/es/precios/', ru: '/ru/tseny/' } */
+  alternates?: Partial<Record<Lang, string>>;
+  noIndex?: boolean;
+  /** Включить кастомный курсор (десктоп, pointer:fine) */
+  customCursor?: boolean;
+}
+
+const {
+  lang,
+  title,
+  description,
+  path,
+  alternates = {},
+  noIndex = false,
+  customCursor = false,
+} = Astro.props;
+const canonical = new URL(path, SITE_URL).href;
+const xDefault = alternates.es ?? path; // x-default = ES (page inventory P01)
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {
+      (Object.entries(alternates) as [Lang, string][]).map(([l, p]) => (
+        <link rel="alternate" hreflang={LOCALES[l]} href={new URL(p, SITE_URL).href} />
+      ))
+    }
+    {Object.keys(alternates).length > 0 && (
+      <link rel="alternate" hreflang="x-default" href={new URL(xDefault, SITE_URL).href} />
+    )}
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="litcore.ai" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content={LOCALES[lang].replace('-', '_')} />
+    {/* TODO: og:image 1200×630 PNG — сделать позже (SVG для og:image не работает) */}
+    <meta name="twitter:card" content="summary" />
+    {noIndex && <meta name="robots" content="noindex" />}
+    <slot name="head" />
+  </head>
+  <body class:list={[{ 'has-custom-cursor': customCursor }]}>
+    <a class="skip-link" href="#main">{SKIP_LINK[lang]}</a>
+    <Header lang={lang} currentPath={path} alternates={alternates} />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer lang={lang} />
+    <CookieConsent lang={lang} />
+    {customCursor && <CustomCursor client:load />}
+    <script src="../scripts/kit.js"></script>
+  </body>
+</html>

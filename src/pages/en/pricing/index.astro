@@ -1,0 +1,93 @@
+---
+/**
+ * P22 — Pricing EN (/en/pricing/) — заглушка Фазы 2 из content/precios/en.md:
+ * герой + три пакета (Start / Business / Core) + CTA. Без грантов (не EN-питч),
+ * без таблицы/FAQ — полная версия в Фазе 2.
+ */
+import Layout from '../../../layouts/Layout.astro';
+import Crumbs from '../../../components/Crumbs.astro';
+import PriceCard from '../../../components/PriceCard.astro';
+import SchemaOrg from '../../../components/seo/SchemaOrg.astro';
+import { ROUTES } from '../../../lib/routes';
+import { breadcrumb } from '../../../lib/schema';
+import { PRECIOS } from '../../../data/precios';
+
+const t = PRECIOS.en;
+---
+
+<Layout
+  lang="en"
+  title={t.seo.title}
+  description={t.seo.description}
+  path={ROUTES.precios.en!}
+  alternates={ROUTES.precios}
+>
+  <SchemaOrg
+    slot="head"
+    data={[
+      breadcrumb([
+        { name: 'Home', path: '/en/' },
+        { name: 'Pricing', path: ROUTES.precios.en! },
+      ]),
+    ]}
+  />
+
+  <div class="page-precios">
+    <!-- HERO (compact) -->
+    <section class="section section--tight hero" style="position:relative">
+      <div class="hero-decor" aria-hidden="true">
+        <div class="blob" data-plx="0.06" style="width:420px;height:420px;right:-120px;top:-140px"></div>
+      </div>
+      <div class="container hero-content">
+        <Crumbs items={t.crumbs} lang="en" />
+        <h1 class="display" set:html={t.hero.h1Html} />
+        <p class="lead">{t.hero.lead}</p>
+      </div>
+    </section>
+
+    <!-- PACKAGES -->
+    <section class="section section--tight">
+      <div class="container">
+        <div class="grid grid--3" style="align-items:stretch">
+          {t.cards.map((card) => (
+            <div class="reveal" style="display:grid">
+              <PriceCard
+                plan={card.plan}
+                price={card.price}
+                cur={card.cur}
+                note={card.note}
+                items={card.items}
+                cta={card.cta}
+                featured={card.featured}
+                recommendLabel={t.recommendLabel}
+              />
+            </div>
+          ))}
+        </div>
+        <p class="muted small" style="margin-top:26px">{t.foot}</p>
+      </div>
+    </section>
+
+    <!-- CTA BAND -->
+    <section class="section section--tight">
+      <div class="container">
+        <div class="cta-band">
+          <h2 class="display" set:html={t.cta.h2Html} />
+          <div class="tag-row">
+            <a class="btn btn--primary btn--lg" href={t.cta.primary.href}>{t.cta.primary.label}</a>
+            <a
+              class="btn btn--ghost btn--lg"
+              style="color:var(--lc-bg);border-color:color-mix(in srgb,var(--lc-bg) 40%,transparent)"
+              href={t.cta.secondary.href}>{t.cta.secondary.label}</a>
+          </div>
+        </div>
+        <p class="muted small" style="margin-top:18px">{t.taxNote}</p>
+      </div>
+    </section>
+  </div>
+</Layout>
+
+<style is:global>
+  /* — страничная специфика цен (перенос из precios.html <style id="page">), префикс .page-precios — */
+  .page-precios .price-card .price{font-variant-numeric:tabular-nums}
+</style>

@@ -1,0 +1,365 @@
+---
+/**
+ * P24 ES — сектор «Clínicas y dental».
+ * Источник 1:1: design-pack/pages/sector-clinicas.html (= content/clinicas/es.md).
+ * JSON-LD из макета перенесён через lib/schema.ts (домен — из SITE_URL).
+ * Тариф-тизер: «Bot básico» / «Bot + agenda» (Recomendado) — канон.
+ */
+import Layout from '../../../../layouts/Layout.astro';
+import Core from '../../../../components/Core.astro';
+import Crumbs from '../../../../components/Crumbs.astro';
+import PriceCard from '../../../../components/PriceCard.astro';
+import Steps from '../../../../components/Steps.astro';
+import Faq from '../../../../components/Faq.astro';
+import DarkSection from '../../../../components/DarkSection.astro';
+import SchemaOrg from '../../../../components/seo/SchemaOrg.astro';
+import { ROUTES } from '../../../../lib/routes';
+import { service, faqPage, breadcrumb } from '../../../../lib/schema';
+import { CLINICAS_ES as d } from '../../../../data/clinicas';
+
+const path = ROUTES.clinicas.es!;
+const alternates = ROUTES.clinicas;
+
+// Service из JSON-LD макета: + serviceType и areaServed «España» поверх базового хелпера
+const serviceSchema = {
+  ...service({ name: d.schemaService.name, description: d.schemaService.description, path, lang: 'es' }),
+  serviceType: d.schemaService.serviceType,
+  areaServed: 'España',
+};
+---
+
+<Layout
+  lang="es"
+  title={d.seo.title}
+  description={d.seo.description}
+  path={path}
+  alternates={alternates}
+>
+  <SchemaOrg
+    slot="head"
+    data={[breadcrumb(d.crumbsSchema), serviceSchema, faqPage(d.schemaFaq)]}
+  />
+
+  <div class="page-clinicas">
+    <!-- ================= HERO ================= -->
+    <section class="section hero" style="position:relative">
+      <div class="hero-decor" aria-hidden="true">
+        <div class="blob" data-plx="0.06" style="width:520px;height:520px;right:-140px;top:-120px"></div>
+        <div class="blob" data-plx="0.10" style="width:260px;height:260px;right:26%;bottom:-80px;background:var(--lc-surface-3)"></div>
+        <span class="core" data-plx="0.16" style="--core-size:120px;position:absolute;right:12%;top:22%"><span class="orbit"></span></span>
+      </div>
+      <div class="container hero-content">
+        <Crumbs items={d.crumbs} lang="es" />
+        <h1 class="display">{d.hero.h1Pre}<span class="accent-word">{d.hero.h1Accent}</span></h1>
+        <p class="lead">{d.hero.lead}</p>
+        <div class="tag-row">
+          <a class="btn btn--primary btn--lg" href={d.hero.ctaPrimary.href}>{d.hero.ctaPrimary.label}</a>
+          <a class="btn btn--ghost btn--lg" href={d.hero.ctaSecondary.href}>{d.hero.ctaSecondary.label}</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= DOLORES ================= -->
+    <section class="section section--alt section--tight">
+      <div class="container">
+        <p class="kicker"><Core sm />{d.pains.kicker}</p>
+        <h2 class="display">{d.pains.h2}</h2>
+        <div class="grid grid--3" style="margin-top:34px">
+          {d.pains.cards.map((card) => (
+            <article class="card reveal">
+              <span class="mono pain-tag">{card.tag}</span>
+              <h3>{card.title}</h3>
+              <p class="muted">{card.text}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SOLUCIONES: proceso → automatización → resultado ================= -->
+    <section class="section">
+      <div class="container">
+        <p class="kicker"><Core sm />{d.solutions.kicker}</p>
+        <h2 class="display">{d.solutions.h2}</h2>
+        <p class="lead">{d.solutions.lead}</p>
+        <div class="grid grid--2" style="margin-top:34px">
+          {d.solutions.cards.map((card) => (
+            <article class="card sol reveal">
+              <h3>{card.title}</h3>
+              <p class="mono sol-k">{d.solutions.labels.proceso}</p>
+              <p>{card.proceso}</p>
+              <p class="mono sol-k">{d.solutions.labels.automatizacion}</p>
+              <p>{card.automatizacion}</p>
+              <p class="mono sol-k sol-k--res">{d.solutions.labels.resultado}</p>
+              <p>{card.resultado}</p>
+              {card.note && <p class="sol-note">{card.note}</p>}
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= FILAMENTO: cuello de botella ================= -->
+    <DarkSection class="section--tight filament">
+      <div class="container">
+        <p class="kicker">{d.filament.kicker}</p>
+        <h2 class="display" style="font-size:var(--lc-size-h3)">{d.filament.h2}</h2>
+        <div class="flow" role="img" aria-label={d.filament.flowAria}>
+          <span class="fnode fnode--bottleneck">{d.filament.bottleneckNode}<span class="fnote">{d.filament.bottleneckNote}</span></span>
+          <span class="fedge" aria-hidden="true"></span>
+          <span class="fnode fnode--lit">{d.filament.litNodes[0]}</span>
+          <span class="fedge" aria-hidden="true"></span>
+          <span class="fnode fnode--lit">{d.filament.litNodes[1]}</span>
+        </div>
+        <p class="goldratt">{d.filament.goldratt}
+          <span class="mono">{d.filament.goldrattMono}</span>
+        </p>
+      </div>
+    </DarkSection>
+
+    <!-- ================= CÓMO LO IMPLANTAMOS ================= -->
+    <section class="section">
+      <div class="container">
+        <p class="kicker"><Core sm />{d.steps.kicker}</p>
+        <h2 class="display">{d.steps.h2}</h2>
+        <div style="margin-top:38px">
+          <Steps steps={d.steps.items} />
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= DEMO ================= -->
+    <section class="section section--warm section--tight" id="demo">
+      <div class="container">
+        <div class="card demo-card reveal">
+          <span class="badge badge--tint">{d.demo.badge}</span>
+          <h2 style="font-size:var(--lc-size-h3);margin-top:14px">{d.demo.h2}</h2>
+          <div class="chat" aria-label={d.demo.chatAria}>
+            {d.demo.chat.map((msg) => (
+              <p class:list={['msg', msg.from === 'p' ? 'msg--p' : 'msg--b']}>{msg.text}</p>
+            ))}
+          </div>
+          <p class="demo-disclaimer">{d.demo.disclaimer}</p>
+          <div class="tag-row">
+            <a class="btn btn--primary" href={d.demo.ctaPrimary.href}>{d.demo.ctaPrimary.label}</a>
+            <a class="btn btn--ghost" href={d.demo.ctaSecondary.href}>{d.demo.ctaSecondary.label}</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PRECIOS (тизер) ================= -->
+    <section class="section">
+      <div class="container price-teaser">
+        <p class="kicker"><Core sm />{d.pricing.kicker}</p>
+        <h2 class="display">{d.pricing.h2}</h2>
+        <div class="grid grid--2" style="margin-top:34px">
+          {d.pricing.plans.map((plan) => (
+            <PriceCard {...plan} />
+          ))}
+        </div>
+        <p class="small muted" style="margin-top:18px">
+          {d.pricing.notePre}<a href={d.pricing.noteLink.href}>{d.pricing.noteLink.label}</a>{d.pricing.notePost}
+        </p>
+      </div>
+    </section>
+
+    <!-- ================= FAQ ================= -->
+    <section class="section section--alt section--tight">
+      <div class="container" style="max-width:820px">
+        <p class="kicker"><Core sm />{d.faq.kicker}</p>
+        <h2 class="display">{d.faq.h2}</h2>
+        <div style="margin-top:26px">
+          {d.faq.items.map((item) => (
+            <Faq q={item.q}>
+              <p>{item.a}</p>
+            </Faq>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CTA ================= -->
+    <section class="section section--tight">
+      <div class="container">
+        <div class="cta-band">
+          <h2 class="display" style="font-size:var(--lc-size-h2)">
+            {d.ctaBand.h2Pre}<span class="accent-word">{d.ctaBand.h2Accent}</span>
+          </h2>
+          <div class="tag-row">
+            <a class="btn btn--primary btn--lg" href={d.ctaBand.primary.href}>{d.ctaBand.primary.label}</a>
+            <a
+              class="btn btn--ghost btn--lg"
+              style="color:var(--lc-bg);border-color:color-mix(in srgb,var(--lc-bg) 40%,transparent)"
+              href={d.ctaBand.ghost.href}>{d.ctaBand.ghost.label}</a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</Layout>
+
+<style is:global>
+  /* ---- I1 Clínicas: специфика страницы (из <style id="page"> макета, префикс .page-clinicas) ---- */
+
+  /* Боли */
+  .page-clinicas .pain-tag {
+    color: var(--lc-accent-deep);
+    display: inline-block;
+    margin-bottom: 12px;
+  }
+
+  /* Решения «proceso → automatización → resultado» */
+  .page-clinicas .sol {
+    display: flex;
+    flex-direction: column;
+  }
+  .page-clinicas .sol h3 {
+    font-size: 1.15rem;
+  }
+  .page-clinicas .sol .sol-k {
+    margin: 12px 0 2px;
+    color: var(--lc-ink-soft);
+  }
+  .page-clinicas .sol .sol-k--res {
+    color: var(--lc-accent-deep);
+  }
+  .page-clinicas .sol p {
+    margin: 0;
+    font-size: 0.94rem;
+  }
+  .page-clinicas .sol .sol-note {
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px solid var(--lc-line);
+    font-size: 0.8rem;
+    color: var(--lc-ink-soft);
+  }
+
+  /* Филамент: строка-схема recepción → agenda → recordatorios */
+  .page-clinicas .filament .flow {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 14px 0;
+    margin: 38px 0 10px;
+  }
+  .page-clinicas .fnode {
+    position: relative;
+    flex: none;
+    padding: 13px 22px 15px;
+    border: 1.5px solid var(--lc-canvas-line);
+    border-radius: var(--lc-radius-pill);
+    background: var(--lc-canvas-2);
+    font-family: var(--lc-font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--lc-glow-light);
+  }
+  .page-clinicas .fnode--lit {
+    border-color: color-mix(in srgb, var(--lc-glow-cyan) 55%, transparent);
+    color: var(--lc-glow-cyan);
+  }
+  .page-clinicas .fedge {
+    flex: 1 1 40px;
+    min-width: 34px;
+    height: 1.5px;
+    background: var(--lc-canvas-line);
+  }
+  .page-clinicas .fnode--bottleneck {
+    color: var(--lc-node-dim);
+    border-color: var(--lc-node-dim);
+    animation: lc-ignite 2s var(--lc-ease) 0.9s forwards;
+  }
+  .page-clinicas .fnode--bottleneck .fnote {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: calc(100% + 8px);
+    text-align: center;
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    color: var(--lc-node-dim);
+    white-space: nowrap;
+    animation: lc-ignite-note 2s var(--lc-ease) 0.9s forwards;
+  }
+  @keyframes lc-ignite {
+    to {
+      color: var(--lc-glow-cyan);
+      border-color: color-mix(in srgb, var(--lc-glow-cyan) 60%, transparent);
+      box-shadow: var(--lc-shadow-glow);
+    }
+  }
+  @keyframes lc-ignite-note {
+    to {
+      color: var(--lc-canvas-muted);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .page-clinicas .fnode--bottleneck {
+      animation: none;
+      color: var(--lc-glow-cyan);
+      border-color: color-mix(in srgb, var(--lc-glow-cyan) 60%, transparent);
+      box-shadow: var(--lc-shadow-glow);
+    }
+    .page-clinicas .fnode--bottleneck .fnote {
+      animation: none;
+      color: var(--lc-canvas-muted);
+    }
+  }
+  .page-clinicas .filament .flow {
+    padding-bottom: 26px; /* место под подпись узла */
+  }
+  .page-clinicas .goldratt {
+    max-width: 62ch;
+    color: var(--lc-canvas-muted);
+    font-size: 0.95rem;
+    margin: 18px 0 0;
+  }
+  .page-clinicas .goldratt .mono {
+    display: block;
+    margin-top: 10px;
+    color: var(--lc-glow-cyan);
+  }
+
+  /* Демо-карточка */
+  .page-clinicas .demo-card {
+    max-width: 600px;
+    margin-inline: auto;
+  }
+  .page-clinicas .chat {
+    display: grid;
+    gap: 10px;
+    margin: 20px 0 6px;
+  }
+  .page-clinicas .msg {
+    padding: 11px 15px;
+    border-radius: 13px;
+    max-width: 86%;
+    font-size: 0.93rem;
+    margin: 0;
+  }
+  .page-clinicas .msg--p {
+    background: var(--lc-surface-2);
+    justify-self: end;
+    border-bottom-right-radius: 4px;
+  }
+  .page-clinicas .msg--b {
+    background: var(--lc-accent-tint);
+    justify-self: start;
+    border-bottom-left-radius: 4px;
+  }
+  .page-clinicas .demo-disclaimer {
+    font-size: 0.8rem;
+    color: var(--lc-ink-soft);
+    margin: 12px 0 18px;
+  }
+
+  /* Тарифы: сетка тизера */
+  .page-clinicas .price-teaser {
+    max-width: 880px;
+    margin-inline: auto;
+  }
+</style>

@@ -1,0 +1,37 @@
+---
+/**
+ * P01 (page inventory): корень — выбор языка / редирект. Не контент-страница.
+ * Статический хостинг → эвристика по navigator.language + meta refresh на /es/ (x-default = ES).
+ */
+import { SITE_URL } from '../config/site';
+const es = new URL('/es/', SITE_URL).href;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>litcore.ai</title>
+    <meta name="robots" content="noindex" />
+    <link rel="canonical" href={es} />
+    <link rel="alternate" hreflang="es-ES" href={es} />
+    <link rel="alternate" hreflang="ru-RU" href={new URL('/ru/', SITE_URL).href} />
+    <link rel="alternate" hreflang="en" href={new URL('/en/', SITE_URL).href} />
+    <link rel="alternate" hreflang="x-default" href={es} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta http-equiv="refresh" content="1;url=/es/" />
+    {/* Внешний бандл (не is:inline) — CSP script-src 'self' (S-2 аудита) */}
+    <script>
+      const l = ((navigator.languages && navigator.languages[0]) || navigator.language || 'es')
+        .slice(0, 2)
+        .toLowerCase();
+      location.replace(l === 'ru' ? '/ru/' : l === 'en' ? '/en/' : '/es/');
+    </script>
+  </head>
+  <body>
+    <p style="font-family:monospace;padding:24px">
+      <a href="/es/">Español</a> · <a href="/ru/">Русский</a> · <a href="/en/">English</a>
+    </p>
+  </body>
+</html>

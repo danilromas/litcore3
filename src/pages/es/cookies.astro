@@ -1,0 +1,139 @@
+---
+/**
+ * P-legal: Política de cookies (ES, LSSI 22.2 + AEPD май 2024). Текст — из аудит-пакета
+ * paginas_legales/3_politica-cookies.md. Кнопка отзыва согласия работает через
+ * [data-cc-open] (скрипт баннера, C4/G2 аудита). Индексируется (C5).
+ * ⚖️ Черновик юриста: финальная вычитка — испанский юрист/gestoría (human TODO).
+ */
+import Layout from '../../layouts/Layout.astro';
+import Crumbs from '../../components/Crumbs.astro';
+import { OWNER, LEGAL_UPDATED_HUMAN } from '../../config/site';
+import { ROUTES } from '../../lib/routes';
+---
+
+<Layout
+  lang="es"
+  title="Política de cookies | litcore.ai"
+  description="Qué cookies usa litcore.ai: solo una cookie técnica propia; analítica únicamente con consentimiento. Cómo gestionar o retirar tu elección."
+  path="/es/cookies/"
+  alternates={ROUTES.cookies}
+>
+  <section class="section section--tight">
+    <div class="container legal-page">
+      <Crumbs lang="es" items={[{ label: 'INICIO', href: '/es/' }, { label: 'COOKIES' }]} />
+      <h1>Política de cookies</h1>
+      <p class="lead">
+        Usamos solo cookies técnicas. La analítica se activa únicamente si la aceptas en el banner.
+      </p>
+      <p class="mono small muted">Última actualización: {LEGAL_UPDATED_HUMAN.es}</p>
+
+      <h2>1. ¿Qué son las cookies?</h2>
+      <p>
+        Una cookie es un pequeño archivo que un sitio web almacena en tu dispositivo para guardar
+        y recuperar información sobre tu navegación. Esta política explica qué cookies utiliza
+        litcore.ai, con qué finalidad y cómo puedes gestionarlas, conforme al{' '}
+        <strong>art. 22.2 de la LSSI (Ley 34/2002)</strong>, al <strong>RGPD (UE) 2016/679</strong>{' '}
+        y a la <strong>Guía de cookies de la AEPD</strong>.
+      </p>
+
+      <h2>2. Cookies que utilizamos actualmente</h2>
+      <p>
+        Hoy este sitio utiliza <strong>una única cookie técnica propia</strong>, necesaria para
+        recordar tu elección sobre cookies. <strong>No usamos cookies de analítica, de publicidad
+        ni de terceros.</strong>
+      </p>
+      <table class="lc">
+        <thead>
+          <tr>
+            <th>Cookie</th>
+            <th>Titular</th>
+            <th>Tipo</th>
+            <th>Finalidad</th>
+            <th>Duración</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="mono">lc_consent</span></td>
+            <td>litcore.ai (propia)</td>
+            <td>Técnica / necesaria</td>
+            <td>
+              Recordar tu elección en el banner de cookies (aceptar / rechazar). Está exenta de
+              consentimiento por ser estrictamente necesaria (art. 22.2 LSSI).
+            </td>
+            <td>180 días</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>3. Cookies de analítica y de terceros</h2>
+      <p>Actualmente <strong>no hay</strong>. Si en el futuro incorporamos analítica u otras cookies no técnicas:</p>
+      <ul>
+        <li>se activarán <strong>solo tras tu consentimiento</strong> en el banner (nunca antes);</li>
+        <li>
+          las añadiremos a la tabla anterior con titular, finalidad, duración y, si el proveedor
+          está fuera del EEE (por ejemplo, EE.&nbsp;UU.), la transferencia internacional y su
+          garantía (ver <a href="/es/privacidad/">Política de Privacidad</a>);
+        </li>
+        <li>podrás aceptarlas o rechazarlas de forma <strong>granular</strong> (por finalidad).</li>
+      </ul>
+      <p class="muted small">
+        Nota: la analítica de audiencia no está exenta de consentimiento con carácter general;
+        solo cierta analítica propia, agregada y sin cesión a terceros ni seguimiento entre sitios
+        puede estar exenta bajo condiciones estrictas de la guía de la AEPD de enero de 2024. La
+        analítica de terceros habitual requiere consentimiento previo.
+      </p>
+
+      <h2>4. Base jurídica y consentimiento</h2>
+      <p>
+        Instalamos cookies no técnicas únicamente con tu <strong>consentimiento</strong> (art.
+        6.1.a RGPD), obtenido mediante un acto claro y afirmativo en el banner. Las cookies
+        técnicas necesarias se amparan en el art. 22.2 LSSI (no requieren consentimiento). Seguir
+        navegando o desplazarte <strong>no</strong> equivale a consentir.
+      </p>
+
+      <h2>5. Cómo gestionar o retirar tu consentimiento</h2>
+      <p>
+        <strong>En el sitio:</strong> puedes cambiar tu elección en cualquier momento con el botón
+        de abajo o desde el enlace «Configuración de cookies» del pie de página. Retirar el
+        consentimiento es tan sencillo como darlo.
+      </p>
+      <p>
+        <button type="button" class="btn btn--ghost" data-cc-open>Configuración de cookies</button>
+      </p>
+      <p>
+        <strong>En tu navegador:</strong> puedes bloquear o eliminar las cookies desde la
+        configuración de tu navegador (Chrome, Firefox, Safari, Edge). Si eliminas la cookie{' '}
+        <span class="mono">lc_consent</span>, el banner volverá a mostrarse.
+      </p>
+
+      <h2>6. Plazo y renovación del consentimiento</h2>
+      <p>
+        Recordamos tu elección durante 180 días; después volveremos a solicitar tu consentimiento.
+        También lo pediremos de nuevo si cambian las finalidades o incorporamos nuevas cookies.
+        <span class="muted"> (La AEPD considera buena práctica que el consentimiento no supere los
+        24 meses.)</span>
+      </p>
+
+      <h2>7. Transferencias internacionales</h2>
+      <p>
+        Mientras solo usemos la cookie técnica propia, <strong>no hay</strong> transferencias
+        internacionales derivadas de cookies. Si incorporamos proveedores fuera del EEE, se
+        detallará aquí y en la <a href="/es/privacidad/">Política de Privacidad</a> (mecanismo de
+        transferencia, p.&nbsp;ej. decisión de adecuación o cláusulas contractuales tipo).
+      </p>
+
+      <h2>8. Cambios en esta política</h2>
+      <p>
+        Podemos actualizar esta Política de Cookies para reflejar cambios técnicos o legales.
+        Publicaremos la versión vigente en esta página.
+      </p>
+
+      <h2>9. Contacto</h2>
+      <p>
+        Para cuestiones sobre cookies o protección de datos:{' '}
+        <a href={`mailto:${OWNER.email}`}>{OWNER.email}</a>.
+      </p>
+    </div>
+  </section>
+</Layout>

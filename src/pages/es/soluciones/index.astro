@@ -1,0 +1,19 @@
+---
+/** ES — хаб «Sectores» (ссылка шапки/футера; ранее 404). */
+import Layout from '../../../layouts/Layout.astro';
+import SchemaOrg from '../../../components/seo/SchemaOrg.astro';
+import SectorsHub from '../../../components/sector/SectorsHub.astro';
+import { ROUTES } from '../../../lib/routes';
+import { breadcrumb } from '../../../lib/schema';
+---
+
+<Layout
+  lang="es"
+  title="Sectores — soluciones de IA por industria | litcore.ai"
+  description="Soluciones de automatización con IA por sector: construcción y reformas, clínicas y dental. Servicios concretos con precios «desde», configurados para su negocio en España."
+  path={ROUTES.sectores.es!}
+  alternates={ROUTES.sectores}
+>
+  <SchemaOrg slot="head" data={breadcrumb([{ name: 'Sectores', path: ROUTES.sectores.es! }])} />
+  <SectorsHub lang="es" />
+</Layout>

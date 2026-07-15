@@ -1,0 +1,360 @@
+---
+/**
+ * Лендинг-маркетплейс направления «Строительство и ремонт» (общий для es/ru/en).
+ * Контент — строго из data/sectores/* (согласованный каталог Промта A, 14.07.2026).
+ * Структура: hero → сетка A (кликабельные карточки) → сквозные B → метод →
+ * демо → пакеты → сводка цен → FAQ → CTA.
+ */
+import Core from '../Core.astro';
+import Crumbs from '../Crumbs.astro';
+import PriceCard from '../PriceCard.astro';
+import Steps from '../Steps.astro';
+import Faq from '../Faq.astro';
+import ServiceIcon from './ServiceIcon.astro';
+import type { Lang } from '../../config/site';
+import { CONSTRUCCION_PAGE, SECTOR_UI } from '../../data/sectores/construccion-page';
+import { GRID_A, GRID_B, ALL_SERVICES, servicePath } from '../../data/sectores/construccion';
+import type { SectorService } from '../../data/sectores/types';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const d = CONSTRUCCION_PAGE[lang];
+const ui = SECTOR_UI[lang];
+
+const num = (s: SectorService) => String(s.num).padStart(2, '0');
+const slugById = new Map(ALL_SERVICES.map((s) => [s.id, servicePath(lang, s)]));
+---
+
+<div class="page-sector">
+  <!-- ================= HERO ================= -->
+  <section class="section hero" style="position:relative">
+    <div class="hero-decor" aria-hidden="true">
+      <div class="blob" data-plx="0.06" style="width:520px;height:520px;right:-140px;top:-120px"></div>
+      <div class="blob" data-plx="0.10" style="width:240px;height:240px;right:26%;bottom:-80px;background:var(--lc-surface-3)"></div>
+      <span class="core" data-plx="0.16" style="--core-size:120px;position:absolute;right:12%;top:22%"><span class="orbit"></span></span>
+    </div>
+    <div class="container hero-content">
+      <Crumbs items={d.crumbs} lang={lang} />
+      <p class="kicker"><Core sm />{d.hero.kicker}</p>
+      <h1 class="display">{d.hero.h1Pre}<span class="accent-word">{d.hero.h1Accent}</span></h1>
+      <p class="lead">{d.hero.lead}</p>
+      <div class="tag-row" style="margin-bottom:22px">
+        {d.hero.badges.map((b) => <span class="badge">{b}</span>)}
+      </div>
+      <div class="tag-row">
+        <a class="btn btn--primary btn--lg" href={d.hero.ctaPrimary.href}>{d.hero.ctaPrimary.label}</a>
+        <a class="btn btn--ghost btn--lg" href={d.hero.ctaSecondary.href}>{d.hero.ctaSecondary.label}</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= СЕТКА A: услуги под стройку ================= -->
+  <section class="section section--alt section--tight" id="servicios">
+    <div class="container">
+      <p class="kicker"><Core sm />{d.gridA.kicker}</p>
+      <h2 class="display">{d.gridA.h2}</h2>
+      <p class="lead">{d.gridA.lead}</p>
+      <div class="grid grid--3" style="margin-top:34px">
+        {GRID_A.map((s) => {
+          const c = s.copy[lang];
+          return (
+            <a class="card svc-card reveal" href={servicePath(lang, s)}>
+              <span class="svc-icon"><ServiceIcon id={s.id} /></span>
+              <h3>{c.title}</h3>
+              <p class="svc-offer">{c.offer}</p>
+              {c.closes && (
+                <p class="svc-closes">
+                  <span class="mono svc-closes-k">{ui.closesLabel}:</span> {c.closes}
+                </p>
+              )}
+              <div class="svc-foot">
+                <div class="svc-price-row">
+                  <span class="svc-price">{c.priceFrom}</span>
+                  {c.badge && <span class="badge badge--tint svc-badge">{c.badge}</span>}
+                </div>
+                <span class="btn btn--ghost-accent svc-btn">{ui.detailsBtn} →</span>
+              </div>
+            </a>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= СЕТКА B: сквозные услуги ================= -->
+  <section class="section section--tight" id="transversales">
+    <div class="container">
+      <p class="kicker"><Core sm />{d.gridB.kicker}</p>
+      <h2 class="display">{d.gridB.h2}</h2>
+      <p class="lead">{d.gridB.lead}</p>
+      <div class="grid grid--3" style="margin-top:34px">
+        {GRID_B.map((s) => {
+          const c = s.copy[lang];
+          return (
+            <a class="card svc-card svc-card--b reveal" href={servicePath(lang, s)}>
+              <span class="svc-icon-row">
+                <span class="svc-icon"><ServiceIcon id={s.id} /></span>
+                <span class="badge">{ui.blockBBadge}</span>
+              </span>
+              <h3>{c.title}</h3>
+              <p class="svc-offer">{c.offer}</p>
+              {c.closes && (
+                <p class="svc-closes">
+                  <span class="mono svc-closes-k">{ui.closesLabel}:</span> {c.closes}
+                </p>
+              )}
+              <div class="svc-foot">
+                <div class="svc-price-row">
+                  <span class="svc-price">{c.priceFrom}</span>
+                  {c.badge && <span class="badge badge--tint svc-badge">{c.badge}</span>}
+                </div>
+                <span class="btn btn--ghost-accent svc-btn">{ui.detailsBtn} →</span>
+              </div>
+            </a>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= КАК ВНЕДРЯЕМ ================= -->
+  <section class="section section--warm section--tight">
+    <div class="container">
+      <p class="kicker"><Core sm />{d.how.kicker}</p>
+      <h2 class="display">{d.how.h2}</h2>
+      <div style="margin-top:38px">
+        <Steps steps={d.how.steps} />
+      </div>
+      <p class="mono" style="margin-top:26px;color:var(--lc-accent-deep)">{d.how.slaNote}</p>
+    </div>
+  </section>
+
+  <!-- ================= ДЕМО ================= -->
+  <section class="section section--tight" id="demo">
+    <div class="container">
+      <div class="card demo-card reveal">
+        <span class="badge badge--accent">{d.demo.badge}</span>
+        <h2 style="font-size:var(--lc-size-h3);margin-top:14px">{d.demo.h2}</h2>
+        <p class="muted" style="margin:0 0 12px">{d.demo.lead}</p>
+        <ol class="demo-list">
+          {d.demo.items.map((item) => <li>{item}</li>)}
+        </ol>
+        <p class="demo-disclaimer">{d.demo.disclaimer}</p>
+        <a class="btn btn--primary" href={d.demo.cta.href}>{d.demo.cta.label}</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ПАКЕТЫ ================= -->
+  <section class="section section--alt">
+    <div class="container">
+      <p class="kicker"><Core sm />{d.bundles.kicker}</p>
+      <h2 class="display">{d.bundles.h2}</h2>
+      <p class="lead">{d.bundles.lead}</p>
+      <div class="grid grid--4" style="margin-top:34px">
+        {d.bundles.plans.map((plan) => (
+          <PriceCard
+            plan={plan.plan}
+            price={plan.price}
+            cur={plan.cur}
+            note={plan.note}
+            items={plan.items}
+            featured={plan.featured}
+            recommendLabel={d.bundles.recommendLabel}
+            cta={{ label: ui.tierCta, href: d.demo.cta.href }}
+          />
+        ))}
+      </div>
+      <p class="small muted" style="margin-top:18px;max-width:76ch">{d.bundles.kitDigitalNote}</p>
+    </div>
+  </section>
+
+  <!-- ================= СВОДКА ЦЕН ================= -->
+  <section class="section section--tight">
+    <div class="container">
+      <p class="kicker"><Core sm />{d.priceTable.kicker}</p>
+      <h2 class="display">{d.priceTable.h2}</h2>
+      <div class="table-wrap" style="margin-top:30px">
+        <table class="lc">
+          <thead>
+            <tr>
+              <th>{d.priceTable.cols.service}</th>
+              <th>{d.priceTable.cols.start}</th>
+              <th>{d.priceTable.cols.pro}</th>
+              <th>{d.priceTable.cols.medida}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {d.priceTable.rows.map((row) => (
+              <tr>
+                <td><a href={slugById.get(row.serviceId)}>{row.name}</a></td>
+                <td>{row.start}</td>
+                <td>{row.pro}</td>
+                <td>{row.medida}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="small muted" style="margin-top:14px">{d.priceTable.note}</p>
+    </div>
+  </section>
+
+  <!-- ================= FAQ ================= -->
+  <section class="section section--alt section--tight">
+    <div class="container" style="max-width:820px">
+      <p class="kicker"><Core sm />{d.faq.kicker}</p>
+      <h2 class="display">{d.faq.h2}</h2>
+      <div style="margin-top:26px">
+        {d.faq.items.map((item) => (
+          <Faq q={item.q}>
+            <p>{item.a}</p>
+          </Faq>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CTA ================= -->
+  <section class="section section--tight">
+    <div class="container">
+      <div class="cta-band">
+        <h2 class="display" style="font-size:var(--lc-size-h2)">
+          {d.ctaBand.h2Pre}<span class="accent-word">{d.ctaBand.h2Accent}</span>
+        </h2>
+        <div class="tag-row">
+          <a class="btn btn--primary btn--lg" href={d.ctaBand.primary.href}>{d.ctaBand.primary.label}</a>
+          <a
+            class="btn btn--ghost btn--lg"
+            style="color:var(--lc-bg);border-color:color-mix(in srgb,var(--lc-bg) 40%,transparent)"
+            href={d.ctaBand.ghost.href}>{d.ctaBand.ghost.label}</a
+          >
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<style is:global>
+  /* ---- Маркетплейс направления: специфика страницы (префикс .page-sector) ---- */
+
+  /* Кликабельная карточка услуги */
+  .page-sector .svc-card {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: var(--lc-ink);
+    transition:
+      box-shadow var(--lc-dur-fast) var(--lc-ease),
+      transform var(--lc-dur-fast) var(--lc-ease),
+      border-color var(--lc-dur-fast) var(--lc-ease);
+  }
+  .page-sector .svc-card:hover {
+    color: var(--lc-ink);
+    border-color: var(--lc-accent);
+    transform: translateY(-2px);
+    box-shadow: var(--lc-shadow-lift);
+  }
+  .page-sector .svc-icon {
+    color: var(--lc-accent-deep);
+    display: inline-flex;
+    margin-bottom: 14px;
+  }
+  .page-sector .svc-icon-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  .page-sector .svc-card h3 {
+    font-size: 1.12rem;
+    margin-bottom: 0.35em;
+  }
+  .page-sector .svc-offer {
+    margin: 0 0 12px;
+    font-size: 0.93rem;
+    color: var(--lc-ink-soft);
+  }
+  .page-sector .svc-closes {
+    margin: 0 0 18px;
+    font-size: 0.85rem;
+    color: var(--lc-ink-soft);
+  }
+  .page-sector .svc-closes-k {
+    color: var(--lc-accent-deep);
+  }
+  .page-sector .svc-foot {
+    margin-top: auto;
+    padding-top: 14px;
+    border-top: 1px solid var(--lc-line);
+    display: grid;
+    gap: 12px;
+  }
+  .page-sector .svc-price-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .page-sector .svc-price {
+    font-family: var(--lc-font-display);
+    font-weight: 800;
+    font-size: 1.5rem;
+    line-height: 1.1;
+  }
+  .page-sector .svc-badge {
+    text-transform: none;
+    letter-spacing: 0.04em;
+  }
+  .page-sector .svc-btn {
+    justify-self: start;
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+  .page-sector .svc-card:hover .svc-btn {
+    background: var(--lc-accent-tint);
+  }
+
+  /* Демо-карточка */
+  .page-sector .demo-card {
+    max-width: 640px;
+    margin-inline: auto;
+  }
+  .page-sector .demo-list {
+    margin: 0 0 8px;
+    padding-left: 20px;
+    display: grid;
+    gap: 8px;
+    font-size: 0.95rem;
+  }
+  .page-sector .demo-disclaimer {
+    font-size: 0.8rem;
+    color: var(--lc-ink-soft);
+    margin: 14px 0 18px;
+    padding-top: 12px;
+    border-top: 1px solid var(--lc-line);
+  }
+
+  /* Сводная таблица цен */
+  .page-sector .table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--lc-line);
+    border-radius: var(--lc-radius-card);
+  }
+  .page-sector table.lc {
+    min-width: 720px;
+  }
+  .page-sector table.lc td a {
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .page-sector table.lc td a:hover {
+    text-decoration: underline;
+  }
+  .page-sector table.lc tbody tr:last-child td {
+    border-bottom: 0;
+  }
+</style>

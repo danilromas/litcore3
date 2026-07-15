@@ -1,0 +1,35 @@
+---
+/** Поле формы: label всегда (не плейсхолдер), подсказка — .hint. */
+interface Props {
+  label: string;
+  name: string;
+  id?: string;
+  type?: astroHTML.JSX.HTMLInputTypeAttribute; // 'text' | 'email' | 'tel' | …
+  textarea?: boolean;
+  required?: boolean;
+  hint?: string;
+  autocomplete?: string;
+  rows?: number;
+}
+const {
+  label,
+  name,
+  id = `f-${name}`,
+  type = 'text',
+  textarea = false,
+  required = false,
+  hint,
+  autocomplete,
+  rows = 4,
+} = Astro.props;
+---
+
+<div class="field">
+  <label for={id}>{label}</label>
+  {textarea ? (
+    <textarea id={id} name={name} rows={rows} required={required} autocomplete={autocomplete}></textarea>
+  ) : (
+    <input id={id} type={type} name={name} required={required} autocomplete={autocomplete} />
+  )}
+  {hint && <span class="hint">{hint}</span>}
+</div>

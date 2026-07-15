@@ -1,0 +1,12 @@
+---
+/** Тёмная граф-вставка «Филамент»: секция с .lc-dark (максимум одна на страницу). */
+interface Props {
+  ariaLabel?: string;
+  class?: string;
+}
+const { ariaLabel, class: className } = Astro.props;
+---
+
+<section class:list={['section', 'lc-dark', className]} aria-label={ariaLabel}>
+  <slot />
+</section>

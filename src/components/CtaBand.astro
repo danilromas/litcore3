@@ -1,0 +1,21 @@
+---
+/** CTA-полоса: чернильная плашка, одно действие. Заголовок — слот (h2.display c .accent-word). */
+interface Props {
+  cta: { label: string; href: string };
+  /** Мелкая mono-строка под кнопкой, напр. «Respuesta hoy · ES / RU / EN» */
+  note?: string;
+}
+const { cta, note } = Astro.props;
+---
+
+<div class="cta-band">
+  <slot />
+  {note ? (
+    <div>
+      <a class="btn btn--primary btn--lg" href={cta.href}>{cta.label}</a>
+      <p class="mono" style="margin:10px 0 0">{note}</p>
+    </div>
+  ) : (
+    <a class="btn btn--primary btn--lg" href={cta.href}>{cta.label}</a>
+  )}
+</div>

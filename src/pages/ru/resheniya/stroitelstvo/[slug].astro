@@ -1,0 +1,31 @@
+---
+/** RU — под-страницы 14 услуг направления «Строительство и ремонт». */
+import Layout from '../../../../layouts/Layout.astro';
+import SchemaOrg from '../../../../components/seo/SchemaOrg.astro';
+import ServicePage from '../../../../components/sector/ServicePage.astro';
+import { sectorServiceSchema } from '../../../../lib/sector-schema';
+import { ALL_SERVICES, serviceAlternates } from '../../../../data/sectores/construccion';
+import type { SectorService } from '../../../../data/sectores/types';
+
+export function getStaticPaths() {
+  return ALL_SERVICES.map((svc) => ({ params: { slug: svc.slug.ru }, props: { svc } }));
+}
+
+interface Props {
+  svc: SectorService;
+}
+const { svc } = Astro.props;
+const alternates = serviceAlternates(svc);
+const c = svc.copy.ru;
+---
+
+<Layout
+  lang="ru"
+  title={c.seo.title}
+  description={c.seo.description}
+  path={alternates.ru}
+  alternates={alternates}
+>
+  <SchemaOrg slot="head" data={sectorServiceSchema('ru', svc)} />
+  <ServicePage lang="ru" svc={svc} />
+</Layout>

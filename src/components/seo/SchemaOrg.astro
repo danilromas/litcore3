@@ -1,0 +1,10 @@
+---
+/** JSON-LD в <head>: <SchemaOrg slot="head" data={[...]} /> */
+interface Props {
+  data: object | object[];
+}
+const { data } = Astro.props;
+const list = Array.isArray(data) ? data : [data];
+---
+
+{list.map((d) => <script type="application/ld+json" set:html={JSON.stringify(d)} />)}

@@ -1,0 +1,75 @@
+---
+/**
+ * P-legal: Uso de IA / transparencia (ES, добровольная — G3 аудита; AI Act art. 50,
+ * применяется с 02.08.2026). Текст — из аудит-пакета paginas_legales/6_aviso-ia.md.
+ * Бейдж «Estás hablando con IA» для живого чат-бота заготовлен в src/i18n/ui.ts
+ * (AI_BADGE) — показывать В САМОМ интерфейсе бота при запуске (G1). Только ES.
+ */
+import Layout from '../../layouts/Layout.astro';
+import Crumbs from '../../components/Crumbs.astro';
+import { OWNER, LEGAL_UPDATED_HUMAN } from '../../config/site';
+---
+
+<Layout
+  lang="es"
+  title="Uso de IA — transparencia | litcore.ai"
+  description="Cómo usa litcore.ai la inteligencia artificial: transparencia y supervisión humana, en línea con el Reglamento (UE) 2024/1689 (AI Act, art. 50)."
+  path="/es/uso-de-ia/"
+>
+  <section class="section section--tight">
+    <div class="container legal-page">
+      <Crumbs lang="es" items={[{ label: 'INICIO', href: '/es/' }, { label: 'USO DE IA' }]} />
+      <h1>Uso de inteligencia artificial</h1>
+      <p class="lead">Transparencia sobre cómo usamos la IA en nuestros servicios y en este sitio.</p>
+      <p class="mono small muted">Última actualización: {LEGAL_UPDATED_HUMAN.es}</p>
+
+      <p>
+        En litcore.ai usamos inteligencia artificial tanto en los servicios que prestamos como, en
+        su caso, en elementos de este sitio. Aplicamos un principio de <strong>transparencia y
+        supervisión humana</strong>, en línea con el <strong>Reglamento (UE) 2024/1689 (Reglamento
+        de IA)</strong>, cuyas obligaciones de transparencia (art. 50) son aplicables desde el{' '}
+        <strong>2 de agosto de 2026</strong>.
+      </p>
+
+      <h2>Cuándo interactúas con una IA</h2>
+      <ul>
+        <li>
+          Cuando ofrezcamos un <strong>asistente/chatbot o una demo interactiva</strong>, te
+          informaremos <strong>claramente de que estás interactuando con un sistema de IA y no con
+          una persona</strong>, en el propio punto de interacción (por ejemplo, «Estás hablando
+          con un asistente de IA»).
+        </li>
+        <li>
+          Nuestros bots funcionan <strong>bajo supervisión humana</strong>: puedes pedir hablar
+          con una persona.
+        </li>
+      </ul>
+
+      <h2>Contenido generado con IA</h2>
+      <ul>
+        <li>
+          Podemos usar IA para redactar borradores de contenido; <strong>el contenido publicado se
+          revisa por personas</strong>, que asumen la responsabilidad editorial.
+        </li>
+        <li>
+          Si publicamos <strong>imágenes, audio o vídeo realistas generados o manipulados con
+          IA</strong> (contenido que pudiera constituir un «deep fake»), lo <strong>indicaremos
+          como generado con IA</strong>.
+        </li>
+      </ul>
+
+      <h2>Supervisión humana y calidad</h2>
+      <p>
+        Las decisiones relevantes y los entregables se <strong>revisan por personas</strong> antes
+        de su uso. No tomamos decisiones automatizadas con efectos jurídicos sobre las personas
+        usuarias a través de este sitio.
+      </p>
+
+      <h2>Contacto</h2>
+      <p>
+        Para cualquier duda sobre nuestro uso de IA:{' '}
+        <a href={`mailto:${OWNER.email}`}>{OWNER.email}</a>.
+      </p>
+    </div>
+  </section>
+</Layout>

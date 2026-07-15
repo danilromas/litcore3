@@ -1,0 +1,26 @@
+---
+/**
+ * P-service: /es/gracias/ — страница после отправки формы. noIndex;
+ * из sitemap отфильтрована в astro.config.mjs. Без alternates (служебная).
+ */
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout
+  lang="es"
+  title="Gracias | litcore.ai"
+  description="Hemos recibido tu solicitud."
+  path="/es/gracias/"
+  noIndex={true}
+>
+  <section class="section">
+    <div class="container" style="text-align:center">
+      <p class="kicker">SOLICITUD RECIBIDA</p>
+      <h1 class="display">Gracias<span class="accent-word">.</span></h1>
+      <p class="lead" style="margin-inline:auto">
+        Hemos recibido tu solicitud — te respondemos hoy mismo.
+      </p>
+      <a class="btn btn--primary btn--lg" href="/es/">Volver al inicio</a>
+    </div>
+  </section>
+</Layout>

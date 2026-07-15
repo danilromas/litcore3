@@ -1,0 +1,21 @@
+---
+/** Шаги процесса: активный шаг — мотив-ядро вместо номера («разжигаем узкое место»). */
+import Core from './Core.astro';
+
+interface Props {
+  steps: { title: string; text: string }[];
+  /** Индекс активного шага; по умолчанию первый */
+  activeIndex?: number;
+}
+const { steps, activeIndex = 0 } = Astro.props;
+---
+
+<ol class="steps" style="list-style:none;margin:0;padding:0">
+  {steps.map((step, i) => (
+    <li class:list={['step', { 'is-active': i === activeIndex }]}>
+      <span class="dot">{i === activeIndex ? <Core sm /> : i + 1}</span>
+      <h4>{step.title}</h4>
+      <p>{step.text}</p>
+    </li>
+  ))}
+</ol>

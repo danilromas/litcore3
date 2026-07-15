@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.astro/
+screenshots/
+
+# Секреты — только в env Cloudflare Pages (H5 аудита)
+.env
+.env.*
+.dev.vars
+.wrangler/

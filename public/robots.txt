@@ -1,0 +1,6 @@
+# TODO-домен: https://litcore.ai — допущение (VERIFICATION §5), подтвердить перед продом.
+# Синхронизирован с astro.config.mjs `site` и src/config/site.ts SITE_URL.
+User-agent: *
+Allow: /
+
+Sitemap: https://litcore.ai/sitemap-index.xml

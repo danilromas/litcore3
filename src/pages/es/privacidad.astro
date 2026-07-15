@@ -1,0 +1,170 @@
+---
+/**
+ * P-legal: Política de privacidad (ES, RGPD art. 13 + LOPDGDD, модель AEPD).
+ * Текст — из аудит-пакета paginas_legales/2_politica-privacidad.md, заполнен данными
+ * владельца (B1–B3); трансграничная передача Cloudflare/США раскрыта: EU-US DPF
+ * (Реш. 2023/1795) + SCC (I1 аудита). Индексируется.
+ * ⚖️ Черновик юриста: финальная вычитка — испанский юрист/gestoría (human TODO).
+ */
+import Layout from '../../layouts/Layout.astro';
+import Crumbs from '../../components/Crumbs.astro';
+import { OWNER, LEGAL_UPDATED_HUMAN } from '../../config/site';
+import { ROUTES } from '../../lib/routes';
+---
+
+<Layout
+  lang="es"
+  title="Política de privacidad | litcore.ai"
+  description="Cómo litcore.ai trata los datos personales: responsable, finalidades, bases jurídicas, plazos, encargados, transferencias internacionales y tus derechos."
+  path="/es/privacidad/"
+  alternates={ROUTES.privacidad}
+>
+  <section class="section section--tight">
+    <div class="container legal-page">
+      <Crumbs lang="es" items={[{ label: 'INICIO', href: '/es/' }, { label: 'PRIVACIDAD' }]} />
+      <h1>Política de privacidad</h1>
+      <p class="lead">Cómo tratamos tus datos personales, con qué finalidad y qué derechos tienes.</p>
+      <p class="mono small muted">Última actualización: {LEGAL_UPDATED_HUMAN.es}</p>
+
+      <h2>1. Responsable del tratamiento</h2>
+      <ul>
+        <li><strong>Responsable:</strong> {OWNER.name} (autónoma)</li>
+        <li><strong>NIF:</strong> {OWNER.nif} · <strong>Domicilio:</strong> {OWNER.address}</li>
+        <li>
+          <strong>Correo de contacto en materia de datos:</strong>{' '}
+          <a href={`mailto:${OWNER.email}`}>{OWNER.email}</a> ·{' '}
+          <strong>Teléfono:</strong> <a href={OWNER.phoneHref}>{OWNER.phone}</a>
+        </li>
+        <li>
+          <strong>Delegado de Protección de Datos (DPD):</strong> no designado (no concurren los
+          supuestos del art. 37 RGPD ni del art. 34 LOPDGDD). Si en el futuro se realiza
+          tratamiento a gran escala o de categorías especiales, se reevaluará.
+        </li>
+      </ul>
+
+      <h2>2. ¿Qué datos tratamos y de dónde proceden?</h2>
+      <p>Tratamos los datos que nos facilitas directamente:</p>
+      <ul>
+        <li>
+          <strong>Formulario de contacto:</strong> nombre, email (o dato de contacto que indiques)
+          y la descripción del proceso o consulta que escribes. Pedimos el <strong>mínimo
+          imprescindible</strong>; te rogamos no incluir datos sensibles ni de terceros.
+        </li>
+        <li>
+          <strong>Mensajería (Telegram / WhatsApp / email):</strong> si nos escribes por estos
+          canales, tratamos los datos de la conversación para atenderte.
+        </li>
+        <li>
+          <strong>Datos técnicos mínimos:</strong> los estrictamente necesarios para servir el
+          sitio (ver <a href="/es/cookies/">Política de Cookies</a>). Actualmente{' '}
+          <strong>no usamos analítica ni cookies de terceros</strong>.
+        </li>
+      </ul>
+
+      <h2>3. Finalidad y base jurídica (art. 6 RGPD)</h2>
+      <table class="lc">
+        <thead>
+          <tr>
+            <th>Finalidad</th>
+            <th>Base jurídica</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Responder a tu consulta y preparar, en su caso, un presupuesto/servicio</td>
+            <td>
+              <strong>Medidas precontractuales a tu solicitud (art. 6.1.b)</strong> y/o{' '}
+              <strong>tu consentimiento (art. 6.1.a)</strong> al marcar la casilla del formulario
+            </td>
+          </tr>
+          <tr>
+            <td>Prestar el servicio contratado y su gestión/facturación</td>
+            <td>
+              <strong>Ejecución de contrato (art. 6.1.b)</strong> y obligaciones legales (art.
+              6.1.c)
+            </td>
+          </tr>
+          <tr>
+            <td>Envío de comunicaciones comerciales (solo si te suscribes)</td>
+            <td>
+              <strong>Tu consentimiento (art. 6.1.a)</strong> + art. 21 LSSI; puedes revocarlo en
+              cualquier momento
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        No usamos tus datos del formulario para marketing sin tu consentimiento separado.{' '}
+        <strong>No</strong> realizamos decisiones automatizadas con efectos jurídicos ni
+        elaboración de perfiles a partir del formulario.
+      </p>
+
+      <h2>4. Plazo de conservación</h2>
+      <p>
+        Conservamos tus datos durante el tiempo necesario para atender tu consulta y, si llega a
+        existir relación contractual, mientras dure y durante los plazos de prescripción legal
+        (fiscales y mercantiles). Si no llega a existir relación, suprimimos los datos
+        transcurridos <strong>12 meses</strong> desde el último contacto.
+      </p>
+
+      <h2>5. Destinatarios y encargados del tratamiento</h2>
+      <p>
+        No cedemos tus datos a terceros salvo obligación legal. Para prestar el servicio nos
+        apoyamos en proveedores que actúan como <strong>encargados del tratamiento</strong> (art.
+        28 RGPD, con contrato):
+      </p>
+      <ul>
+        <li>
+          <strong>Hosting / CDN / seguridad / procesado del formulario:</strong> Cloudflare, Inc.
+          (ver §6 — transferencia internacional). El formulario de contacto se procesa en la
+          infraestructura de Cloudflare y se entrega al buzón del titular.
+        </li>
+        <li>
+          <strong>Mensajería:</strong> Telegram / WhatsApp, si eliges esos canales (se rigen por
+          sus propias políticas de privacidad).
+        </li>
+      </ul>
+
+      <h2>6. Transferencias internacionales</h2>
+      <p>
+        El sitio se sirve a través de <strong>Cloudflare, Inc. (EE.&nbsp;UU.)</strong>. Estados
+        Unidos cuenta con <strong>decisión de adecuación</strong> de la Comisión Europea para
+        entidades certificadas en el <strong>Marco de Privacidad de Datos UE-EE.&nbsp;UU. (EU-US
+        Data Privacy Framework)</strong> — Decisión de Ejecución (UE) 2023/1795, de 10 de julio de
+        2023 (art. 45 RGPD). Cloudflare está <strong>certificada</strong> en dicho Marco; como
+        salvaguarda adicional, sus condiciones incluyen las <strong>Cláusulas Contractuales Tipo
+        (CCT/SCC, art. 46 RGPD)</strong>. Si usas Telegram o WhatsApp, esos servicios pueden
+        implicar transferencias regidas por sus propias garantías.
+      </p>
+
+      <h2>7. Tus derechos (arts. 15–22 RGPD)</h2>
+      <p>
+        Puedes ejercer, de forma <strong>gratuita</strong>, los derechos de{' '}
+        <strong>acceso, rectificación, supresión, limitación, oposición y portabilidad</strong>,
+        así como retirar tu consentimiento cuando esa sea la base (sin efecto retroactivo).
+        Escribe a <a href={`mailto:${OWNER.email}`}>{OWNER.email}</a> indicando el derecho que
+        ejercitas; responderemos en el plazo de <strong>un mes</strong> (ampliable a dos más si la
+        solicitud es compleja). Podemos pedirte que acredites tu identidad.
+      </p>
+      <p>
+        Si consideras que no hemos atendido correctamente tus derechos, puedes reclamar ante la{' '}
+        <strong>Agencia Española de Protección de Datos (AEPD)</strong> —{' '}
+        <a href="https://www.aepd.es" rel="noopener">www.aepd.es</a>, C/ Jorge Juan 6, 28001
+        Madrid.
+      </p>
+
+      <h2>8. Seguridad</h2>
+      <p>
+        Aplicamos medidas técnicas y organizativas apropiadas (art. 32 RGPD) para proteger tus
+        datos: cifrado en tránsito por HTTPS, minimización de datos, validación y protección
+        antispam en el formulario, y acceso restringido a la información.
+      </p>
+
+      <h2>9. Cambios</h2>
+      <p>
+        Podemos actualizar esta política por motivos legales o técnicos; publicaremos la versión
+        vigente en esta página.
+      </p>
+    </div>
+  </section>
+</Layout>

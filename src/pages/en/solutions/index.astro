@@ -1,0 +1,19 @@
+---
+/** EN — solutions hub (footer link; previously 404). */
+import Layout from '../../../layouts/Layout.astro';
+import SchemaOrg from '../../../components/seo/SchemaOrg.astro';
+import SectorsHub from '../../../components/sector/SectorsHub.astro';
+import { ROUTES } from '../../../lib/routes';
+import { breadcrumb } from '../../../lib/schema';
+---
+
+<Layout
+  lang="en"
+  title="Solutions by sector | litcore.ai"
+  description="AI automation by industry: construction and renovation, with more sectors coming. Concrete services with transparent 'from' pricing, configured for your business in Spain."
+  path={ROUTES.sectores.en!}
+  alternates={ROUTES.sectores}
+>
+  <SchemaOrg slot="head" data={breadcrumb([{ name: 'Solutions', path: ROUTES.sectores.en! }])} />
+  <SectorsHub lang="en" />
+</Layout>

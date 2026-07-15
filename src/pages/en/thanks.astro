@@ -1,0 +1,26 @@
+---
+/**
+ * P-service: /en/thanks/ — страница после отправки формы (EN). noIndex;
+ * из sitemap отфильтрована в astro.config.mjs. Без alternates (служебная).
+ */
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout
+  lang="en"
+  title="Thank you | litcore.ai"
+  description="We received your request."
+  path="/en/thanks/"
+  noIndex={true}
+>
+  <section class="section">
+    <div class="container" style="text-align:center">
+      <p class="kicker">REQUEST RECEIVED</p>
+      <h1 class="display">Thank you<span class="accent-word">.</span></h1>
+      <p class="lead" style="margin-inline:auto">
+        We received your request — we'll reply today.
+      </p>
+      <a class="btn btn--primary btn--lg" href="/en/">Back to home</a>
+    </div>
+  </section>
+</Layout>

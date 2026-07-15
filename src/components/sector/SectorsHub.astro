@@ -1,0 +1,140 @@
+---
+/**
+ * Хаб «Отрасли / Sectores / Solutions» — навесной индекс направлений.
+ * Закрывает 404 по ссылкам шапки/футера «Все отрасли» и даёт перелинковку.
+ * Карточки — только реально существующие лендинги (стройка ×3 языка,
+ * клиники — es/ru); остальные направления помечены «скоро», без ссылок.
+ */
+import Core from '../Core.astro';
+import type { Lang } from '../../config/site';
+import { ROUTES } from '../../lib/routes';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+
+interface HubCard {
+  title: string;
+  text: string;
+  href?: string;
+  badge?: string;
+}
+
+const COPY: Record<
+  Lang,
+  { kicker: string; h1Pre: string; h1Accent: string; lead: string; more: string; open: string; soon: string; cards: HubCard[] }
+> = {
+  es: {
+    kicker: 'Sectores',
+    h1Pre: 'Soluciones ',
+    h1Accent: 'por sector.',
+    lead: 'No vendemos «IA en general»: montamos servicios concretos para cada industria — con sus plantillas, su normativa y su idioma. Elija su sector.',
+    more: 'Próximamente: inmobiliarias, gestorías, clínicas dentales, hostelería y más sectores.',
+    open: 'Abrir el sector →',
+    soon: 'Próximamente',
+    cards: [
+      {
+        title: 'Construcción y reformas',
+        text: '14 servicios: presupuestos por capítulos, propuestas, bot de solicitudes 24/7, control de obra por fotos, CTE/LOE y más.',
+        href: ROUTES.construccion.es,
+      },
+      {
+        title: 'Clínicas y dental',
+        text: 'Bot de recepción: citas 24/7 por web y WhatsApp, recordatorios que reducen ausencias, respuestas en ES/RU.',
+        href: ROUTES.clinicas.es,
+      },
+    ],
+  },
+  ru: {
+    kicker: 'Отрасли',
+    h1Pre: 'Решения ',
+    h1Accent: 'по отраслям.',
+    lead: 'Мы не продаём «ИИ вообще»: собираем конкретные услуги под каждую индустрию — на ваших шаблонах, вашей нормативной базе и вашем языке. Выберите отрасль.',
+    more: 'Скоро: недвижимость, юристы и миграция, клиники и стоматология, HoReCa и другие направления.',
+    open: 'Открыть направление →',
+    soon: 'Скоро',
+    cards: [
+      {
+        title: 'Строительство и ремонт',
+        text: '14 услуг: сметы по капитулос, КП, бот заявок 24/7 на RU и ES, фото-контроль объекта, проверка CTE/LOE и другое.',
+        href: ROUTES.construccion.ru,
+      },
+      {
+        title: 'Медицина и стоматология',
+        text: 'Бот-администратор: запись 24/7, напоминания против неявок, ответы пациентам на RU и ES.',
+        href: ROUTES.clinicas.ru,
+      },
+    ],
+  },
+  en: {
+    kicker: 'Solutions',
+    h1Pre: 'Solutions ',
+    h1Accent: 'by sector.',
+    lead: 'We don’t sell "AI in general": we build concrete services for each industry — on your templates, your regulations and your language. Pick your sector.',
+    more: 'Coming soon: real estate, legal, clinics, hospitality and more sectors.',
+    open: 'Open the sector →',
+    soon: 'Coming soon',
+    cards: [
+      {
+        title: 'Construction & renovation',
+        text: '14 services: by-chapter estimates, proposals, a 24/7 lead bot in ES/RU, photo-based site control, CTE/LOE checks and more.',
+        href: ROUTES.construccion.en,
+      },
+    ],
+  },
+};
+
+const d = COPY[lang];
+---
+
+<div class="page-sectores-hub">
+  <section class="section hero" style="position:relative">
+    <div class="hero-decor" aria-hidden="true">
+      <div class="blob" data-plx="0.06" style="width:460px;height:460px;right:-160px;top:-140px"></div>
+      <span class="core" data-plx="0.14" style="--core-size:110px;position:absolute;right:10%;top:20%"><span class="orbit"></span></span>
+    </div>
+    <div class="container hero-content">
+      <p class="kicker"><Core sm />{d.kicker}</p>
+      <h1 class="display">{d.h1Pre}<span class="accent-word">{d.h1Accent}</span></h1>
+      <p class="lead">{d.lead}</p>
+      <div class="grid grid--2" style="margin-top:38px;max-width:920px">
+        {d.cards.map((card) => (
+          <a class="card hub-card reveal" href={card.href}>
+            <h3>{card.title}</h3>
+            <p class="muted">{card.text}</p>
+            <span class="hub-more">{d.open}</span>
+          </a>
+        ))}
+      </div>
+      <p class="small muted" style="margin-top:26px">{d.more}</p>
+    </div>
+  </section>
+</div>
+
+<style is:global>
+  .page-sectores-hub .hub-card {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: var(--lc-ink);
+    transition:
+      box-shadow var(--lc-dur-fast) var(--lc-ease),
+      border-color var(--lc-dur-fast) var(--lc-ease);
+  }
+  .page-sectores-hub .hub-card:hover {
+    color: var(--lc-ink);
+    border-color: var(--lc-accent);
+    box-shadow: var(--lc-shadow-lift);
+  }
+  .page-sectores-hub .hub-card p {
+    margin: 0 0 16px;
+    font-size: 0.94rem;
+  }
+  .page-sectores-hub .hub-more {
+    margin-top: auto;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--lc-accent-deep);
+  }
+</style>

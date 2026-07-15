@@ -1,0 +1,38 @@
+---
+/** Шапка по KIT-README: бренд с ядром, меню из i18n (RU — свой состав), язык, CTA. */
+import Core from './Core.astro';
+import { NAV, HEADER_CTA, HOME_HREF, NAV_ARIA } from '../i18n/ui';
+import type { Lang } from '../config/site';
+
+interface Props {
+  lang: Lang;
+  /** Путь текущей страницы — для aria-current в меню */
+  currentPath: string;
+  /** Пути языковых альтернатив; нет — переключатель ведёт на главную языка */
+  alternates?: Partial<Record<Lang, string>>;
+}
+const { lang, currentPath, alternates = {} } = Astro.props;
+
+// Активный пункт: currentPath начинается с href; берём самое длинное совпадение
+const active = NAV[lang]
+  .filter((item) => currentPath.startsWith(item.href))
+  .sort((a, b) => b.href.length - a.href.length)[0];
+
+const LANGS: Lang[] = ['es', 'ru', 'en'];
+const cta = HEADER_CTA[lang];
+---
+
+<header class="site-header"><div class="container nav">
+  <a class="brand" href={HOME_HREF[lang]}><Core sm text />litcore<span class="tld">.ai</span></a>
+  <nav class="nav-links" aria-label={NAV_ARIA[lang].main}>
+    {NAV[lang].map((item) => (
+      <a href={item.href} aria-current={item === active ? 'page' : undefined}>{item.label}</a>
+    ))}
+  </nav>
+  <div class="lang" aria-label={NAV_ARIA[lang].lang}>
+    {LANGS.map((l) => (
+      <a href={alternates[l] ?? HOME_HREF[l]} aria-current={l === lang ? 'true' : undefined}>{l.toUpperCase()}</a>
+    ))}
+  </div>
+  <a class="btn btn--primary" href={cta.href}>{cta.label}</a>
+</div></header>

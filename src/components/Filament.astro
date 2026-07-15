@@ -1,0 +1,128 @@
+---
+/**
+ * Секция «Филамент» — одинаковый интерактив на ES/RU/EN (меняется только копи).
+ */
+import '../styles/filament.css';
+import FilamentGraph from './filament/FilamentGraph';
+import { FILAMENT_NODES, SOLUTIONS, INDUSTRIES, filamentText, type FilamentLang } from '../data/filament';
+import { FILAMENT_UI, localizeHref, sectorGridFor } from '../data/filament-i18n';
+
+interface Props {
+  lang?: FilamentLang;
+  intro?: {
+    kicker?: string;
+    h2Html?: string;
+    text?: string;
+    hint?: string;
+  };
+}
+
+const { lang = 'es', intro = {} } = Astro.props;
+const ui = FILAMENT_UI[lang];
+const grid = sectorGridFor(lang);
+
+const defaults = {
+  es: {
+    kicker: 'El Filamento',
+    h2Html: 'Encontramos el cuello de botella. Y lo <span class="accent-word">encendemos.</span>',
+    text: 'Cada negocio tiene un proceso que frena el dinero: llamadas perdidas, presupuestos lentos, facturas tecleadas a mano. Elige tu sector en el mapa y mira qué automatizamos primero — en semanas, no en meses.',
+  },
+  ru: {
+    kicker: 'Филамент',
+    h2Html: 'Находим узкое место. И <span class="accent-word">зажигаем.</span>',
+    text: 'В каждом бизнесе есть процесс, который тормозит деньги: потерянные звонки, медленные сметы, счета вручную. Выберите отрасль на карте — увидите, что автоматизируем первым.',
+  },
+  en: {
+    kicker: 'Filament',
+    h2Html: 'We find the bottleneck. Then we <span class="accent-word">ignite</span> it.',
+    text: 'Every business has a process that stalls cash: missed calls, slow quotes, invoices typed by hand. Pick your industry on the map and see what we automate first.',
+  },
+} as const;
+
+const d = defaults[lang];
+const kicker = intro.kicker ?? d.kicker;
+const h2Html = intro.h2Html ?? d.h2Html;
+const text = intro.text ?? d.text;
+const hint = intro.hint ?? ui.hint;
+---
+
+<section class="section lc-dark fil-section" id="filamento" aria-label={ui.aria}>
+  <div class="container">
+    <div class="fil-headrow">
+      <div>
+        <p class="kicker">
+          <span class="core core--sm"><span class="orbit"></span></span>
+          {kicker}
+        </p>
+        <h2 class="display noise-hover" set:html={h2Html} />
+        <p class="lead">{text}</p>
+        <p class="fil-hint">{hint}</p>
+      </div>
+    </div>
+
+    <div class="fil-scene">
+      <FilamentGraph client:visible nodes={FILAMENT_NODES} lang={lang} />
+    </div>
+
+    <div class="fil-acc" id="fil-acc">
+      <p class="mono fil-acc-h">{ui.solutions}</p>
+      {
+        SOLUTIONS.map((n) => (
+          <details class="faq">
+            <summary>{n.label[lang]}</summary>
+            <p>{filamentText(n.pain, lang)}</p>
+            <p>
+              <a class="btn btn--ghost" href={localizeHref(n.href, lang)}>
+                {ui.goSolution}
+              </a>
+            </p>
+          </details>
+        ))
+      }
+
+      <p class="mono fil-acc-h">{ui.sectors}</p>
+      {
+        INDUSTRIES.map((n) => (
+          <details class="faq">
+            <summary>{n.label[lang]}</summary>
+            <p>{filamentText(n.pain, lang)}</p>
+            <p>
+              <a class="btn btn--ghost" href={localizeHref(n.href, lang)}>
+                {ui.goSector}
+              </a>
+            </p>
+          </details>
+        ))
+      }
+    </div>
+
+    <div class="fil-foot">
+      <p class="fil-legend" aria-hidden="true">
+        <span class="l-sol"><i></i>{ui.legendSol}</span>
+        <span class="l-ind"><i></i>{ui.legendInd}</span>
+        <span class="l-dim"><i></i>{ui.legendDim}</span>
+      </p>
+      <p class="fil-plaque">
+        <span class="core" aria-hidden="true"><span class="orbit"></span></span>
+        {ui.plaque}
+      </p>
+    </div>
+  </div>
+
+  <noscript>
+    <style is:inline>
+      .fil-scene{display:none!important;min-height:0!important}
+      .fil-acc{display:block!important}
+    </style>
+  </noscript>
+</section>
+
+<section class="section section--tight">
+  <div class="container">
+    <p class="kicker">{ui.navKicker}</p>
+    <h2 class="display">{ui.navH2}</h2>
+    <nav class="sector-grid" aria-label={ui.navAria}>
+      {grid.map((s) => <a href={s.href}>{s.label}</a>)}
+    </nav>
+  </div>
+</section>

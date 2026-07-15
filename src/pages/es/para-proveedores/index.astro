@@ -1,0 +1,219 @@
+---
+/**
+ * P07 ES — «Para proveedores» (сегмент PROVIDER).
+ * Тексты — из content/proveedores/es.md, кит и раскладка — 1:1 по RU-макету dlya-postavshchikov.html
+ * (тот же P07; ES — НЕ зеркало RU: канал WhatsApp первым).
+ */
+import Layout from '../../../layouts/Layout.astro';
+import Core from '../../../components/Core.astro';
+import Crumbs from '../../../components/Crumbs.astro';
+import Steps from '../../../components/Steps.astro';
+import Faq from '../../../components/Faq.astro';
+import DarkSection from '../../../components/DarkSection.astro';
+import SchemaOrg from '../../../components/seo/SchemaOrg.astro';
+import { ROUTES } from '../../../lib/routes';
+import { faqPage, breadcrumb } from '../../../lib/schema';
+import { PROVEEDORES_ES as d } from '../../../data/proveedores';
+
+const path = ROUTES.proveedores.es!;
+const alternates = ROUTES.proveedores;
+---
+
+<Layout
+  lang="es"
+  title={d.seo.title}
+  description={d.seo.description}
+  path={path}
+  alternates={alternates}
+>
+  <SchemaOrg slot="head" data={[breadcrumb(d.crumbsSchema), faqPage(d.faq.items)]} />
+
+  <div class="page-proveedores">
+    <!-- HERO -->
+    <section class="section hero" style="position:relative">
+      <div class="hero-decor" aria-hidden="true">
+        <div class="blob" data-plx="0.06" style="width:520px;height:520px;right:-140px;top:-120px"></div>
+        <span class="core" data-plx="0.16" style="--core-size:120px;position:absolute;right:12%;top:22%"><span class="orbit"></span></span>
+      </div>
+      <div class="container hero-content">
+        <Crumbs items={d.crumbs} lang="es" />
+        <h1 class="display">{d.hero.h1Pre}<span class="accent-word">{d.hero.h1Accent}</span></h1>
+        <p class="lead">{d.hero.lead}</p>
+        <div class="tag-row">
+          {/* TODO: enlace wa.me real (WHATSAPP_URL в src/config/site.ts = null) — пока фолбэк /es/contacto/ */}
+          <a class="btn btn--primary btn--lg" href={d.hero.ctaPrimary.href}>{d.hero.ctaPrimary.label}</a>
+          <a class="btn btn--ghost btn--lg" href={d.hero.ctaSecondary.href}>{d.hero.ctaSecondary.label}</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- DOLORES -->
+    <section class="section section--alt">
+      <div class="container">
+        <p class="kicker"><Core sm />{d.pains.kicker}</p>
+        <h2 class="display">{d.pains.h2}</h2>
+        <div class="grid grid--3" style="margin-top:40px">
+          {d.pains.cards.map((card) => (
+            <article class="card reveal">
+              <p class="mono muted">{card.tag}</p>
+              <h3>{card.title}</h3>
+              <p class="muted">{card.text}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- PAQUETE DE SOLUCIONES -->
+    <section class="section">
+      <div class="container">
+        <p class="kicker"><Core sm />{d.pack.kicker}</p>
+        <h2 class="display">{d.pack.h2}</h2>
+        <p class="lead">{d.pack.lead}</p>
+        <div class="grid grid--3" style="margin-top:40px">
+          {d.pack.cards.map((card) => (
+            <article class="card reveal">
+              <p class="mono muted">{card.tag}</p>
+              <h3>{card.title}</h3>
+              <p class="muted">{card.text}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- CÓMO TRABAJAMOS -->
+    <section class="section section--tight section--alt">
+      <div class="container">
+        <h2 class="display">{d.steps.h2}</h2>
+        <div style="margin-top:40px">
+          <Steps steps={d.steps.items} />
+        </div>
+      </div>
+    </section>
+
+    <!-- INSERTO OSCURO: CUELLO DE BOTELLA -->
+    <DarkSection class="section--tight">
+      <div class="container">
+        <p class="kicker"><Core sm />{d.dark.kicker}</p>
+        <h2 class="display">{d.dark.h2}</h2>
+        <p class="lead">{d.dark.lead}</p>
+        <div class="node-line" aria-hidden="true">
+          <span class="node"></span><span class="link"></span>
+          <span class="node"></span><span class="link"></span>
+          <span class="node node--ignite"></span><span class="link"></span>
+          <span class="node"></span>
+        </div>
+        <p class="mono node-caption">{d.dark.caption}</p>
+      </div>
+    </DarkSection>
+
+    <!-- TEASER DE PRECIOS -->
+    <section class="section">
+      <div class="container teaser">
+        <div>
+          <h2 class="display">{d.teaser.h2}</h2>
+          <p><a href={d.teaser.allPrices.href}>{d.teaser.allPrices.label}</a></p>
+        </div>
+        {/* Карточка 1:1 по RU-макету: обычный .price-card с primary-CTA */}
+        <div class="price-card reveal">
+          <span class="plan">{d.teaser.plan.plan}</span>
+          <div class="price">{d.teaser.plan.price} <span class="cur">{d.teaser.plan.cur}</span></div>
+          <span class="price-note">{d.teaser.plan.note}</span>
+          <ul>
+            {d.teaser.plan.items.map((item) => <li>{item}</li>)}
+          </ul>
+          <a class="btn btn--primary" href={d.teaser.plan.cta.href}>{d.teaser.plan.cta.label}</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section section--tight section--alt">
+      <div class="container" style="max-width:820px">
+        <h2 class="display">{d.faq.h2}</h2>
+        {d.faq.items.map((item) => (
+          <Faq q={item.q}>
+            <p>{item.a}</p>
+          </Faq>
+        ))}
+      </div>
+    </section>
+
+    <!-- BANDA CTA -->
+    <section class="section section--tight">
+      <div class="container">
+        <div class="cta-band">
+          <h2 class="display">
+            {d.ctaBand.h2Pre}<span class="accent-word">{d.ctaBand.h2Accent}</span>
+          </h2>
+          <div class="tag-row">
+            <a class="btn btn--primary btn--lg" href={d.ctaBand.primary.href}>{d.ctaBand.primary.label}</a>
+            <a
+              class="btn btn--ghost btn--lg"
+              style="color:var(--lc-bg);border-color:color-mix(in srgb,var(--lc-bg) 40%,transparent)"
+              href={d.ctaBand.ghost.href}>{d.ctaBand.ghost.label}</a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</Layout>
+
+<style is:global>
+  /* — специфика страницы P07 (из <style id="page"> dlya-postavshchikov.html, префикс .page-proveedores) — */
+  /* узел-«узкое место»: тусклая цепочка, разжигающееся звено */
+  .page-proveedores .node-line {
+    display: flex;
+    align-items: center;
+    max-width: 520px;
+    margin-top: 28px;
+  }
+  .page-proveedores .node-line .node {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--lc-node-dim);
+    flex: none;
+  }
+  .page-proveedores .node-line .link {
+    flex: 1;
+    height: 1.5px;
+    background: var(--lc-canvas-line);
+  }
+  .page-proveedores .node-line .node--ignite {
+    background: var(--lc-accent);
+    box-shadow: 0 0 18px rgba(226, 58, 46, 0.8);
+    animation: lc-ignite 2.6s var(--lc-ease) infinite alternate;
+  }
+  @keyframes lc-ignite {
+    from {
+      box-shadow: 0 0 6px rgba(226, 58, 46, 0.35);
+    }
+    to {
+      box-shadow: 0 0 26px rgba(226, 58, 46, 0.95);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .page-proveedores .node-line .node--ignite {
+      animation: none;
+    }
+  }
+  .page-proveedores .node-caption {
+    margin-top: 14px;
+    color: var(--lc-canvas-muted);
+  }
+  /* тизер тарифа: карточка + текст рядом */
+  .page-proveedores .teaser {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 40px;
+    align-items: center;
+  }
+  @media (max-width: 860px) {
+    .page-proveedores .teaser {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

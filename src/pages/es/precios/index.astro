@@ -1,0 +1,147 @@
+---
+/**
+ * P22 — Precios ES (/es/precios/). Разметка 1:1 из design-pack/pages/precios.html.
+ * Копи — src/data/precios.ts. Цены — канон (Start desde 300 € / Negocio desde 1 500 € /
+ * Núcleo a medida); гранты — честный комплаенс (не гарантия).
+ */
+import Layout from '../../../layouts/Layout.astro';
+import Crumbs from '../../../components/Crumbs.astro';
+import PriceCard from '../../../components/PriceCard.astro';
+import Faq from '../../../components/Faq.astro';
+import Core from '../../../components/Core.astro';
+import SchemaOrg from '../../../components/seo/SchemaOrg.astro';
+import { ROUTES } from '../../../lib/routes';
+import { breadcrumb, faqPage } from '../../../lib/schema';
+import { PRECIOS } from '../../../data/precios';
+
+const t = PRECIOS.es;
+---
+
+<Layout
+  lang="es"
+  title={t.seo.title}
+  description={t.seo.description}
+  path={ROUTES.precios.es!}
+  alternates={ROUTES.precios}
+>
+  <SchemaOrg
+    slot="head"
+    data={[
+      breadcrumb([
+        { name: 'Inicio', path: '/es/' },
+        { name: 'Precios', path: ROUTES.precios.es! },
+      ]),
+      faqPage(t.faq.items),
+    ]}
+  />
+
+  <div class="page-precios">
+    <!-- ГЕРОЙ (компакт) -->
+    <section class="section section--tight hero" style="position:relative">
+      <div class="hero-decor" aria-hidden="true">
+        <div class="blob" data-plx="0.06" style="width:420px;height:420px;right:-120px;top:-140px"></div>
+      </div>
+      <div class="container hero-content">
+        <Crumbs items={t.crumbs} lang="es" />
+        <h1 class="display" set:html={t.hero.h1Html} />
+        <p class="lead">{t.hero.lead}</p>
+      </div>
+    </section>
+
+    <!-- ПАКЕТЫ -->
+    <section class="section section--tight">
+      <div class="container">
+        <div class="grid grid--3" style="align-items:stretch">
+          {t.cards.map((card) => (
+            <div class="reveal" style="display:grid">
+              <PriceCard
+                plan={card.plan}
+                price={card.price}
+                cur={card.cur}
+                note={card.note}
+                items={card.items}
+                cta={card.cta}
+                featured={card.featured}
+                recommendLabel={t.recommendLabel}
+              />
+            </div>
+          ))}
+        </div>
+        <p class="muted small" style="margin-top:18px">{t.taxNote}</p>
+      </div>
+    </section>
+
+    <!-- СРАВНЕНИЕ -->
+    <section class="section section--alt">
+      <div class="container">
+        <h2 class="display">{t.table.h2}</h2>
+        <div class="table-wrap" style="margin-top:32px">
+          <table class="lc">
+            <thead>
+              <tr>{t.table.head.map((h) => <th>{h}</th>)}</tr>
+            </thead>
+            <tbody>
+              {t.table.rows.map((row) => (
+                <tr>{row.map((cell) => <td>{cell}</td>)}</tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p class="muted small" style="margin-top:18px">{t.table.foot}</p>
+      </div>
+    </section>
+
+    <!-- ГРАНТЫ (честно: проверка, не гарантия) -->
+    <section class="section section--tight">
+      <div class="container">
+        <div class="card">
+          <p class="kicker"><Core sm />{t.grants.kicker}</p>
+          <h2 class="display" style="font-size:var(--lc-size-h3)">{t.grants.h2}</h2>
+          <p class="muted">{t.grants.text}</p>
+          <div class="stamps">
+            {t.grants.stamps.map((s) => <span class="badge badge--tint">{s}</span>)}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section section--tight section--alt">
+      <div class="container" style="max-width:820px">
+        <h2 class="display">{t.faq.h2}</h2>
+        {t.faq.items.map((item) => (
+          <Faq q={item.q}>
+            <p>{item.a}</p>
+          </Faq>
+        ))}
+      </div>
+    </section>
+
+    <!-- CTA-ПОЛОСА -->
+    <section class="section section--tight">
+      <div class="container">
+        <div class="cta-band">
+          <h2 class="display" set:html={t.cta.h2Html} />
+          <div class="tag-row">
+            <a class="btn btn--primary btn--lg" href={t.cta.primary.href}>{t.cta.primary.label}</a>
+            <a
+              class="btn btn--ghost btn--lg"
+              style="color:var(--lc-bg);border-color:color-mix(in srgb,var(--lc-bg) 40%,transparent)"
+              href={t.cta.secondary.href}>{t.cta.secondary.label}</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</Layout>
+
+<style is:global>
+  /* — страничная специфика цен (из precios.html <style id="page">), префикс .page-precios — */
+  .page-precios table.lc td,
+  .page-precios .price-card .price{font-variant-numeric:tabular-nums}
+  .page-precios table.lc th[scope="row"],
+  .page-precios table.lc td:first-child{font-weight:600}
+  .page-precios .table-wrap{overflow-x:auto}
+  /* грант-штампы */
+  .page-precios .stamps{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+</style>

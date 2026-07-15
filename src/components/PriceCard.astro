@@ -1,0 +1,26 @@
+---
+/** Карточка тарифа по KIT-README «Тариф»: featured — рамка accent + «Recomendado» + primary-CTA. */
+interface Props {
+  plan: string;
+  price: string;
+  /** Валюта; не задана — цена «a medida» без .cur */
+  cur?: string;
+  note: string;
+  items: string[];
+  cta: { label: string; href: string };
+  featured?: boolean;
+  recommendLabel?: string;
+}
+const { plan, price, cur, note, items, cta, featured = false, recommendLabel } = Astro.props;
+---
+
+<div class:list={['price-card', { 'price-card--featured': featured }]}>
+  {featured && recommendLabel && <span class="badge badge--accent recommend">{recommendLabel}</span>}
+  <span class="plan">{plan}</span>
+  <div class="price">{price} {cur && <span class="cur">{cur}</span>}</div>
+  <span class="price-note">{note}</span>
+  <ul>
+    {items.map((item) => <li>{item}</li>)}
+  </ul>
+  <a class:list={['btn', featured ? 'btn--primary' : 'btn--ghost']} href={cta.href}>{cta.label}</a>
+</div>

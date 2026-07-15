@@ -1,0 +1,93 @@
+---
+/**
+ * P-legal: Terms & conditions (EN). Новая страница (E1 аудита) — резюме-перевод
+ * испанских Términos y Condiciones (испанская версия приоритетна).
+ */
+import Layout from '../../layouts/Layout.astro';
+import Crumbs from '../../components/Crumbs.astro';
+import { OWNER, LEGAL_UPDATED_HUMAN } from '../../config/site';
+import { ROUTES } from '../../lib/routes';
+---
+
+<Layout
+  lang="en"
+  title="Terms and conditions | litcore.ai"
+  description="Terms for litcore.ai services: how contracts are formed, prices and payment, intellectual property, liability and consumer information."
+  path="/en/terms/"
+  alternates={ROUTES.terminos}
+>
+  <section class="section section--tight">
+    <div class="container legal-page">
+      <Crumbs lang="en" items={[{ label: 'HOME', href: '/en/' }, { label: 'TERMS' }]} />
+      <h1>Terms and conditions</h1>
+      <p class="lead">How litcore.ai services are contracted and which conditions apply.</p>
+      <p class="mono small muted">Last updated: {LEGAL_UPDATED_HUMAN.en}</p>
+
+      <p class="muted small">
+        This is an English summary. The legally binding version is the Spanish{' '}
+        <a href="/es/terminos/">Términos y condiciones</a>.
+      </p>
+
+      <h2>1. Provider</h2>
+      <p>
+        Full details are in the <a href="/en/legal-notice/">Legal notice</a>. Provider:{' '}
+        {OWNER.name} (sole trader — autónoma), NIF {OWNER.nif}. Contact:{' '}
+        <a href={`mailto:${OWNER.email}`}>{OWNER.email}</a>.
+      </p>
+
+      <h2>2. Services and contract formation</h2>
+      <p>
+        Service descriptions on the site are <strong>indicative</strong>. The specific scope,
+        deliverables, timeline and price of each project are set in an{' '}
+        <strong>individual proposal/quote</strong>, which prevails over the general site content.
+        Process: diagnosis → proposal → your written acceptance (contract formation) → delivery
+        and, where applicable, subscription/support.
+      </p>
+
+      <h2>3. Prices and payment</h2>
+      <p>
+        “From…” prices on the site are indicative until a firm quote. Unless stated otherwise,
+        prices <strong>exclude taxes</strong>; the applicable <strong>VAT (IVA)</strong> is added.
+        Payment terms and subscription periodicity are set in each proposal.
+      </p>
+
+      <h2>4. Intellectual property</h2>
+      <p>
+        Ownership and/or licensing of deliverables (code, configurations, content) are defined in
+        each proposal. Unless agreed otherwise, litcore.ai retains its know-how, tools and
+        reusable components.
+      </p>
+
+      <h2>5. Warranties and liability</h2>
+      <p>
+        Services are provided with professional diligence. To the extent permitted by law,
+        liability for indirect damages and loss of profit is excluded; limits and SLAs, if any,
+        are set in the proposal. Mandatory consumer rights are not affected.
+      </p>
+
+      <h2>6. Personal data</h2>
+      <p>
+        Data processing is governed by the <a href="/en/privacy/">Privacy policy</a>. Where
+        litcore.ai processes personal data on the client's behalf (e.g. operating a bot or CRM), a
+        data-processing agreement (GDPR art. 28) is signed.
+      </p>
+
+      <h2>7. Consumers and distance contracts</h2>
+      <p>
+        These terms are aimed primarily at <strong>businesses and sole traders (B2B)</strong>, to
+        whom the consumer regime does not apply. If the client is a <strong>consumer</strong>{' '}
+        contracting at a distance, Spanish law RDL 1/2007 applies: mandatory pre-contractual
+        information and a <strong>14-day right of withdrawal</strong> (with the art. 103
+        exceptions, including services fully performed with your prior express consent and
+        custom-made work). To withdraw, write to{' '}
+        <a href={`mailto:${OWNER.email}`}>{OWNER.email}</a>.
+      </p>
+
+      <h2>8. Governing law</h2>
+      <p>
+        Spanish law applies. For consumers, the mandatory forum of the consumer's domicile
+        applies.
+      </p>
+    </div>
+  </section>
+</Layout>

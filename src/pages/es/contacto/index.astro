@@ -1,0 +1,121 @@
+---
+/**
+ * P45 — Contacto ES (/es/contacto/). Разметка 1:1 из design-pack/pages/contacto.html.
+ * Пробелы (VERIFICATION): endpoint формы и WhatsApp — из src/config/site.ts (null → '#' + TODO).
+ * Textarea и чекбокс приватности — вручную (Field не поддерживает placeholder/checkbox).
+ */
+import Layout from '../../../layouts/Layout.astro';
+import Crumbs from '../../../components/Crumbs.astro';
+import Field from '../../../components/Field.astro';
+import SchemaOrg from '../../../components/seo/SchemaOrg.astro';
+import { ROUTES } from '../../../lib/routes';
+import { breadcrumb, localBusiness } from '../../../lib/schema';
+import { CONTACTO, CONTACT_EMAIL, TELEGRAM_URL } from '../../../data/contacto';
+import { FORM_ENDPOINT, WHATSAPP_URL, TURNSTILE_SITE_KEY } from '../../../config/site';
+
+const t = CONTACTO.es;
+
+/* Endpoint формы: Cloudflare Pages Function (functions/api/contact.js), redirect → /es/gracias/ */
+const formAction = FORM_ENDPOINT ?? '#';
+const waHref = WHATSAPP_URL ?? '#';
+
+const channelHref: Record<string, string> = {
+  whatsapp: waHref,
+  telegram: TELEGRAM_URL,
+  email: `mailto:${CONTACT_EMAIL}`,
+};
+---
+
+<Layout
+  lang="es"
+  title={t.seo.title}
+  description={t.seo.description}
+  path={ROUTES.contacto.es!}
+  alternates={ROUTES.contacto}
+>
+  <SchemaOrg
+    slot="head"
+    data={[
+      breadcrumb([
+        { name: 'Inicio', path: '/es/' },
+        { name: 'Contacto', path: ROUTES.contacto.es! },
+      ]),
+      localBusiness(),
+    ]}
+  />
+
+  <div class="page-contacto">
+    <!-- ГЕРОЙ (компакт) -->
+    <section class="section section--tight hero" style="position:relative">
+      <div class="hero-decor" aria-hidden="true">
+        <div class="blob" data-plx="0.06" style="width:380px;height:380px;right:-110px;top:-130px"></div>
+      </div>
+      <div class="container hero-content">
+        <Crumbs items={t.crumbs} lang="es" />
+        <h1 class="display" set:html={t.hero.h1Html} />
+        <p class="lead">{t.hero.lead}</p>
+      </div>
+    </section>
+
+    <!-- ФОРМА + КАНАЛЫ -->
+    <section class="section section--tight">
+      <div class="container contact-grid">
+        <!-- Форма -->
+        <div class="card">
+          <h2 style="font-size:var(--lc-size-h3)">{t.form.h2}</h2>
+          <p class="muted small">{t.form.intro}</p>
+          <form method="post" action={formAction}>
+            <!-- honeypot: скрыт от людей, виден ботам -->
+            <p class="hp" aria-hidden="true">
+              <label>{t.form.honeypotLabel}<input type="text" name="empresa_web" tabindex="-1" autocomplete="off" /></label>
+            </p>
+            <Field label={t.form.fields.name.label} name={t.form.fields.name.name} autocomplete="name" required />
+            <Field label={t.form.fields.email.label} name={t.form.fields.email.name} type="email" autocomplete="email" required />
+            <div class="field">
+              <label for="f-proceso">{t.form.fields.process.label}</label>
+              <textarea id="f-proceso" name={t.form.fields.process.name} rows="4" placeholder={t.form.fields.process.placeholder}></textarea>
+            </div>
+            <div class="field field--check">
+              <input id="f-privacidad" name="privacidad" type="checkbox" required />
+              <label for="f-privacidad" set:html={t.form.privacyHtml} />
+            </div>
+            <!-- Серверная часть: functions/api/contact.js (валидация + Turnstile + доставка) -->
+            <input type="hidden" name="lang" value="es" />
+            {TURNSTILE_SITE_KEY && <div class="cf-turnstile" data-sitekey={TURNSTILE_SITE_KEY}></div>}
+            <button class="btn btn--primary btn--lg" type="submit">{t.form.submit}</button>
+          </form>
+          {TURNSTILE_SITE_KEY && (
+            <script is:inline async defer src="https://challenges.cloudflare.com/turnstile/v0/api.js"></script>
+          )}
+        </div>
+
+        <!-- Каналы -->
+        <div class="channel-list">
+          {t.channels.map((ch) => (
+            <div class="card">
+              <p class="mono muted">{ch.mono}</p>
+              <h3>{ch.h3}</h3>
+              <p class="muted small">{ch.text}</p>
+              <a class="btn btn--ghost" href={channelHref[ch.cta.kind]}>{ch.cta.label}</a>
+            </div>
+          ))}
+          <p class="mono muted" style="margin:6px 0 0">{t.channelsNote}</p>
+        </div>
+      </div>
+    </section>
+  </div>
+</Layout>
+
+<style is:global>
+  /* — страничная специфика контактов (из contacto.html <style id="page">), префикс .page-contacto — */
+  /* двухколонник контактов */
+  .page-contacto .contact-grid{display:grid;grid-template-columns:1.15fr 1fr;gap:40px;align-items:start}
+  @media (max-width:860px){.page-contacto .contact-grid{grid-template-columns:1fr}}
+  /* чекбокс согласия */
+  .page-contacto .field--check{grid-template-columns:auto 1fr;align-items:start;gap:10px}
+  .page-contacto .field--check input{margin-top:4px;width:18px;height:18px;accent-color:var(--lc-accent-deep)}
+  .page-contacto .field--check label{font-weight:500;font-size:var(--lc-size-small);color:var(--lc-ink-soft)}
+  /* honeypot: скрыт от людей, виден ботам */
+  .page-contacto .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+  .page-contacto .channel-list{display:grid;gap:16px}
+</style>

@@ -1,0 +1,154 @@
+/* ============================================================
+   ФИЛАМЕНТ — секционные стили (перенос <style id="page"> из
+   graph/filament.html). Всё остальное — классы кита (kit.css).
+   Префикс fil-. Только переменные --lc-* из tokens.css; rgba —
+   от палитровых триплетов (как в прототипе), новых hex нет.
+   ============================================================ */
+
+/* ---------- Шапка секции на тёмном ---------- */
+.fil-section{position:relative;overflow:hidden}
+.fil-headrow{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;
+  flex-wrap:wrap;margin-bottom:clamp(24px,4vw,44px)}
+.fil-hint{color:var(--lc-canvas-muted);font-size:var(--lc-size-small);max-width:46ch;margin:0}
+
+/* ---------- Обёртка сцены (Astro): резервирует высоту до гидратации острова
+   (CLS = 0); на мобиле и при no-JS скрывается — остров возвращает null ---------- */
+.fil-scene{min-height:600px}
+
+/* ---------- Сцена графа (внутри острова) ---------- */
+.fil-wrap{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:28px;align-items:stretch}
+.fil-stage{position:relative;min-height:600px;border:1px solid var(--lc-canvas-line);
+  border-radius:var(--lc-radius-card);
+  /* свечение за ядром + «пыль» — только CSS-градиенты, без картинок */
+  background:
+    radial-gradient(closest-side at 50% 50%, rgba(139,140,255,.10), transparent 68%),
+    radial-gradient(circle at 18% 26%, rgba(99,225,255,.10) 0 1px, transparent 2.5px),
+    radial-gradient(circle at 82% 18%, rgba(99,225,255,.08) 0 1px, transparent 2.5px),
+    radial-gradient(circle at 12% 78%, rgba(139,140,255,.10) 0 1px, transparent 2.5px),
+    radial-gradient(circle at 88% 72%, rgba(99,225,255,.07) 0 1px, transparent 2.5px),
+    radial-gradient(circle at 62% 88%, rgba(139,140,255,.08) 0 1px, transparent 2.5px),
+    var(--lc-canvas)}
+
+/* Параллакс-слои глубины: рёбра+внешнее кольцо (0.04) и внутреннее кольцо (0.08).
+   Transform ставит framer-motion (useScroll+useTransform) внутри острова.
+   В DOM внутренний слой идёт ПЕРВЫМ (порядок Tab: решения → отрасли, spec §7);
+   z-index восстанавливает живопись прототипа: рёбра под точками решений. */
+.fil-layer{position:absolute;inset:0;pointer-events:none} /* клики — только по узлам */
+.fil-layer--in{z-index:2}
+.fil-layer .fil-node{pointer-events:auto}
+.fil-edges{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.fil-edge{fill:none;stroke-width:1.1;vector-effect:non-scaling-stroke;opacity:.55;
+  transition:opacity var(--lc-dur-base) var(--lc-ease),stroke-width var(--lc-dur-base) var(--lc-ease)}
+.fil-edge.hi{opacity:1;stroke-width:1.8}
+
+/* ---------- Ядро litcore (мотив кита, крупно; статично, без параллакса) ---------- */
+.fil-core{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  display:flex;flex-direction:column;align-items:center;gap:12px;pointer-events:none}
+.fil-core-lbl{color:var(--lc-glow-light);font-size:.72rem}
+
+/* ---------- Узлы (кнопки) ---------- */
+.fil-node{position:absolute;transform:translate(-50%,-50%);border:0;background:none;
+  padding:6px;margin:0;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:8px;
+  font-family:var(--lc-font-mono);font-size:.68rem;font-weight:500;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--lc-glow-light);border-radius:10px;
+  /* дрейф ±6px; длительность 12–16с задаётся инлайном через --dd */
+  animation:fil-drift var(--dd,14s) ease-in-out infinite alternate}
+.fil-node:nth-child(even){animation-name:fil-drift-b}
+.fil-node .lbl{max-width:120px;text-align:center;line-height:1.35;
+  text-shadow:0 1px 6px rgba(10,12,17,.9)}
+.fil-node .dot{width:14px;height:14px;border-radius:50%;background:var(--lc-glow-cyan);
+  box-shadow:0 0 10px rgba(99,225,255,.75),0 0 28px rgba(99,225,255,.30);
+  transition:transform var(--lc-dur-fast) var(--lc-ease),background var(--lc-dur-base) var(--lc-ease),
+    box-shadow var(--lc-dur-base) var(--lc-ease);position:relative}
+.fil-node--ind .dot{width:10px;height:10px;background:var(--lc-glow-indigo);
+  box-shadow:0 0 9px rgba(139,140,255,.75),0 0 24px rgba(139,140,255,.28)}
+.fil-node--ind{color:var(--lc-canvas-muted)}
+.fil-node:hover .dot,.fil-node:focus-visible .dot{transform:scale(1.4)}
+.fil-node:hover,.fil-node:focus-visible{color:var(--lc-glow-light)}
+.fil-node[aria-expanded="true"] .dot{transform:scale(1.4);
+  box-shadow:0 0 14px rgba(99,225,255,.9),0 0 40px rgba(99,225,255,.4)}
+
+/* «Узкое место» (Голдратт): тусклый узел с пульсирующим кольцом,
+   при hover/focus/клике «разжигается» до акцента */
+.fil-node--dim .dot{background:var(--lc-node-dim);box-shadow:none}
+.fil-node--dim .dot::after{content:"";position:absolute;inset:-7px;border-radius:50%;
+  border:1px solid rgba(232,163,61,.55);animation:fil-pulse 2.2s var(--lc-ease) infinite}
+.fil-node--dim:hover .dot,.fil-node--dim:focus-visible .dot,.fil-node--dim.is-lit .dot{
+  background:var(--lc-accent);
+  box-shadow:0 0 14px rgba(232,163,61,.85),0 0 38px rgba(232,163,61,.40)}
+.fil-node--dim.is-lit .dot::after{animation:none;border-color:rgba(232,163,61,.85)}
+
+@keyframes fil-drift{from{transform:translate(-50%,-50%)}to{transform:translate(-50%,-50%) translate(5px,-6px)}}
+@keyframes fil-drift-b{from{transform:translate(-50%,-50%)}to{transform:translate(-50%,-50%) translate(-6px,5px)}}
+@keyframes fil-pulse{0%{transform:scale(.75);opacity:.9}70%{transform:scale(1.6);opacity:0}100%{transform:scale(1.6);opacity:0}}
+
+/* ---------- Карточка сбоку (dialog) ---------- */
+.fil-aside{display:flex;flex-direction:column}
+.fil-aside>.card{position:sticky;top:84px;align-self:flex-start;width:100%;
+  display:flex;flex-direction:column;gap:12px}
+.fil-aside>.card[hidden]{display:none} /* hidden сильнее display:flex */
+.fil-card{position:relative}
+.fil-card:focus{outline:none}
+.fil-card .fil-tag{color:var(--lc-glow-cyan);margin:0 0 2px}
+.fil-card h3{color:var(--lc-glow-light);margin:0}
+.fil-card p{margin:0}
+.fil-card .btn{margin-top:10px;align-self:flex-start}
+.fil-close{position:absolute;top:14px;right:14px;width:34px;height:34px;border-radius:50%;
+  border:1px solid var(--lc-canvas-line);background:none;color:var(--lc-canvas-muted);
+  font-size:1.1rem;line-height:1;cursor:pointer}
+.fil-close:hover{color:var(--lc-glow-cyan);border-color:var(--lc-glow-cyan)}
+
+/* Плейсхолдер карточки до выбора узла */
+.fil-ph .fil-tag{color:var(--lc-glow-cyan);margin:0 0 2px}
+.fil-ph h3{color:var(--lc-glow-light);margin:0}
+
+/* ---------- Подвал секции: легенда + комплаенс-плашка в углу ---------- */
+.fil-foot{display:flex;justify-content:space-between;align-items:center;gap:18px;
+  flex-wrap:wrap;margin-top:22px}
+.fil-legend{display:flex;gap:18px;flex-wrap:wrap;color:var(--lc-canvas-muted);
+  font-family:var(--lc-font-mono);font-size:.68rem;letter-spacing:.09em;text-transform:uppercase}
+.fil-legend i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px;vertical-align:-1px}
+.fil-legend .l-sol i{background:var(--lc-glow-cyan);box-shadow:0 0 6px rgba(99,225,255,.7)}
+.fil-legend .l-ind i{background:var(--lc-glow-indigo);box-shadow:0 0 6px rgba(139,140,255,.7)}
+.fil-legend .l-dim i{background:var(--lc-node-dim);box-shadow:0 0 0 3px rgba(232,163,61,.25)}
+.fil-plaque{display:inline-flex;align-items:center;gap:10px;margin:0;padding:8px 14px;
+  border:1px solid var(--lc-canvas-line);border-radius:var(--lc-radius-pill);
+  color:var(--lc-canvas-muted);font-family:var(--lc-font-mono);font-size:.66rem;
+  letter-spacing:.1em;text-transform:uppercase}
+.fil-plaque .core{--core-size:14px}
+.fil-plaque .core::before{border-width:1px}
+
+/* ---------- Мобильный фолбэк: тёмный аккордеон вместо холста ---------- */
+.fil-acc{display:none;max-width:640px}
+.fil-acc-h{color:var(--lc-glow-cyan);margin:26px 0 4px}
+.fil-acc details.faq p{color:var(--lc-canvas-muted)}
+.fil-acc details.faq summary{color:var(--lc-glow-light)}
+.fil-acc details.faq summary::after{color:var(--lc-glow-cyan)}
+.fil-acc .btn{margin-bottom:14px}
+@media (max-width:767px){
+  .fil-scene{display:none;min-height:0}
+  .fil-acc{display:block}
+}
+
+/* ---------- Reduced motion: статичная схема (spec §6, матрица reduce).
+   Дрейф и пульс — OFF; пульс-кольцо остаётся статично видимым, узел находим.
+   Орбиту ядра и hover/focus-transition гасит/оставляет кит.
+   .fil-reduced ставит остров по useReducedMotion() — тот же эффект для
+   динамической смены настройки без перезагрузки. ---------- */
+@media (prefers-reduced-motion:reduce){
+  .fil-node{animation:none}
+  .fil-node--dim .dot::after{animation:none;transform:none;opacity:.9}
+}
+.fil-reduced .fil-node{animation:none}
+.fil-reduced .fil-node--dim .dot::after{animation:none;transform:none;opacity:.9}
+
+/* ---------- Светлый грид «Все отрасли» (SEO / параллельная навигация) ---------- */
+.sector-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+@media (max-width:960px){.sector-grid{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:640px){.sector-grid{grid-template-columns:repeat(2,1fr)}}
+.sector-grid a{display:flex;align-items:center;gap:10px;padding:16px 18px;
+  background:var(--lc-card);border:1px solid var(--lc-line);border-radius:var(--lc-radius-card);
+  color:var(--lc-ink);text-decoration:none;font-weight:600;font-size:.95rem;
+  transition:border-color var(--lc-dur-fast) var(--lc-ease),box-shadow var(--lc-dur-fast) var(--lc-ease)}
+.sector-grid a:hover{border-color:var(--lc-accent);box-shadow:var(--lc-shadow-soft);color:var(--lc-ink)}
+.sector-grid a::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--lc-accent);flex:none}

@@ -1,0 +1,12 @@
+---
+/** FAQ-аккордеон: нативный details без JS, «+/–» рисует кит. Ответ — в слот (<p>…</p>). */
+interface Props {
+  q: string;
+}
+const { q } = Astro.props;
+---
+
+<details class="faq">
+  <summary>{q}</summary>
+  <slot />
+</details>

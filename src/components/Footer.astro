@@ -1,0 +1,240 @@
+---
+/**
+ * Футер: 4 колонки (бренд+двери / услуги / отрасли / компания) + комплаенс-плашка.
+ * Контент — из design-pack/content/home/{es,ru,en}.md, секция «Footer». RU — НЕ зеркало ES.
+ * Легальные ссылки живут в строке комплаенса (как в md: «… · Legal: …»).
+ */
+import Core from './Core.astro';
+import { COMPLIANCE, HOME_HREF } from '../i18n/ui';
+import type { Lang } from '../config/site';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+
+type Link = { label: string; href: string };
+type Col = { title: string; links: Link[] };
+
+const FOOTER: Record<Lang, { brandText: string; doors: Link[]; cols: Col[]; legal: Link[] }> = {
+  es: {
+    brandText:
+      'Automatización de procesos con IA. Webs y apps como interfaz. Hecho en Asturias, para toda España.',
+    // «Puertas» из es.md: сегментные входы + дверь в RU-версию
+    doors: [
+      { label: 'Negocios locales', href: '/es/negocios/' },
+      { label: 'Para proveedores', href: '/es/para-proveedores/' },
+      { label: 'По-русски: боты и автоматизация →', href: '/ru/' },
+    ],
+    cols: [
+      {
+        title: 'Servicios',
+        links: [
+          { label: 'Automatización', href: '/es/servicios/automatizacion/' },
+          { label: 'Chatbot IA', href: '/es/servicios/chatbot-ia/' },
+          { label: 'Documentos con IA', href: '/es/servicios/documentos-ia/' },
+          { label: 'Software de gestión', href: '/es/servicios/software-gestion/' },
+          { label: 'Diseño web', href: '/es/servicios/diseno-web/' },
+          { label: 'Todos los servicios', href: '/es/servicios/' },
+        ],
+      },
+      {
+        title: 'Sectores',
+        links: [
+          { label: 'Clínicas', href: '/es/soluciones/clinicas/' },
+          { label: 'Inmobiliarias', href: '/es/soluciones/inmobiliarias/' },
+          { label: 'Gestorías', href: '/es/soluciones/gestorias/' },
+          { label: 'Construcción', href: '/es/soluciones/construccion/' },
+          { label: 'Restaurantes', href: '/es/soluciones/restaurantes/' },
+          { label: 'Todos los sectores', href: '/es/soluciones/' },
+        ],
+      },
+      {
+        title: 'Compañía',
+        links: [
+          { label: 'Demos', href: '/es/demos/' },
+          { label: 'Precios', href: '/es/precios/' },
+          { label: 'Casos (pilotos)', href: '/es/casos/' },
+          { label: 'Nosotros', href: '/es/nosotros/' },
+          { label: 'Blog', href: '/es/blog/' },
+          { label: 'Contacto', href: '/es/contacto/' },
+        ],
+      },
+    ],
+    // Легальные ссылки — по аудиту (A3, E1, C4): все правовые страницы + отзыв согласия cookies.
+    legal: [
+      { label: 'Aviso legal', href: '/es/aviso-legal/' },
+      { label: 'Privacidad', href: '/es/privacidad/' },
+      { label: 'Cookies', href: '/es/cookies/' },
+      { label: 'Términos', href: '/es/terminos/' },
+      { label: 'Accesibilidad', href: '/es/accesibilidad/' },
+      { label: 'Uso de IA', href: '/es/uso-de-ia/' },
+    ],
+  },
+  ru: {
+    brandText:
+      'Автоматизация бизнеса с ИИ в Испании. Сайты и приложения — как интерфейс. База — север Испании, Астурия; работаем по всей стране.',
+    // «Двери» из ru.md: релокантский вход, поставщики (1-й уровень), дверь в ES
+    doors: [
+      { label: 'Бизнес релоканта', href: '/ru/biznes-v-ispanii/' },
+      { label: 'Для поставщиков услуг', href: '/ru/dlya-postavshchikov/' },
+      { label: 'En español →', href: '/es/' },
+    ],
+    cols: [
+      {
+        title: 'Услуги',
+        links: [
+          { label: 'Чат-боты', href: '/ru/uslugi/chat-bot/' },
+          { label: 'Бизнес-софт', href: '/ru/uslugi/biznes-soft/' },
+          { label: 'Документы с ИИ', href: '/ru/uslugi/dokumenty-ii/' },
+          { label: 'Автоматизация', href: '/ru/uslugi/avtomatizaciya/' },
+          { label: 'Создание сайтов', href: '/ru/uslugi/sozdanie-saytov/' },
+          { label: 'Все услуги', href: '/ru/uslugi/' },
+        ],
+      },
+      {
+        title: 'Отрасли',
+        links: [
+          { label: 'Строительство и ремонт', href: '/ru/resheniya/stroitelstvo/' },
+          { label: 'Медицина', href: '/ru/resheniya/medicina/' },
+          { label: 'Недвижимость', href: '/ru/resheniya/nedvizhimost/' },
+          { label: 'Юристы', href: '/ru/resheniya/yuristy/' },
+          { label: 'Релокация', href: '/ru/resheniya/relokaciya/' },
+          { label: 'Бухгалтерия', href: '/ru/resheniya/buhgalteriya/' },
+          { label: 'Все отрасли', href: '/ru/resheniya/' },
+        ],
+      },
+      {
+        title: 'Компания',
+        links: [
+          { label: 'Демо', href: '/ru/demo/' },
+          { label: 'Цены', href: '/ru/tseny/' },
+          { label: 'Пилоты', href: '/ru/keysy/' },
+          { label: 'О нас', href: '/ru/o-nas/' },
+          { label: 'Блог', href: '/ru/blog/' },
+          { label: 'Контакты', href: '/ru/kontakty/' },
+        ],
+      },
+    ],
+    // A3 аудита: «Правовая информация» (Aviso legal) обязана быть и в RU-футере.
+    legal: [
+      { label: 'Правовая информация', href: '/ru/pravovaya-informaciya/' },
+      { label: 'Конфиденциальность', href: '/ru/politika-konfidencialnosti/' },
+      { label: 'Cookie', href: '/ru/cookie/' },
+      { label: 'Условия', href: '/ru/usloviya/' },
+    ],
+  },
+  en: {
+    brandText: 'AI process automation and full-cycle engineering from Spain for EU companies.',
+    doors: [],
+    cols: [
+      {
+        title: 'Services',
+        links: [
+          { label: 'Automation', href: '/en/services/automation/' },
+          { label: 'Integrations & RPA', href: '/en/services/integrations-rpa/' },
+          { label: 'AI assistants', href: '/en/services/ai-assistants/' },
+          { label: 'Chatbots', href: '/en/services/chatbots/' },
+          { label: 'Business software', href: '/en/services/business-software/' },
+          { label: 'All services', href: '/en/services/' },
+        ],
+      },
+      {
+        title: 'Solutions',
+        links: [
+          { label: 'Construction & renovation', href: '/en/solutions/construction/' },
+          { label: 'Real estate', href: '/en/solutions/real-estate/' },
+          { label: 'Legal', href: '/en/solutions/legal/' },
+          { label: 'Relocation', href: '/en/solutions/relocation/' },
+          { label: 'E-commerce', href: '/en/solutions/ecommerce/' },
+          { label: 'All solutions', href: '/en/solutions/' },
+        ],
+      },
+      {
+        title: 'Company',
+        links: [
+          { label: 'Demos', href: '/en/demos/' },
+          { label: 'Pricing', href: '/en/pricing/' },
+          { label: 'Pilots', href: '/en/cases/' },
+          { label: 'About', href: '/en/about/' },
+          { label: 'Contact', href: '/en/contact/' },
+        ],
+      },
+    ],
+    // A3 аудита: Legal notice обязана быть и в EN-футере.
+    legal: [
+      { label: 'Legal notice', href: '/en/legal-notice/' },
+      { label: 'Privacy', href: '/en/privacy/' },
+      { label: 'Cookies', href: '/en/cookies/' },
+      { label: 'Terms', href: '/en/terms/' },
+    ],
+  },
+};
+
+/** C4 аудита (AEPD §3.2.9, RGPD 7(3)): постоянный механизм отзыва согласия cookies. */
+const COOKIE_SETTINGS: Record<Lang, string> = {
+  es: 'Configuración de cookies',
+  ru: 'Настройки cookies',
+  en: 'Cookie settings',
+};
+
+const f = FOOTER[lang];
+---
+
+<footer class="site-footer"><div class="container">
+  <div class="footer-grid">
+    <div>
+      <a class="brand" href={HOME_HREF[lang]}><Core sm text />litcore<span class="tld">.ai</span></a>
+      <p class="muted small" style="max-width:34ch;margin-top:14px">{f.brandText}</p>
+      {f.doors.length > 0 && (
+        <ul style="margin-top:14px">
+          {f.doors.map((door) => (
+            <li><a href={door.href}>{door.label}</a></li>
+          ))}
+        </ul>
+      )}
+    </div>
+    {f.cols.map((col) => (
+      <div>
+        <h4>{col.title}</h4>
+        <ul>
+          {col.links.map((link) => (
+            <li><a href={link.href}>{link.label}</a></li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </div>
+  <div class="compliance">
+    <Core size="16px" />
+    <span>{COMPLIANCE[lang]}</span>
+    {f.legal.map((link) => (
+      <Fragment>
+        <span>·</span>
+        <a href={link.href}>{link.label}</a>
+      </Fragment>
+    ))}
+    <span>·</span>
+    <button type="button" class="cc-open" data-cc-open>{COOKIE_SETTINGS[lang]}</button>
+  </div>
+</div></footer>
+
+<style>
+  /* Кнопка отзыва согласия — выглядит как остальные ссылки компл.-строки (C4 аудита). */
+  .compliance .cc-open {
+    background: none;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    font-family: inherit;
+    font-size: 0.93rem; /* = .site-footer a */
+    letter-spacing: inherit;
+    text-transform: inherit;
+    color: var(--lc-ink);
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .compliance .cc-open:hover {
+    color: var(--lc-accent-deep);
+  }
+</style>

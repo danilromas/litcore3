@@ -1,0 +1,111 @@
+/* ============================================================
+   litcore.ai — DESIGN TOKENS «Stone & Signal»
+   Тёплый минерально-графитовый минимализм + янтарный сигнал.
+   Source of truth. Совместимые имена --lc-* сохранены для кита.
+   ============================================================ */
+
+:root {
+  /* ---------- ЦВЕТ · светлая база ---------- */
+  --lc-bg:            #F6F4EF;  /* известняк */
+  --lc-surface-2:     #EFEBE3;  /* секции-прослойки */
+  --lc-surface-3:     #E8E2D6;  /* тёплые секции */
+  --lc-card:          #FFFFFF;  /* поверхность / карточки */
+  --lc-ink:           #1C2830;  /* графитовые чернила */
+  --lc-ink-soft:      #46545F;  /* приглушённый текст */
+  --lc-ink-soft-2:    #5A6872;
+  --lc-line:          #DCD6C8;  /* 1px инженерные линии */
+
+  /* Акцент — янтарный сигнал */
+  --lc-accent:        #E8A33D;  /* дисплей / крупный акцент / свечение */
+  --lc-accent-deep:   #8F5015;  /* CTA, ссылки (контраст на светлом) */
+  --lc-accent-tint:   #F5E6C8;  /* подложка под акцент */
+  --lc-on-accent:     #FFFFFF;  /* текст на CTA (accent-deep) */
+  --lc-success:       #2F6B4F;
+
+  /* Алиасы Stone & Signal (для новых компонентов) */
+  --color-bg:         var(--lc-bg);
+  --color-surface:    var(--lc-card);
+  --color-ink:        var(--lc-ink);
+  --color-ink-soft:   var(--lc-ink-soft);
+  --color-line:       var(--lc-line);
+  --color-accent:     var(--lc-accent-deep);
+  --color-accent-bg:  var(--lc-accent);
+  --color-success:    var(--lc-success);
+
+  /* ---------- ЦВЕТ · тёмный холст (hero / Filament) ---------- */
+  --lc-canvas:        #0F151B;
+  --lc-canvas-2:      #161E26;
+  --lc-glow-cyan:     #E8A33D;  /* перекрашен в янтарь (бывш. cyan) */
+  --lc-glow-indigo:   #C4842A;  /* вторичное свечение */
+  --lc-glow-light:    #EAE6DC;
+  --lc-canvas-muted:  #A7B0B8;
+  --lc-canvas-line:   #2B3641;
+  --lc-node-dim:      #3A4550;
+
+  /* ---------- ТИПОГРАФИКА (кириллица) ---------- */
+  --lc-font-display:  'Geologica Variable', 'Geologica', 'Segoe UI', sans-serif;
+  --lc-font-text:     'Onest', 'Segoe UI', sans-serif;
+  --lc-font-mono:     'JetBrains Mono', 'Consolas', monospace;
+
+  --lc-size-h1:       clamp(3.2rem, 8vw, 6.8rem);
+  --lc-size-h2:       clamp(2.1rem, 4.2vw, 3.4rem);
+  --lc-size-h3:       clamp(1.3rem, 2.1vw, 1.65rem);
+  --lc-size-lead:     clamp(1.05rem, 1.55vw, 1.22rem);
+  --lc-size-body:     1rem;
+  --lc-size-small:    .875rem;
+  --lc-size-mono:     .78rem;
+  --lc-size-price:    clamp(2.3rem, 3.8vw, 3.1rem);
+  --lc-track-mono:    .12em;
+  --lc-lh-display:    .94;
+  --lc-lh-body:       1.6;
+
+  /* ---------- СЕТКА / ОТСТУПЫ ---------- */
+  --lc-container:     1200px;
+  --lc-gutter:        clamp(20px, 4vw, 48px);
+  --lc-space-1: 4px;  --lc-space-2: 8px;   --lc-space-3: 16px;
+  --lc-space-4: 24px; --lc-space-5: 40px;  --lc-space-6: 64px;
+  --lc-space-7: 96px; --lc-space-8: 144px;
+
+  /* ---------- РАДИУСЫ / ТЕНИ ---------- */
+  --lc-radius-btn:    12px;
+  --lc-radius-card:   12px;
+  --lc-radius-pill:   999px;
+  --lc-shadow-soft:   0 1px 2px rgba(28,40,48,.04);
+  --lc-shadow-lift:   0 2px 4px rgba(28,40,48,.06), 0 12px 28px rgba(28,40,48,.08);
+  --lc-shadow-glow:   0 0 18px rgba(232,163,61,.35), 0 0 48px rgba(232,163,61,.14);
+
+  /* ---------- MOTION ---------- */
+  --lc-dur-fast:      160ms;
+  --lc-dur-base:      260ms;
+  --lc-dur-slow:      600ms;
+  --lc-ease:          cubic-bezier(.22,.61,.28,1);
+  --lc-orbit-period:  9s;
+  --lc-plx-bg:        0.06;
+  --lc-plx-mid:       0.10;
+  --lc-plx-fg:        0.16;
+}
+
+/* Тёмный под-набор: класс .lc-dark на секции */
+.lc-dark {
+  --lc-bg:         var(--lc-canvas);
+  --lc-card:       var(--lc-canvas-2);
+  --lc-ink:        var(--lc-glow-light);
+  --lc-ink-soft:   var(--lc-canvas-muted);
+  --lc-ink-soft-2: var(--lc-canvas-muted);
+  --lc-line:       var(--lc-canvas-line);
+  --lc-on-accent:  #0F151B;
+  color-scheme: dark;
+}
+
+:root[data-theme="dark"] {
+  --lc-bg:            #0F151B;
+  --lc-surface-2:     #141B22;
+  --lc-surface-3:     #161E26;
+  --lc-card:          #161E26;
+  --lc-ink:           #EAE6DC;
+  --lc-ink-soft:      #A7B0B8;
+  --lc-ink-soft-2:    #A7B0B8;
+  --lc-line:          #2B3641;
+  --lc-on-accent:     #0F151B;
+  color-scheme: dark;
+}

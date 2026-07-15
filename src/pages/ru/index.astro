@@ -1,0 +1,199 @@
+---
+/**
+ * P03 — Главная RU (/ru/). Тот же UX/фичи, что ES (HeroCore, Filament, bento).
+ * Копи и PROVIDER-дверь — из HOME.ru (не зеркало текстов).
+ */
+import Layout from '../../layouts/Layout.astro';
+import HeroCore from '../../components/HeroCore.astro';
+import BentoServices from '../../components/BentoServices.astro';
+import Steps from '../../components/Steps.astro';
+import PriceCard from '../../components/PriceCard.astro';
+import Filament from '../../components/Filament.astro';
+import SchemaOrg from '../../components/seo/SchemaOrg.astro';
+import { ROUTES } from '../../lib/routes';
+import { organization, localBusiness } from '../../lib/schema';
+import { HOME } from '../../data/home';
+
+const t = HOME.ru;
+---
+
+<Layout
+  lang="ru"
+  title={t.seo.title}
+  description={t.seo.description}
+  path={ROUTES.home.ru!}
+  alternates={ROUTES.home}
+  customCursor
+>
+  <SchemaOrg slot="head" data={[organization(), localBusiness()]} />
+
+  <div class="page-home">
+    <HeroCore
+      kicker={t.hero.kicker}
+      h1Html={t.hero.h1Html}
+      lead={t.hero.lead}
+      primary={t.hero.primary}
+      secondary={t.hero.secondary}
+    />
+
+    <section class="trust" aria-label={t.trust.aria} data-plx="0.03">
+      <div class="container mono">
+        {t.trust.items.map((item) => <span>{item}</span>)}
+      </div>
+    </section>
+
+    <BentoServices
+      kicker={t.services.kicker}
+      h2={t.services.h2}
+      cards={t.services.cards}
+      subrowHead={t.services.subrowHead}
+      minis={t.services.minis}
+    />
+
+    <section class="section section--tight section--warm" id="dlya-postavshchikov">
+      <div class="container">
+        <h2 class="display noise-hover">{t.proveedores.h2}</h2>
+        <p class="lead">{t.proveedores.text}</p>
+        <a class="btn btn--ghost-accent" href={t.proveedores.cta.href}>{t.proveedores.cta.label}</a>
+      </div>
+    </section>
+
+    <Filament lang="ru" intro={{ kicker: t.mapa.kicker, h2Html: t.mapa.h2Html, text: t.mapa.text }} />
+
+    <section class="section section--alt" id="otrasli">
+      <div class="container">
+        <p class="kicker">{t.sectores.kicker}</p>
+        <h2 class="display noise-hover">{t.sectores.h2}</h2>
+        <div class="grid grid--3">
+          {
+            t.sectores.cards.map((card) => (
+              <article class="card ind-card reveal" data-plx="0.05">
+                <h3>
+                  <a href={card.href}>{card.title}</a>
+                </h3>
+                <p class="flow" set:html={card.flowHtml} />
+              </article>
+            ))
+          }
+        </div>
+        <p class="more-link">
+          <a href={t.sectores.more.href}>{t.sectores.more.label}</a>
+        </p>
+      </div>
+    </section>
+
+    <section class="section" id="demo">
+      <div class="container">
+        <p class="kicker">{t.demos.kicker}</p>
+        <h2 class="display noise-hover">{t.demos.h2}</h2>
+        <div class="grid grid--3">
+          {
+            t.demos.cards.map((card) => (
+              <article class="card demo-card reveal">
+                <span class="badge badge--tint">{t.demos.badge}</span>
+                <h3>{card.title}</h3>
+                <p>{card.text}</p>
+                <a href={card.link.href}>{card.link.label}</a>
+              </article>
+            ))
+          }
+        </div>
+        <p class="price-foot small" set:html={t.demos.upsellHtml} />
+      </div>
+    </section>
+
+    <section class="section section--tight" id="process">
+      <div class="container">
+        <p class="kicker">{t.proceso.kicker}</p>
+        <h2 class="display noise-hover">{t.proceso.h2}</h2>
+        <div style="margin:32px 0 0">
+          <Steps steps={t.proceso.steps} activeIndex={0} />
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--warm" id="tseny">
+      <div class="container">
+        <p class="kicker">{t.precios.kicker}</p>
+        <h2 class="display noise-hover">{t.precios.h2}</h2>
+        <div class="grid grid--3" style="margin-top:36px">
+          {
+            t.precios.cards.map((card) => (
+              <div class="reveal" style="display:grid">
+                <PriceCard
+                  plan={card.plan}
+                  price={card.price}
+                  cur={card.cur}
+                  note={card.note}
+                  items={card.items}
+                  cta={card.cta}
+                  featured={card.featured}
+                  recommendLabel={t.precios.recommendLabel}
+                />
+              </div>
+            ))
+          }
+        </div>
+        <p class="price-foot small" set:html={t.precios.footHtml} />
+      </div>
+    </section>
+
+    <section class="section section--tight">
+      <div class="container">
+        <div class="cta-band">
+          <h2 class="display noise-hover" set:html={t.cta.h2Html} />
+          <div class="tag-row">
+            <a class="btn btn--primary btn--lg" href={t.cta.primary.href}>{t.cta.primary.label}</a>
+            <a
+              class="btn btn--ghost btn--lg"
+              style="color:var(--lc-bg);border-color:color-mix(in srgb,var(--lc-bg) 40%,transparent)"
+              href={t.cta.secondary.href}>{t.cta.secondary.label}</a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</Layout>
+
+<style is:global>
+  .page-home .trust {
+    border-block: 1px solid var(--lc-line);
+    padding: 16px 0;
+    background: var(--lc-bg);
+  }
+  .page-home .trust .container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 18px;
+    justify-content: center;
+    color: var(--lc-ink-soft);
+    text-align: center;
+  }
+  .page-home .ind-card .flow {
+    margin: 0;
+    color: var(--lc-ink-soft);
+    font-size: 0.93rem;
+  }
+  .page-home .ind-card .flow b {
+    color: var(--lc-ink);
+    font-weight: 700;
+  }
+  .page-home .flow .arr {
+    color: var(--lc-accent-deep);
+    padding-inline: 0.25em;
+  }
+  .page-home .more-link {
+    margin-top: 26px;
+  }
+  .page-home .demo-card .badge {
+    margin-bottom: 16px;
+  }
+  .page-home .demo-card p {
+    color: var(--lc-ink-soft);
+  }
+  .page-home .price-foot {
+    margin-top: 26px;
+    color: var(--lc-ink-soft);
+  }
+</style>

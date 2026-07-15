@@ -1,0 +1,164 @@
+---
+/**
+ * P-legal: Privacy policy (EN). Заполнена по аудит-пакету (перевод испанской версии;
+ * она приоритетна). Трансграничная передача Cloudflare/США: EU-US DPF + SCC (I1).
+ * ⚖️ Черновик юриста: финальная вычитка — испанский юрист/gestoría (human TODO).
+ */
+import Layout from '../../layouts/Layout.astro';
+import Crumbs from '../../components/Crumbs.astro';
+import { OWNER, LEGAL_UPDATED_HUMAN } from '../../config/site';
+import { ROUTES } from '../../lib/routes';
+---
+
+<Layout
+  lang="en"
+  title="Privacy policy | litcore.ai"
+  description="How litcore.ai processes personal data: controller, purposes, legal bases, retention, processors, international transfers and your rights."
+  path="/en/privacy/"
+  alternates={ROUTES.privacidad}
+>
+  <section class="section section--tight">
+    <div class="container legal-page">
+      <Crumbs lang="en" items={[{ label: 'HOME', href: '/en/' }, { label: 'PRIVACY' }]} />
+      <h1>Privacy policy</h1>
+      <p class="lead">How we process your personal data, why, and what rights you have.</p>
+      <p class="mono small muted">Last updated: {LEGAL_UPDATED_HUMAN.en}</p>
+
+      <p class="muted small">
+        This is an English translation. The legally binding version is the Spanish{' '}
+        <a href="/es/privacidad/">Política de Privacidad</a>.
+      </p>
+
+      <h2>1. Data controller</h2>
+      <ul>
+        <li><strong>Controller:</strong> {OWNER.name} (sole trader — autónoma)</li>
+        <li><strong>Tax ID (NIF):</strong> {OWNER.nif} · <strong>Address:</strong> {OWNER.address}</li>
+        <li>
+          <strong>Contact for data matters:</strong>{' '}
+          <a href={`mailto:${OWNER.email}`}>{OWNER.email}</a> ·{' '}
+          <strong>Phone:</strong> <a href={OWNER.phoneHref}>{OWNER.phone}</a>
+        </li>
+        <li>
+          <strong>Data Protection Officer:</strong> not appointed (the conditions of GDPR art. 37
+          / LOPDGDD art. 34 do not apply). To be reassessed if large-scale processing or special
+          categories of data are ever involved.
+        </li>
+      </ul>
+
+      <h2>2. Data we process</h2>
+      <ul>
+        <li>
+          <strong>Contact form:</strong> name, email (or the contact detail you provide) and the
+          description of your process or enquiry. We collect the <strong>minimum necessary</strong>;
+          please do not include sensitive data or data about third parties.
+        </li>
+        <li>
+          <strong>Messaging (Telegram / WhatsApp / email):</strong> if you write to us through
+          these channels, we process the conversation data in order to reply.
+        </li>
+        <li>
+          <strong>Minimal technical data</strong> strictly needed to serve the site (see the{' '}
+          <a href="/en/cookies/">Cookie policy</a>). We currently use{' '}
+          <strong>no analytics and no third-party cookies</strong>.
+        </li>
+      </ul>
+
+      <h2>3. Purposes and legal basis (GDPR art. 6)</h2>
+      <table class="lc">
+        <thead>
+          <tr>
+            <th>Purpose</th>
+            <th>Legal basis</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Answering your enquiry and preparing a quote/service</td>
+            <td>
+              <strong>Pre-contractual steps at your request (art. 6(1)(b))</strong> and/or{' '}
+              <strong>your consent (art. 6(1)(a))</strong> via the form checkbox
+            </td>
+          </tr>
+          <tr>
+            <td>Delivering the contracted service, administration and invoicing</td>
+            <td><strong>Contract performance (art. 6(1)(b))</strong> and legal obligations (art. 6(1)(c))</td>
+          </tr>
+          <tr>
+            <td>Commercial communications (only if you subscribe)</td>
+            <td><strong>Your consent (art. 6(1)(a))</strong> + art. 21 LSSI; revocable at any time</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        We do not use your form data for marketing without separate consent. We make{' '}
+        <strong>no</strong> automated decisions with legal effects and no profiling based on the
+        form.
+      </p>
+
+      <h2>4. Retention</h2>
+      <p>
+        We keep your data for as long as needed to handle your enquiry and, if a contractual
+        relationship arises, for its duration plus the statutory limitation periods (tax,
+        commercial). If no relationship arises, we delete the data <strong>12 months</strong>{' '}
+        after the last contact.
+      </p>
+
+      <h2>5. Recipients and processors</h2>
+      <p>
+        We do not share your data with third parties except where legally required. We rely on
+        providers acting as <strong>processors</strong> (GDPR art. 28, under contract):
+      </p>
+      <ul>
+        <li>
+          <strong>Hosting / CDN / security / form processing:</strong> Cloudflare, Inc. (see §6 —
+          international transfer). The contact form is processed on Cloudflare infrastructure and
+          delivered to the owner's mailbox.
+        </li>
+        <li>
+          <strong>Messaging:</strong> Telegram / WhatsApp, if you choose those channels (governed
+          by their own privacy policies).
+        </li>
+      </ul>
+
+      <h2>6. International transfers</h2>
+      <p>
+        The site is served through <strong>Cloudflare, Inc. (USA)</strong>. The United States has
+        an <strong>adequacy decision</strong> of the European Commission for entities certified
+        under the <strong>EU-US Data Privacy Framework</strong> — Implementing Decision (EU)
+        2023/1795 of 10 July 2023 (GDPR art. 45). Cloudflare is <strong>certified</strong> under
+        that Framework; as an additional safeguard its terms include the{' '}
+        <strong>Standard Contractual Clauses (SCC, GDPR art. 46)</strong>. If you use Telegram or
+        WhatsApp, those services may involve transfers governed by their own safeguards.
+      </p>
+
+      <h2>7. Your rights (GDPR arts. 15–22)</h2>
+      <p>
+        You can exercise, <strong>free of charge</strong>, your rights of{' '}
+        <strong>access, rectification, erasure, restriction, objection and portability</strong>,
+        and withdraw consent where that is the basis (without retroactive effect). Write to{' '}
+        <a href={`mailto:${OWNER.email}`}>{OWNER.email}</a> stating the right you exercise; we
+        will reply within <strong>one month</strong> (extendable by two more for complex
+        requests). We may ask you to verify your identity.
+      </p>
+      <p>
+        If you believe we have not handled your rights correctly, you can complain to the{' '}
+        <strong>Spanish Data Protection Agency (AEPD)</strong> —{' '}
+        <a href="https://www.aepd.es" rel="noopener">www.aepd.es</a>, C/ Jorge Juan 6, 28001
+        Madrid.
+      </p>
+
+      <h2>8. Security</h2>
+      <p>
+        We apply appropriate technical and organisational measures (GDPR art. 32): encryption in
+        transit (HTTPS), data minimisation, form validation and anti-spam protection, and
+        restricted access to information.
+      </p>
+
+      <h2>9. Changes</h2>
+      <p>
+        We may update this policy for legal or technical reasons; the current version will be
+        published on this page.
+      </p>
+    </div>
+  </section>
+</Layout>

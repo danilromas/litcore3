@@ -1,0 +1,27 @@
+---
+/** Хлебные крошки: моно, разделитель « / », текущая страница — aria-current="page". */
+import { NAV_ARIA } from '../i18n/ui';
+import type { Lang } from '../config/site';
+
+interface Props {
+  items: { label: string; href?: string }[];
+  lang: Lang;
+}
+const { items, lang } = Astro.props;
+const last = items.length - 1;
+---
+
+<nav class="crumbs" aria-label={NAV_ARIA[lang].crumbs}>
+  {items.map((item, i) => (
+    <Fragment>
+      {i > 0 && <span class="sep">/</span>}
+      {i === last ? (
+        <span aria-current="page">{item.label}</span>
+      ) : item.href ? (
+        <a href={item.href}>{item.label}</a>
+      ) : (
+        <span>{item.label}</span>
+      )}
+    </Fragment>
+  ))}
+</nav>

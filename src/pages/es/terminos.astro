@@ -1,0 +1,153 @@
+---
+/**
+ * P-legal: Términos y Condiciones (ES). Новая страница (E1 аудита) — из аудит-пакета
+ * paginas_legales/4_terminos-condiciones.md, заполнена реквизитами. Клиенты —
+ * преимущественно B2B; раздел о потребителях (desistimiento 14 дней) — на случай B2C.
+ * ⚖️ Черновик юриста: финальная вычитка — испанский юрист/gestoría (human TODO).
+ */
+import Layout from '../../layouts/Layout.astro';
+import Crumbs from '../../components/Crumbs.astro';
+import { OWNER, LEGAL_UPDATED_HUMAN } from '../../config/site';
+import { ROUTES } from '../../lib/routes';
+---
+
+<Layout
+  lang="es"
+  title="Términos y condiciones | litcore.ai"
+  description="Condiciones de contratación de los servicios de litcore.ai: proceso, precios, propiedad intelectual, responsabilidad e información para personas consumidoras."
+  path="/es/terminos/"
+  alternates={ROUTES.terminos}
+>
+  <section class="section section--tight">
+    <div class="container legal-page">
+      <Crumbs lang="es" items={[{ label: 'INICIO', href: '/es/' }, { label: 'TÉRMINOS' }]} />
+      <h1>Términos y condiciones</h1>
+      <p class="lead">Cómo se contratan los servicios de litcore.ai y qué condiciones se aplican.</p>
+      <p class="mono small muted">Última actualización: {LEGAL_UPDATED_HUMAN.es}</p>
+
+      <h2>1. Identificación del prestador</h2>
+      <p>
+        Los datos completos del titular figuran en el <a href="/es/aviso-legal/">Aviso Legal</a>.
+        Titular: {OWNER.name} (autónoma), NIF {OWNER.nif}, domicilio {OWNER.address}. Contacto:{' '}
+        <a href={`mailto:${OWNER.email}`}>{OWNER.email}</a>.
+      </p>
+
+      <h2>2. Objeto</h2>
+      <p>
+        Estas condiciones regulan la contratación de los servicios ofrecidos por litcore.ai
+        (automatización de procesos con IA, asistentes y bots, documentos con IA, integración de
+        software, diseño web y de aplicaciones, y servicios relacionados). La navegación por el
+        sitio no obliga a contratar; la contratación se formaliza según la cláusula 4.
+      </p>
+
+      <h2>3. Servicios</h2>
+      <p>
+        Los servicios se describen en el sitio con carácter <strong>orientativo</strong>. El
+        alcance concreto, entregables, plazos y precio de cada proyecto se fijan en la{' '}
+        <strong>propuesta/presupuesto individual</strong> aceptada por el cliente, que prevalece
+        sobre la información general del sitio. Muchos servicios de IA se prestan bajo modelo{' '}
+        <strong>setup + suscripción</strong>.
+      </p>
+
+      <h2>4. Proceso de contratación</h2>
+      <ol>
+        <li><strong>Diagnóstico</strong> y solicitud a través del formulario o canales de contacto.</li>
+        <li><strong>Propuesta/presupuesto</strong> con alcance, precio y condiciones.</li>
+        <li><strong>Aceptación</strong> por el cliente (por medio escrito/electrónico) → formación del contrato.</li>
+        <li><strong>Prestación</strong> del servicio y, en su caso, suscripción/soporte.</li>
+      </ol>
+
+      <h2>5. Precios y pago</h2>
+      <p>
+        Los precios mostrados en el sitio («desde…») son <strong>orientativos</strong> hasta el
+        presupuesto en firme. Salvo indicación expresa, los precios <strong>no incluyen
+        impuestos</strong>; se aplicará el <strong>IVA</strong> correspondiente. Las condiciones de
+        pago, la periodicidad de la suscripción y la facturación se fijan en cada propuesta.
+      </p>
+
+      <h2>6. Obligaciones del cliente</h2>
+      <p>
+        El cliente se compromete a facilitar información veraz y los accesos necesarios, a usar
+        los servicios conforme a la ley y a estas condiciones, y a colaborar razonablemente para
+        la correcta prestación del servicio.
+      </p>
+
+      <h2>7. Duración, renovación y cancelación</h2>
+      <p>
+        La duración de cada servicio o suscripción, el preaviso de cancelación, los efectos de la
+        baja y la portabilidad de datos y entregables se establecen en la propuesta
+        correspondiente.
+      </p>
+
+      <h2>8. Propiedad intelectual</h2>
+      <p>
+        La titularidad y/o licencia de los entregables (código, configuraciones, contenidos) se
+        definen en cada propuesta. Salvo pacto en contrario, litcore.ai conserva sus
+        conocimientos, herramientas y componentes reutilizables.
+      </p>
+
+      <h2>9. Garantías y responsabilidad</h2>
+      <p>
+        litcore.ai prestará los servicios con diligencia profesional. En la medida permitida por
+        la ley, se excluye la responsabilidad por daños indirectos o lucro cesante; los límites y
+        niveles de servicio (SLA), si los hubiera, se fijan en la propuesta. Estas limitaciones no
+        se oponen a los derechos imperativos de las personas consumidoras.
+      </p>
+
+      <h2>10. Protección de datos</h2>
+      <p>
+        El tratamiento de datos se rige por la <a href="/es/privacidad/">Política de
+        Privacidad</a>. Cuando litcore.ai trate datos personales por cuenta del cliente
+        (p.&nbsp;ej. al operar un bot o CRM), se suscribirá un <strong>contrato de encargado del
+        tratamiento (art. 28 RGPD)</strong>.
+      </p>
+
+      <h2>11. Contratación a distancia y personas consumidoras</h2>
+      <p>
+        Estas condiciones se dirigen principalmente a <strong>empresas y personas autónomas
+        (B2B)</strong>, a las que no se aplica el régimen de consumidores.
+      </p>
+      <p>
+        <strong>Si el cliente es persona consumidora</strong> (persona física que actúa fuera de
+        su actividad económica) y contrata a distancia, se aplica el <strong>RDL 1/2007
+        (TR-LGDCU)</strong>:
+      </p>
+      <ul>
+        <li>
+          <strong>Información precontractual</strong> obligatoria (art. 97 RDL 1/2007):
+          características, precio total con impuestos, identidad del prestador, duración y la
+          existencia, condiciones, plazo y procedimiento del derecho de desistimiento.
+        </li>
+        <li>
+          <strong>Derecho de desistimiento: 14 días naturales</strong> sin necesidad de
+          justificación (art. 102). Si no se informa del derecho, el plazo se amplía 12 meses
+          (art. 105). Para ejercerlo, escribe a{' '}
+          <a href={`mailto:${OWNER.email}`}>{OWNER.email}</a> con una declaración inequívoca de tu
+          decisión (puedes pedirnos un modelo de formulario).
+        </li>
+        <li>
+          <strong>Excepciones (art. 103)</strong> relevantes: servicios completamente ejecutados
+          cuya ejecución comenzó con el consentimiento previo y expreso del consumidor y con su
+          conocimiento de que perdería el derecho una vez ejecutado (103.a); bienes o servicios
+          confeccionados a medida o claramente personalizados (103.c); y contenido digital sin
+          soporte material iniciado con consentimiento previo expreso (103.m). Los proyectos «a
+          medida» de litcore suelen encajar en estas excepciones — se informará y se recabará el
+          consentimiento correspondiente antes de empezar.
+        </li>
+      </ul>
+
+      <h2>12. Modificaciones</h2>
+      <p>
+        litcore.ai puede modificar estas condiciones; la versión vigente se publicará en el sitio
+        y se aplicará a las contrataciones posteriores.
+      </p>
+
+      <h2>13. Ley aplicable y jurisdicción</h2>
+      <p>
+        Se aplica la legislación española. Para personas consumidoras rige el fuero legal
+        imperativo (el de su domicilio); en contratación entre empresas, serán competentes los
+        juzgados y tribunales que correspondan conforme a la normativa aplicable.
+      </p>
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,93 @@
+---
+/**
+ * P-legal: Declaración de accesibilidad (ES, ДОБРОВОЛЬНАЯ — F3 аудита).
+ * По аудиту EAA/Ley 11/2023 для соло-B2B НЕ обязательна (вне охвата + исключение
+ * микропредприятий) — публикуем как best practice. Текст — из аудит-пакета
+ * paginas_legales/5_declaracion-accesibilidad.md. Только ES (без alternates).
+ */
+import Layout from '../../layouts/Layout.astro';
+import Crumbs from '../../components/Crumbs.astro';
+import { OWNER, LEGAL_UPDATED_HUMAN } from '../../config/site';
+---
+
+<Layout
+  lang="es"
+  title="Declaración de accesibilidad | litcore.ai"
+  description="Compromiso voluntario de accesibilidad de litcore.ai: referencia EN 301 549 / WCAG, medidas implementadas y canal de contacto para barreras de accesibilidad."
+  path="/es/accesibilidad/"
+>
+  <section class="section section--tight">
+    <div class="container legal-page">
+      <Crumbs lang="es" items={[{ label: 'INICIO', href: '/es/' }, { label: 'ACCESIBILIDAD' }]} />
+      <h1>Declaración de accesibilidad</h1>
+      <p class="lead">
+        Queremos que este sitio sea usable por el mayor número de personas, con independencia de
+        sus capacidades.
+      </p>
+      <p class="mono small muted">Fecha de esta declaración: {LEGAL_UPDATED_HUMAN.es}</p>
+
+      <p>
+        Esta declaración es <strong>voluntaria</strong>: por el tamaño de la actividad
+        (microempresa/autónoma) y por el carácter B2B/informativo del sitio, no estamos, con
+        carácter general, sujetos a las obligaciones de accesibilidad de la Ley 11/2023 (European
+        Accessibility Act); aun así asumimos este compromiso como buena práctica.
+      </p>
+
+      <h2>Estándar de referencia</h2>
+      <p>
+        Tomamos como referencia la norma <strong>EN 301 549</strong> y las <strong>Pautas WCAG 2.1
+        nivel AA</strong>; el diseño del sitio persigue el nivel <strong>WCAG 2.2 AA</strong>.
+      </p>
+
+      <h2>Estado de conformidad</h2>
+      <p>
+        <strong>Parcialmente conforme</strong> (autoevaluación durante el desarrollo,{' '}
+        {LEGAL_UPDATED_HUMAN.es}). Está pendiente una auditoría completa sobre el sitio publicado;
+        actualizaremos este estado con sus resultados.
+      </p>
+
+      <h2>Medidas de accesibilidad ya implementadas</h2>
+      <ul>
+        <li>Enlace «saltar al contenido» (skip-link) al inicio de cada página.</li>
+        <li>Contrastes de color conformes a AA (verificados en el sistema de diseño).</li>
+        <li>
+          Foco de teclado siempre visible (<span class="mono">:focus-visible</span>) y navegación
+          por teclado en los elementos interactivos (incluido el gráfico interactivo).
+        </li>
+        <li>
+          Etiquetas (<span class="mono">label</span>) asociadas en todos los campos de formulario;
+          no se usan placeholders como sustituto de la etiqueta.
+        </li>
+        <li>
+          Estructura semántica (un solo <span class="mono">h1</span>, jerarquía de encabezados,{' '}
+          <span class="mono">aria-label</span> en navegación, <span class="mono">aria-current</span>).
+        </li>
+        <li>
+          Respeto de <span class="mono">prefers-reduced-motion</span> (se desactivan
+          animaciones/parallax).
+        </li>
+        <li>
+          Alternativa sin JavaScript: el contenido del gráfico interactivo está disponible como
+          acordeón estático.
+        </li>
+        <li>Idioma declarado por página (<span class="mono">lang</span>) y alternativas de idioma.</li>
+      </ul>
+
+      <h2>Contenido no accesible / limitaciones conocidas</h2>
+      <p>
+        Se identificarán, en su caso, tras la auditoría del sitio publicado y se listarán aquí.
+      </p>
+
+      <h2>Vía de contacto y sugerencias</h2>
+      <p>
+        Si encuentras una barrera de accesibilidad, escríbenos a{' '}
+        <a href={`mailto:${OWNER.email}`}>{OWNER.email}</a> describiendo el problema y la página.
+        Procuraremos responder en un plazo razonable (orientativamente, 15 días hábiles) y buscar
+        una solución o alternativa.
+      </p>
+
+      <h2>Método y fecha</h2>
+      <p>Método: autoevaluación. Fecha de esta declaración: {LEGAL_UPDATED_HUMAN.es}.</p>
+    </div>
+  </section>
+</Layout>

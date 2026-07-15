@@ -1,0 +1,26 @@
+---
+/**
+ * P-service: /ru/spasibo/ — страница после отправки формы. noIndex;
+ * из sitemap отфильтрована в astro.config.mjs. Без alternates (служебная).
+ */
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout
+  lang="ru"
+  title="Спасибо | litcore.ai"
+  description="Заявка получена."
+  path="/ru/spasibo/"
+  noIndex={true}
+>
+  <section class="section">
+    <div class="container" style="text-align:center">
+      <p class="kicker">ЗАЯВКА ПОЛУЧЕНА</p>
+      <h1 class="display">Спасибо<span class="accent-word">.</span></h1>
+      <p class="lead" style="margin-inline:auto">
+        Заявка получена — ответим сегодня.
+      </p>
+      <a class="btn btn--primary btn--lg" href="/ru/">На главную</a>
+    </div>
+  </section>
+</Layout>

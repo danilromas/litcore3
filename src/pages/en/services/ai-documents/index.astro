@@ -1,0 +1,105 @@
+---
+/**
+ * P12 EN — «AI documents»: заглушка Фазы 2 (герой + 3 карточки болей + CTA-полоса).
+ * Тексты — из content/documentos-ia/en.md; полная EN-страница строится при запуске Фазы 2.
+ */
+import Layout from '../../../../layouts/Layout.astro';
+import Core from '../../../../components/Core.astro';
+import Crumbs from '../../../../components/Crumbs.astro';
+import SchemaOrg from '../../../../components/seo/SchemaOrg.astro';
+import { ROUTES } from '../../../../lib/routes';
+import { service, breadcrumb } from '../../../../lib/schema';
+import { DOCUMENTOS_EN as d } from '../../../../data/documentos-ia';
+
+const path = ROUTES['documentos-ia'].en!;
+const alternates = ROUTES['documentos-ia'];
+---
+
+<Layout
+  lang="en"
+  title={d.seo.title}
+  description={d.seo.description}
+  path={path}
+  alternates={alternates}
+>
+  <SchemaOrg
+    slot="head"
+    data={[
+      service({ name: d.schemaService.name, description: d.schemaService.description, path, lang: 'en' }),
+      breadcrumb(d.crumbsSchema),
+    ]}
+  />
+
+  <div class="page-documentos">
+    <!-- ============ HERO ============ -->
+    <section class="section hero" style="position:relative">
+      <div class="hero-decor" aria-hidden="true">
+        <div class="blob" data-plx="0.06" style="width:520px;height:520px;right:-140px;top:-120px"></div>
+        <div class="blob" data-plx="0.10" style="width:220px;height:220px;right:26%;bottom:-80px"></div>
+        <span class="core" data-plx="0.16" style="--core-size:120px;position:absolute;right:12%;top:22%"><span class="orbit"></span></span>
+      </div>
+      <div class="container hero-content">
+        <Crumbs items={d.crumbs} lang="en" />
+        <h1 class="display">{d.hero.h1Pre}<span class="accent-word">in&nbsp;minutes.</span></h1>
+        <p class="lead">{d.hero.lead}</p>
+        <div class="tag-row">
+          <a class="btn btn--primary btn--lg" href={d.hero.ctaPrimary.href}>{d.hero.ctaPrimary.label}</a>
+          <a class="btn btn--ghost btn--lg" href={d.hero.ctaSecondary.href}>{d.hero.ctaSecondary.label}</a>
+          <span class="badge badge--tint demo-note">{d.hero.demoBadge}</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SOUND FAMILIAR? ============ -->
+    <section class="section section--alt">
+      <div class="container">
+        <p class="kicker"><Core sm />{d.pains.kicker}</p>
+        <h2 class="display">{d.pains.h2Lines[0]}<br />{d.pains.h2Lines[1]}</h2>
+        <div class="grid grid--3" style="margin-top:40px">
+          {d.pains.cards.map((card) => (
+            <article class="card pain-card reveal">
+              <span class="mono mono-tag">{card.tag}</span>
+              <h3>{card.title}</h3>
+              <p>{card.text}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CTA ============ -->
+    <section class="section--tight">
+      <div class="container">
+        <div class="cta-band">
+          <h2 class="display" style="font-size:var(--lc-size-h2)">
+            {d.ctaBand.h2Pre}<span class="accent-word">in&nbsp;minutes.</span>
+          </h2>
+          <div class="tag-row">
+            <a class="btn btn--primary btn--lg" href={d.ctaBand.primary.href}>{d.ctaBand.primary.label}</a>
+            <a
+              class="btn btn--ghost btn--lg"
+              style="color:var(--lc-bg);border-color:color-mix(in srgb,var(--lc-bg) 40%,transparent)"
+              href={d.ctaBand.ghost.href}>{d.ctaBand.ghost.label}</a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</Layout>
+
+<style is:global>
+  /* — специфика страницы documentos-ia, EN-заглушка (подмножество <style id="page"> макета) — */
+  .page-documentos .pain-card .mono-tag {
+    color: var(--lc-accent-deep);
+    display: block;
+    margin-bottom: 10px;
+  }
+  .page-documentos .pain-card p {
+    margin: 0;
+    color: var(--lc-ink-soft);
+  }
+  .page-documentos .demo-note {
+    align-self: center;
+  }
+</style>

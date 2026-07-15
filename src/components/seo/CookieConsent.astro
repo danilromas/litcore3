@@ -1,0 +1,161 @@
+---
+/**
+ * Cookie-баннер (GDPR / ePrivacy / AEPD май 2024). Честная модель: по умолчанию — только
+ * технические cookies; аналитика подключается ТОЛЬКО после явного согласия.
+ *
+ * Доработки по аудиту (03_Spec_banner_cookies.md):
+ * - G1: кнопки «Aceptar»/«Rechazar» равного визуального веса (обе .btn--primary-подобные, C3).
+ * - G2: механизм отзыва — window.lcOpenConsent() + клики по [data-cc-open] (ссылка в футере
+ *   и кнопка на странице политики cookies) переоткрывают баннер (C4, RGPD 7(3), AEPD §3.2.9).
+ * - G4: значение cookie хранит версию и timestamp: lc_consent=v1.<all|essential>.<unix>
+ *   (клиентское доказательство: когда и на какую версию дан выбор). Старый формат
+ *   all|essential читается как валидный выбор (обратная совместимость).
+ * - G5: флаг Secure (сайт по HTTPS).
+ * - CSP: скрипт вынесен из инлайна во внешний бандл (script-src 'self', S-2 аудита).
+ *
+ * Выбор хранится в document.cookie (НЕ localStorage), 180 дней. Без анимаций —
+ * prefers-reduced-motion соблюдён по построению.
+ */
+import type { Lang } from '../../config/site';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+
+const T: Record<
+  Lang,
+  { aria: string; text: string; more: string; moreHref: string; accept: string; reject: string }
+> = {
+  es: {
+    aria: 'Aviso de cookies',
+    text: 'Usamos solo cookies técnicas. Analítica — únicamente con tu consentimiento.',
+    more: 'Más info',
+    moreHref: '/es/cookies/',
+    accept: 'Aceptar',
+    reject: 'Rechazar',
+  },
+  ru: {
+    aria: 'Уведомление о cookies',
+    text: 'Используем только технические cookies. Аналитика — только после вашего согласия.',
+    more: 'Подробнее',
+    moreHref: '/ru/cookie/',
+    accept: 'Принять',
+    reject: 'Отклонить',
+  },
+  en: {
+    aria: 'Cookie notice',
+    text: 'We use essential cookies only. Analytics — only with your consent.',
+    more: 'Learn more',
+    moreHref: '/en/cookies/',
+    accept: 'Accept',
+    reject: 'Decline',
+  },
+};
+const t = T[lang];
+---
+
+<div id="cookie-consent" class="cookie-consent" role="region" aria-label={t.aria} hidden>
+  <div class="card cc-card">
+    <p class="mono small cc-text">
+      {t.text}
+      <a href={t.moreHref}>{t.more}</a>
+    </p>
+    <div class="cc-actions">
+      <!-- AEPD §3.1.2.2: «Rechazar» — та же капа, тот же визуальный вес, что «Aceptar» (C3) -->
+      <button type="button" class="btn btn--primary cc-btn" data-cc="all">{t.accept}</button>
+      <button type="button" class="btn btn--primary cc-btn" data-cc="essential">{t.reject}</button>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Только позиционирование и раскладка — визуал даёт кит (.card/.btn/.mono), токены кита. */
+  .cookie-consent {
+    position: fixed;
+    inset-inline: 0;
+    bottom: 0;
+    z-index: 90;
+    padding: 12px var(--lc-gutter) 16px;
+    pointer-events: none;
+  }
+  .cc-card {
+    pointer-events: auto;
+    max-width: 720px;
+    margin-inline: auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px 20px;
+    box-shadow: var(--lc-shadow-lift);
+  }
+  .cc-card:hover {
+    box-shadow: var(--lc-shadow-lift); /* без «подпрыгивания» карточки */
+  }
+  .cc-text {
+    margin: 0;
+    max-width: 44ch;
+  }
+  .cc-actions {
+    display: flex;
+    gap: 10px;
+  }
+  /* Равный вес кнопок: одинаковый размер/стиль (AEPD, равная заметность) */
+  .cc-actions .cc-btn {
+    min-width: 9ch;
+  }
+</style>
+
+<script>
+  // Внешний бандл (CSP script-src 'self'). Логика согласия + отзыв (G2).
+  const COOKIE_RE = /(?:^|;\s*)lc_consent=(?:v\d+\.)?(all|essential)(?:\.\d+)?(?:;|$)/;
+
+  function readConsent(): 'all' | 'essential' | null {
+    const m = document.cookie.match(COOKIE_RE);
+    return m ? (m[1] as 'all' | 'essential') : null;
+  }
+
+  function writeConsent(v: 'all' | 'essential'): void {
+    // v1 + unix-timestamp — клиентское доказательство выбора (G4); 180 дней; Secure (G5).
+    const value = `v1.${v}.${Math.floor(Date.now() / 1000)}`;
+    document.cookie = `lc_consent=${value}; max-age=15552000; path=/; SameSite=Lax; Secure`;
+  }
+
+  function init(): void {
+    const el = document.getElementById('cookie-consent');
+    if (!el) return;
+
+    const consent = readConsent();
+    // Выбор уже сделан — баннер не показываем; аналитика (если появится) — только при all.
+    if (!consent) el.hidden = false;
+    // if (consent === 'all') { /* init analytics — ТОЛЬКО здесь и ТОЛЬКО при all */ }
+
+    el.addEventListener('click', (e) => {
+      const target = e.target as HTMLElement | null;
+      const btn = target && target.closest ? target.closest('[data-cc]') : null;
+      if (!btn) return;
+      const v = btn.getAttribute('data-cc') === 'all' ? 'all' : 'essential';
+      writeConsent(v);
+      el.hidden = true;
+      // Аналитика подключается ТОЛЬКО здесь и ТОЛЬКО при v === 'all'.
+    });
+
+    // G2 · Отзыв/изменение согласия: переоткрыть баннер в любой момент.
+    const open = (): void => {
+      el.hidden = false;
+      const first = el.querySelector<HTMLButtonElement>('[data-cc]');
+      if (first) first.focus();
+    };
+    (window as typeof window & { lcOpenConsent?: () => void }).lcOpenConsent = open;
+    document.addEventListener('click', (e) => {
+      const target = e.target as HTMLElement | null;
+      const opener = target && target.closest ? target.closest('[data-cc-open]') : null;
+      if (!opener) return;
+      e.preventDefault();
+      open();
+    });
+  }
+
+  init();
+</script>

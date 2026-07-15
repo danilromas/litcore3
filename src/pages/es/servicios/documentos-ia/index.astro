@@ -1,0 +1,244 @@
+---
+/**
+ * P12 ES — «Documentos con IA» (ЭТАЛОН подачи).
+ * Источник 1:1: design-pack/pages/servicio-documentos-ia.html + content/documentos-ia/es.md.
+ */
+import Layout from '../../../../layouts/Layout.astro';
+import Core from '../../../../components/Core.astro';
+import Crumbs from '../../../../components/Crumbs.astro';
+import PriceCard from '../../../../components/PriceCard.astro';
+import Steps from '../../../../components/Steps.astro';
+import Faq from '../../../../components/Faq.astro';
+import DarkSection from '../../../../components/DarkSection.astro';
+import SchemaOrg from '../../../../components/seo/SchemaOrg.astro';
+import { ROUTES } from '../../../../lib/routes';
+import { service, faqPage, breadcrumb } from '../../../../lib/schema';
+import { DOCUMENTOS_ES as d } from '../../../../data/documentos-ia';
+
+const path = ROUTES['documentos-ia'].es!;
+const alternates = ROUTES['documentos-ia'];
+---
+
+<Layout
+  lang="es"
+  title={d.seo.title}
+  description={d.seo.description}
+  path={path}
+  alternates={alternates}
+>
+  <SchemaOrg
+    slot="head"
+    data={[
+      service({ name: d.schemaService.name, description: d.schemaService.description, path, lang: 'es' }),
+      breadcrumb(d.crumbsSchema),
+      faqPage(d.faq.items),
+    ]}
+  />
+
+  <div class="page-documentos">
+    <!-- ============ HERO ============ -->
+    <section class="section hero" style="position:relative">
+      <div class="hero-decor" aria-hidden="true">
+        <div class="blob" data-plx="0.06" style="width:520px;height:520px;right:-140px;top:-120px"></div>
+        <div class="blob" data-plx="0.10" style="width:220px;height:220px;right:26%;bottom:-80px"></div>
+        <span class="core" data-plx="0.16" style="--core-size:120px;position:absolute;right:12%;top:22%"><span class="orbit"></span></span>
+      </div>
+      <div class="container hero-content">
+        <Crumbs items={d.crumbs} lang="es" />
+        <h1 class="display">{d.hero.h1Pre}<span class="accent-word">en&nbsp;minutos.</span></h1>
+        <p class="lead">{d.hero.lead}</p>
+        <div class="tag-row">
+          <a class="btn btn--primary btn--lg" href={d.hero.ctaPrimary.href}>{d.hero.ctaPrimary.label}</a>
+          <a class="btn btn--ghost btn--lg" href={d.hero.ctaSecondary.href}>{d.hero.ctaSecondary.label}</a>
+          <span class="badge badge--tint demo-note">{d.hero.demoBadge}</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ ¿TE SUENA? ============ -->
+    <section class="section section--alt">
+      <div class="container">
+        <p class="kicker"><Core sm />{d.pains.kicker}</p>
+        <h2 class="display">{d.pains.h2Lines[0]}<br />{d.pains.h2Lines[1]}</h2>
+        <div class="grid grid--3" style="margin-top:40px">
+          {d.pains.cards.map((card) => (
+            <article class="card pain-card reveal">
+              <span class="mono mono-tag">{card.tag}</span>
+              <h3>{card.title}</h3>
+              <p>{card.text}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CÓMO FUNCIONA ============ -->
+    <section class="section">
+      <div class="container">
+        <p class="kicker">{d.how.kicker}</p>
+        <h2 class="display">{d.how.h2Pre}<span class="accent-word">{d.how.h2Accent}</span></h2>
+        <div style="margin-top:40px">
+          <Steps steps={d.how.steps} />
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ QUÉ CONSIGUES ============ -->
+    <section class="section section--warm">
+      <div class="container">
+        <p class="kicker">{d.benefits.kicker}</p>
+        <h2 class="display">{d.benefits.h2Lines[0]}<br />{d.benefits.h2Lines[1]}</h2>
+        <div class="grid grid--2" style="margin-top:40px">
+          {d.benefits.cards.map((card) => (
+            <article class="card reveal">
+              <h3>{card.title}</h3>
+              <p class="muted">{card.text}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CUELLO DE BOTELLA (Голдратт, тёмная вставка) ============ -->
+    <DarkSection class="section--tight bottleneck-band">
+      <div class="container bottleneck">
+        <span class="node-dim" aria-hidden="true"></span>
+        <p>{d.bottleneck.dim}</p>
+        <Core sm />
+        <p class="ignite">{d.bottleneck.ignite}</p>
+      </div>
+    </DarkSection>
+
+    <!-- ============ PARA QUIÉN ============ -->
+    <section class="section">
+      <div class="container">
+        <p class="kicker">{d.sectors.kicker}</p>
+        <h2 class="display">{d.sectors.h2}</h2>
+        <div class="grid grid--3" style="margin-top:40px">
+          {d.sectors.cards.map((card) => (
+            <article class="card sector-card reveal">
+              <span class="mono mono-tag">{card.tag}</span>
+              <h3>{card.title}</h3>
+              <p>{card.text}</p>
+              <a class="more" href={card.more.href}>{card.more.label}</a>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PRECIOS ============ -->
+    <section class="section section--alt">
+      <div class="container">
+        <p class="kicker">{d.pricing.kicker}</p>
+        <h2 class="display">{d.pricing.h2Lines[0]}<br />{d.pricing.h2Lines[1]}</h2>
+        <div class="grid grid--3" style="margin-top:52px;align-items:stretch">
+          {d.pricing.plans.map((plan) => (
+            <PriceCard {...plan} />
+          ))}
+        </div>
+        <p class="small muted pricing-note">{d.pricing.note}</p>
+      </div>
+    </section>
+
+    <!-- ============ FAQ ============ -->
+    <section class="section">
+      <div class="container faq-wrap">
+        <p class="kicker">{d.faq.kicker}</p>
+        <h2 class="display">{d.faq.h2}</h2>
+        <div style="margin-top:32px">
+          {d.faq.items.map((item) => (
+            <Faq q={item.q}>
+              <p>{item.a}</p>
+            </Faq>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CTA ============ -->
+    <section class="section--tight">
+      <div class="container">
+        <div class="cta-band">
+          <h2 class="display" style="font-size:var(--lc-size-h2)">
+            {d.ctaBand.h2Pre}<span class="accent-word">en&nbsp;minutos.</span>
+          </h2>
+          <div class="tag-row">
+            <a class="btn btn--primary btn--lg" href={d.ctaBand.primary.href}>{d.ctaBand.primary.label}</a>
+            <a
+              class="btn btn--ghost btn--lg"
+              style="color:var(--lc-bg);border-color:color-mix(in srgb,var(--lc-bg) 40%,transparent)"
+              href={d.ctaBand.ghost.href}>{d.ctaBand.ghost.label}</a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</Layout>
+
+<style is:global>
+  /* — специфика страницы A3 documentos-ia (из <style id="page"> макета, префикс .page-documentos) — */
+  .page-documentos .pain-card .mono-tag {
+    color: var(--lc-accent-deep);
+    display: block;
+    margin-bottom: 10px;
+  }
+  .page-documentos .pain-card p {
+    margin: 0;
+    color: var(--lc-ink-soft);
+  }
+  .page-documentos .bottleneck {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    text-align: center;
+  }
+  .page-documentos .bottleneck p {
+    margin: 0;
+    font-size: var(--lc-size-lead);
+  }
+  .page-documentos .bottleneck .node-dim {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--lc-node-dim);
+    flex: none;
+  }
+  .page-documentos .bottleneck .ignite {
+    color: var(--lc-accent);
+    font-weight: 700;
+  } /* на тёмном холсте: #E23A2E = 4.5:1 (AA); accent-deep тут темнее фона по контрасту — осознанное AA-решение, НЕ менять */
+  .page-documentos .sector-card {
+    display: flex;
+    flex-direction: column;
+  }
+  .page-documentos .sector-card .mono-tag {
+    color: var(--lc-ink-soft);
+    display: block;
+    margin-bottom: 12px;
+  }
+  .page-documentos .sector-card p {
+    color: var(--lc-ink-soft);
+    flex: 1;
+  }
+  .page-documentos .sector-card .more {
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .page-documentos .faq-wrap {
+    max-width: 760px;
+  }
+  .page-documentos .pricing-note {
+    margin-top: 22px;
+  }
+  .page-documentos .demo-note {
+    align-self: center;
+  }
+  /* тёмная полоса-«узкое место»: паддинг как в макете (inline-style оригинала) */
+  .page-documentos .lc-dark.bottleneck-band {
+    padding-block: clamp(32px, 5vw, 56px);
+  }
+</style>

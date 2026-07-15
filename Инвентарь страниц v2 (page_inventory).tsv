@@ -1,0 +1,51 @@
+PageID	Название RU	Тип	URL ES	URL RU	URL EN	Сегменты	Приоритет	Writer	Примечание
+P01	Корень — выбор языка / редирект	служебная	/	—	—	все	MVP	W1	Redirect по Accept-Language; x-default=ES; не контент-страница
+P02	Главная ES — витрина LOCAL	главная	/es/	—	—	LOCAL, PROVIDER втор.	MVP	W1	Hero «процесс→автоматизация→результат»; ядро A первым; SEO-вход
+P03	Главная RU — витрина RELO+PROVIDER	главная	—	/ru/	—	RELO, PROVIDER	MVP	W1	НЕ зеркало ES; PROVIDER-дверь поднята; CTA Telegram
+P04	Главная EN — витрина ЕС-экспансии	главная	—	—	/en/	EN-EU	Ф2+	W1	dedicated team / augmentation / white label
+P05	Сегмент-лендинг «местный бизнес»	сегмент	/es/negocios/	—	—	LOCAL	MVP	W1	Ниша «после Kit Digital»; гранты = «проверим», не гарантия
+P06	Сегмент-лендинг «релоканты»	сегмент	—	/ru/biznes-v-ispanii/	—	RELO	MVP	W1	«Под ключ на русском, быстро»; Telegram-канал
+P07	Сегмент-лендинг «для поставщиков» (PROVIDER)	сегмент	/es/para-proveedores/	/ru/dlya-postavshchikov/	—	PROVIDER	MVP	W1	Приоритет GTM; север; бот-ресепшн/лид-бот/CRM; в RU-шапке пункт 1-го уровня
+P08	Хаб услуг — каталог 12 пилларов	хаб	/es/servicios/	/ru/uslugi/	/en/services/	все	MVP	W1	Порядок: A0–A5 → C → D → E; EN-версия — Ф2+
+P09	A0 Автоматизация процессов с ИИ (хаб ядра)	услуга-ядро	/es/servicios/automatizacion/	/ru/uslugi/avtomatizaciya/	/en/services/automation/	все	MVP	W1	Флагман v2; вбирает роль v1 soluciones-ia; блок отраслевых автоматизаций (каталог 63); слаг входит и в гео-набор
+P10	A1 ИИ-ассистенты и агенты	услуга-ядро	/es/servicios/asistentes-ia/	/ru/uslugi/ii-assistenty/	/en/services/ai-assistants/	LOCAL, RELO, EN-EU	MVP	W1	Новый пиллар (выделен из v1 S5)
+P11	A2 Боты: ресепшн / лиды / поддержка	услуга-ядро	/es/servicios/chatbot-ia/	/ru/uslugi/chat-bot/	/en/services/chatbots/	PROVIDER, LOCAL, RELO	MVP	W1	Ядро «бот-ресепшн», флагман PROVIDER-GTM; слаг = и пиллар, и гео-набор; метка AI Act
+P12	A3 Генерация документов и документооборот	услуга-ядро	/es/servicios/documentos-ia/	/ru/uslugi/dokumenty-ii/	/en/services/ai-documents/	LOCAL, RELO	MVP	W1	Сметы/счета/письма/КП; северный оффер для стройки и гесторий; в гео-наборе отсутствует (SPEC-ISSUE-2)
+P13	A4 Интеграции и RPA	услуга-ядро	/es/servicios/integraciones-rpa/	/ru/uslugi/integracii-rpa/	/en/services/integrations-rpa/	LOCAL, EN-EU	MVP	W1	ETL, внешние API, внутренние инструменты
+P14	A5 CRM / ERP / BPM — внедрение и автоматизация	услуга-ядро	/es/servicios/software-gestion/	/ru/uslugi/biznes-soft/	/en/services/business-software/	все	MVP	W1	Рефрейм v1 S4 под автоматизацию продаж/сервиса/учёта; гео-слаг crm ведёт сюда
+P15	C1 Создание сайтов — интерфейс автоматизации	услуга-канал	/es/servicios/diseno-web/	/ru/uslugi/sozdanie-saytov/	/en/services/web-development/	LOCAL, RELO	Ф1	W2	Типы внутри страницы: лендинг/корп/e-comm/PWA/кабинеты; НЕ главный заголовок сайта
+P16	C2 Мобильные приложения (PWA/кроссплатформа)	услуга-канал	/es/servicios/apps-moviles/	/ru/uslugi/mobilnye-prilozheniya/	/en/services/mobile-apps/	LOCAL, EN-EU	Ф1	W2	Нативную iOS/Android НЕ рекламировать — подтвердить у команды
+P17	D1 Ведение контента + ИИ-контент-фабрика	услуга-контент	/es/servicios/gestion-contenido/	/ru/uslugi/vedenie-kontenta/	/en/services/content-management/	LOCAL, RELO	Ф1	W2	Контент-фабрика — ОДИН из процессов (kit content-factory), не отрасль-плитка
+P18	D2 Данные и аналитика	услуга-контент	/es/servicios/datos-analitica/	/ru/uslugi/dannye-i-analitika/	/en/services/data-analytics/	LOCAL, EN-EU	Ф1	W2	Дашборды, БД, миграции, парсинг
+P19	E1 UX/UI-дизайн	услуга-дизайн	/es/servicios/diseno-ux-ui/	/ru/uslugi/dizayn-ux-ui/	/en/services/ux-ui-design/	LOCAL, EN-EU	Ф2+	W2	Усилитель
+P20	E2 3D / WebGL / интерактив	услуга-дизайн	/es/servicios/3d-webgl/	/ru/uslugi/3d-webgl/	/en/services/3d-webgl/	LOCAL, EN-EU	Ф2+	W2	Конфигураторы; усилитель; слаг един для трёх языков
+P21	Демо-хаб — живая витрина ботов	демо	/es/demos/	/ru/demo/	/en/demos/	все	MVP	W2	Демо: бот-ресепшн, лид-бот, генератор КП/смет, разбор письма; якорные секции без child-URL; метка «Вы общаетесь с ИИ» (AI Act art.50)
+P22	Цены и пакеты	конверсионная	/es/precios/	/ru/tseny/	/en/pricing/	все	MVP	W2	Старт/Бизнес/Крепость; ИИ = setup+подписка; якоря SPEC §7; гранты осторожно (RU — без грантов)
+P23	Хаб отраслей — маркетплейс-грид	хаб	/es/soluciones/	/ru/resheniya/	/en/solutions/	все	MVP	W3	ES 12+1; RU сокращённый 9+1; EN лайт 4+1; «под каждую отрасль — своя автоматизация»
+P24	I1 Медицина и стоматология	отрасль	/es/soluciones/clinicas/	/ru/resheniya/medicina/	—	LOCAL, PROVIDER	MVP	W3	Топ-отрасль; бот-ресепшн/запись; RU-приём для PROVIDER; GDPR art.9; «не медконсультация»
+P25	I2 Недвижимость / PropTech	отрасль	/es/soluciones/inmobiliarias/	/ru/resheniya/nedvizhimost/	/en/solutions/real-estate/	LOCAL, PROVIDER, RELO	MVP	W3	Топ-отрасль; микро-ниша УК: бот+CRM; RD 933/2021 SES.Hospedajes
+P26	I3 Юриспруденция и миграция	отрасль	/es/soluciones/abogados/	/ru/resheniya/yuristy/	/en/solutions/legal/	LOCAL, RELO	Ф1	W3	Документооборот, письма, обращения (каталог 63)
+P27	I4 Гостиницы и туризм	отрасль	/es/soluciones/hoteles/	/ru/resheniya/oteli/	—	LOCAL	Ф1	W3	Реестры жилья: NRU аннулирован 21.05.2026, региональные + SES.Hospedajes
+P28	I5 Рестораны и HoReCa	отрасль	/es/soluciones/restaurantes/	—	—	LOCAL	MVP	W3	Топ-отрасль MVP (SPEC); аллергены Reg.1169/2011; RU-версии нет — спрос локальный ES (слаг restorany зарезервирован)
+P29	I6 E-commerce и ритейл	отрасль	/es/soluciones/ecommerce/	/ru/resheniya/ecommerce/	/en/solutions/ecommerce/	LOCAL, RELO	Ф1	W3	Карточки товаров, поддержка; слаг един ES/RU/EN
+P30	I7 Логистика, авто и сервис	отрасль	/es/soluciones/logistica/	—	—	LOCAL	Ф2+	W3	Обработка документов; RU-версии нет — массовый местный спрос
+P31	I8 Образование и репетиторы	отрасль	/es/soluciones/educacion/	/ru/resheniya/obrazovanie/	—	LOCAL, RELO	Ф2+	W3	Данные несовершеннолетних (согласие с 14)
+P32	I9 Бухгалтерия и консалтинг (gestorías)	отрасль	/es/soluciones/gestorias/	/ru/resheniya/buhgalteriya/	—	LOCAL, RELO	Ф1	W3	Извлечение из счетов, документооборот; Verifactu→2027; «не налоговая консультация»
+P33	I10 Строительство и ремонт	отрасль	/es/soluciones/construccion/	/ru/resheniya/stroitelstvo/	—	LOCAL, PROVIDER	Ф1	W3	Сметы/КП/проверка норм (CTE/LOE + técnico); «муж на час» — PROVIDER-ниша
+P34	I11 Бьюти и здоровье	отрасль	/es/soluciones/belleza/	—	—	LOCAL	Ф2+	W3	Запись/напоминания/отзывы; RU-версии нет
+P35	I12 Релокейт-услуги	отрасль	/es/soluciones/relocation/	/ru/resheniya/relokaciya/	/en/solutions/relocation/	PROVIDER, RELO	MVP	W3	Топ-отрасль GTM: боты+CRM+контент для релокейт-агентств (B2B)
+P36	Другие отрасли (catch-all)	отрасль	/es/soluciones/otros-sectores/	/ru/resheniya/drugie-otrasli/	/en/solutions/other-industries/	все	Ф1	W3	FinTech/GovTech/HRTech/IoT/Manufacturing → «решение по запросу»; НЕ выдумывать готовые решения
+P37	Шаблон: Услуга×Город	программный-шаблон	/es/servicios/{servicio}/{ciudad}/	/ru/uslugi/{usluga}/{gorod}/	/en/services/{service}/{city}/	LOCAL, PROVIDER	MVP	W4	Набор слагов §2a: diseno-web, chatbot-ia, gestion-contenido, crm, automatizacion, apps-moviles; MVP = ×T0 север (пример /es/servicios/chatbot-ia/oviedo/, /ru/uslugi/chat-bot/bilbao/); T1 — Ф2; EN — опц. Ф2+; анти-thin; RU-гео = посадочные под Telegram, не органика
+P38	Шаблон: Отрасль×Услуга	программный-шаблон	/es/soluciones/{industria}/{servicio}/	/ru/resheniya/{otrasl}/{usluga}/	/en/solutions/{industry}/{service}/	LOCAL, PROVIDER	Ф1	W4	Примеры: /es/soluciones/clinicas/chatbot-ia/, /es/soluciones/construccion/documentos-ia/, /ru/resheniya/medicina/chat-bot/; EN — опц. Ф2+
+P39	Шаблон: Отрасль×Город	программный-шаблон	/es/soluciones/{industria}/{ciudad}/	/ru/resheniya/{otrasl}/{gorod}/	/en/solutions/{industry}/{city}/	PROVIDER, LOCAL	MVP	W4	MVP = T0 × топ-отрасли (пример /es/soluciones/clinicas/oviedo/, /ru/resheniya/relokaciya/bilbao/); провайдер-ориентирован; EN — опц. Ф2+
+P40	Кейсы — хаб	кейсы	/es/casos/	/ru/keysy/	/en/cases/	все	Ф1	W4	Фильтр отрасль/сегмент/город; кейсов пока нет — помечать «пилот/демо»
+P41	Кейс — шаблон карточки	кейсы	/es/casos/{slug}/	/ru/keysy/{slug}/	/en/cases/{slug}/	все	Ф1	W4	Схема «задача→автоматизация→измеримый результат»; метрики не выдумывать
+P42	Блог — хаб	блог	/es/blog/	/ru/blog/	/en/blog/	LOCAL, EN-EU	Ф1	W4	ES — основной SEO-канал LOCAL (pillar/cluster); RU — облегчён (канал Telegram); EN — Ф2+
+P43	Статья блога — шаблон	блог	/es/blog/{slug}/	/ru/blog/{slug}/	/en/blog/{slug}/	LOCAL	Ф1	W4	Типы: pillar (широкая) и cluster (узкая → ссылка на pillar)
+P44	О компании + модели сотрудничества	конверсионная	/es/nosotros/	/ru/o-nas/	/en/about/	все, акцент PROVIDER/EN-EU	Ф1	W4	Компетенции SPEC §8; блок моделей: dedicated team/augmentation/white label/MVP/поддержка/миграция; НЕ отдельные слаги
+P45	Контакты	конверсионная	/es/contacto/	/ru/kontakty/	/en/contact/	все	MVP	W4	Канал по сегменту: ES форма/WhatsApp, RU Telegram первичен, EN book a call; GDPR-минимизация полей
+P46	Политика конфиденциальности	служебная	/es/privacidad/	/ru/politika-konfidencialnosti/	/en/privacy/	все	MVP	W4	GDPR/DPA; ссылка из каждой формы и бота
+P47	Cookie-политика	служебная	/es/cookies/	/ru/cookie/	/en/cookies/	все	MVP	W4	ePrivacy; consent-баннер до аналитики
+P48	Aviso legal — юридическое уведомление	служебная	/es/aviso-legal/	—	—	LOCAL	MVP	W4	LSSI-CE (исп. требование); применимость к RU/EN — подтвердить у юриста (пробел)
+P49	Страница 404	служебная	/es/404	/ru/404	/en/404	все	MVP	W4	noindex; маршруты в A0/отрасли/демо/контакты; слаг вне SPEC §6 — производный
+P50	Страница «спасибо» (после заявки)	служебная	/es/gracias/	/ru/spasibo/	/en/thank-you/	все	MVP	W4	noindex; цель конверсии для аналитики; слаги производные (нет в SPEC §6) — подтвердить
