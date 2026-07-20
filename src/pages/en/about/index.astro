@@ -1,0 +1,80 @@
+---
+/**
+ * EN About / collaboration models (/en/about/) — Фаза 2.
+ * Закрывает битые ссылки с главной (hero secondary + models foot).
+ */
+import Layout from '../../../layouts/Layout.astro';
+import Crumbs from '../../../components/Crumbs.astro';
+import CtaBand from '../../../components/CtaBand.astro';
+import SchemaOrg from '../../../components/seo/SchemaOrg.astro';
+import { ROUTES } from '../../../lib/routes';
+import { breadcrumb, organization } from '../../../lib/schema';
+import { HOME } from '../../../data/home';
+
+const t = HOME.en;
+const models = t.models;
+---
+
+<Layout
+  lang="en"
+  title="How we work · Dedicated teams & collaboration | litcore.ai"
+  description="Dedicated team, team augmentation, and white-label automation from Spain for EU companies. Book an intro call."
+  path={ROUTES.about.en!}
+  alternates={ROUTES.about}
+>
+  <SchemaOrg
+    slot="head"
+    data={[
+      breadcrumb([
+        { name: 'Home', path: '/en/' },
+        { name: 'About', path: ROUTES.about.en! },
+      ]),
+      organization(),
+    ]}
+  />
+
+  <div class="page-about">
+    <section class="section section--tight">
+      <div class="container">
+        <Crumbs
+          items={[
+            { label: 'Home', href: '/en/' },
+            { label: 'About' },
+          ]}
+          lang="en"
+        />
+        <p class="kicker">{models.kicker}</p>
+        <h1 class="display">{models.h2}</h1>
+        <p class="lead">
+          Spain-based engineering for EU companies. Pick the model that fits your capacity — not a generic SaaS subscription.
+        </p>
+      </div>
+    </section>
+
+    <section class="section section--alt">
+      <div class="container">
+        <div class="grid grid--3">
+          {
+            models.cards.map((card) => (
+              <article class="card reveal">
+                <h2 class="h3">{card.title}</h2>
+                <p class="muted">{card.text}</p>
+              </article>
+            ))
+          }
+        </div>
+        <p class="more-link small muted" style="margin-top:26px">
+          Also: product from scratch / MVP. Based in Asturias, delivering across the EU under GDPR and the AI Act.
+        </p>
+      </div>
+    </section>
+
+    <section class="section section--tight">
+      <div class="container">
+        <CtaBand cta={t.cta.cta}>
+          <h2 class="display">{t.cta.h2}</h2>
+        </CtaBand>
+      </div>
+    </section>
+  </div>
+</Layout>

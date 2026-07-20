@@ -23,6 +23,7 @@ export const ROUTES: Record<string, Partial<Record<Lang, string>>> = {
   proveedores: { es: '/es/para-proveedores/', ru: '/ru/dlya-postavshchikov/' }, // P07
   precios: { es: '/es/precios/', ru: '/ru/tseny/', en: '/en/pricing/' }, // P22
   contacto: { es: '/es/contacto/', ru: '/ru/kontakty/', en: '/en/contact/' }, // P45
+  about: { en: '/en/about/' }, // EN collaboration / how we work
   // Правовые страницы (доработка по аудиту 10.07.2026: A1–A3, B1, C5, E1).
   'aviso-legal': {
     es: '/es/aviso-legal/',

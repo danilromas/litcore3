@@ -1,6 +1,7 @@
 ---
 /** Шапка: бренд, меню, язык, CTA + мобильный drawer (гамбургер). */
 import Core from './Core.astro';
+import LangSwitcher from './LangSwitcher.astro';
 import { NAV, HEADER_CTA, HOME_HREF, NAV_ARIA } from '../i18n/ui';
 import type { Lang } from '../config/site';
 
@@ -26,7 +27,6 @@ const active = NAV[lang]
   })
   .sort((a, b) => b.href.split('#')[0].length - a.href.split('#')[0].length)[0];
 
-const LANGS: Lang[] = ['es', 'ru', 'en'];
 const cta = HEADER_CTA[lang];
 const aria = NAV_ARIA[lang];
 ---
@@ -47,19 +47,7 @@ const aria = NAV_ARIA[lang];
       }
     </nav>
 
-    <div class="lang" aria-label={aria.lang} data-nav-lang>
-      {
-        LANGS.map((l) => (
-          <a
-            href={alternates[l] ?? HOME_HREF[l]}
-            aria-current={l === lang ? 'true' : undefined}
-            hreflang={l}
-          >
-            {l.toUpperCase()}
-          </a>
-        ))
-      }
-    </div>
+    <LangSwitcher lang={lang} ariaLabel={aria.lang} alternates={alternates} variant="header" />
 
     <a class="btn btn--primary nav-cta" href={cta.href}>{cta.label}</a>
 
@@ -85,19 +73,7 @@ const aria = NAV_ARIA[lang];
         ))
       }
     </nav>
-    <div class="nav-drawer__lang" aria-label={aria.lang}>
-      {
-        LANGS.map((l) => (
-          <a
-            href={alternates[l] ?? HOME_HREF[l]}
-            aria-current={l === lang ? 'true' : undefined}
-            hreflang={l}
-          >
-            {l.toUpperCase()}
-          </a>
-        ))
-      }
-    </div>
+    <LangSwitcher lang={lang} ariaLabel={aria.lang} alternates={alternates} variant="drawer" />
     <a class="btn btn--primary nav-drawer__cta" href={cta.href}>{cta.label}</a>
   </div>
 </header>

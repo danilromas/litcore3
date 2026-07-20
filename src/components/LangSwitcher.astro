@@ -1,0 +1,45 @@
+---
+/**
+ * Компактный языковой переключатель-пилюля (segmented control).
+ * Активный язык — акцент (--color-accent-bg), неактивные приглушены.
+ * Переход с лёгким fade через data-lang-switch (kit.js).
+ */
+import { HOME_HREF } from '../i18n/ui';
+import type { Lang } from '../config/site';
+
+interface Props {
+  lang: Lang;
+  ariaLabel: string;
+  alternates?: Partial<Record<Lang, string>>;
+  /** Модификатор для drawer / компактного режима */
+  variant?: 'header' | 'drawer';
+}
+
+const { lang, ariaLabel, alternates = {}, variant = 'header' } = Astro.props;
+const LANGS: Lang[] = ['es', 'ru', 'en'];
+---
+
+<div
+  class:list={['lang', variant === 'drawer' && 'lang--drawer']}
+  role="group"
+  aria-label={ariaLabel}
+  data-nav-lang
+>
+  {
+    LANGS.map((l) => {
+      const active = l === lang;
+      return (
+        <a
+          href={alternates[l] ?? HOME_HREF[l]}
+          class:list={['lang__opt', { 'is-active': active }]}
+          aria-current={active ? 'true' : undefined}
+          hreflang={l}
+          data-lang-switch={l}
+          title={l.toUpperCase()}
+        >
+          <span class="lang__code">{l.toUpperCase()}</span>
+        </a>
+      );
+    })
+  }
+</div>

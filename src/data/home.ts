@@ -9,6 +9,7 @@
  * Строки *Html вставляются через set:html (содержат <span class="accent-word"> / <br>).
  */
 import { TELEGRAM_URL } from '../config/site';
+import { TRUST_STRIP } from './trust';
 
 /** Данные карточки тарифа — 1:1 props компонента PriceCard.astro */
 export interface PriceCardData {
@@ -32,15 +33,11 @@ export const HOME = {
     hero: {
       kicker: 'Automatización · Web · Apps',
       h1Html: 'Tu rutina, automatizada.<br>Tu negocio, <span class="accent-word">encendido.</span>',
-      lead: 'Citas, presupuestos, facturas, WhatsApp: la IA se encarga del proceso y tú recuperas horas y ventas. Proceso → automatización → resultado.',
+      lead: 'Citas, presupuestos, facturas, WhatsApp: la IA los lleva; tú recuperas horas y ventas.',
       primary: { label: 'Pedir propuesta', href: '/es/contacto/' },
       secondary: { label: 'Ver demos', href: '/es/#demos' },
     },
-    trust: {
-      aria: 'Dónde y cómo trabajamos',
-      /* Единый формат hero-фактов: ровно 4 коротких атома в один ряд (ES/RU/EN) */
-      items: ['Asturias · Norte', 'ES / RU / EN', 'GDPR · AI Act', 'Ciclo completo'],
-    },
+    trust: TRUST_STRIP.es,
     services: {
       kicker: 'Servicios · el núcleo',
       h2: 'Qué te quitamos de encima',
@@ -111,7 +108,7 @@ export const HOME = {
     mapa: {
       kicker: 'Mapa de procesos',
       h2Html: '¿Dónde se atasca tu <span class="accent-word">negocio?</span>',
-      text: 'Cada negocio tiene un punto que lo frena: un proceso apagado que consume horas y deja escapar clientes. Lo encontramos — y lo encendemos.',
+      text: 'Cada negocio tiene un proceso que consume horas y deja escapar clientes. Lo localizamos y lo automatizamos.',
       cta: { label: 'Explorar el mapa →', href: '/es/soluciones/' },
     },
     proceso: {
@@ -252,15 +249,11 @@ export const HOME = {
     hero: {
       kicker: 'Автоматизация · Боты · Под ключ',
       h1Html: 'Рутину — ИИ. Бизнес — <span class="accent-word">вам.</span>',
-      lead: 'Вы в Испании и всё тащите сами: заявки в WhatsApp по вечерам, счета, запись клиентов. Мы ставим ИИ-ботов, документы и CRM под ключ — на русском, быстро, здесь. Запуск за дни.',
+      lead: 'WhatsApp по вечерам, счета, запись — сами. Ставим ботов, документы и CRM под ключ: на русском, быстро, в Испании.',
       primary: { label: 'Обсудить в Telegram', href: TELEGRAM_URL }, // Telegram подтверждён владельцем: litcore_ai
       secondary: { label: 'Посмотреть демо-бота', href: '/ru/#demo' },
     },
-    trust: {
-      aria: 'Где и как работаем',
-      /* Единый формат: 4 коротких атома в один ряд */
-      items: ['Астурия · Испания', 'RU / ES / EN', 'GDPR · AI Act', 'Под ключ'],
-    },
+    trust: TRUST_STRIP.ru,
     services: {
       kicker: 'Услуги',
       h2: 'Что забираем на себя',
@@ -292,10 +285,10 @@ export const HOME = {
           text: 'Найдём, где буксует, — уберём рутину, замерим результат.',
         },
         {
-          tag: 'A1 · Ассистенты',
-          title: 'ИИ-ассистенты',
+          tag: 'A1 · ИИ-ассистенты',
+          title: 'ИИ-ассистент на почте и в чатах',
           href: '/ru/uslugi/ii-assistenty/',
-          text: 'Разбирают почту и чаты, готовят ответы, держат клиента тёплым.',
+          text: 'Разбирает почту и чаты, готовит ответы, держит клиента тёплым.',
         },
         {
           tag: 'A4 · Интеграции',
@@ -314,12 +307,12 @@ export const HOME = {
         {
           title: 'Приложения',
           href: '/ru/uslugi/mobilnye-prilozheniya/',
-          text: 'Приложения (PWA / кроссплатформа).',
+          text: 'PWA и кроссплатформа: ваш сервис в кармане клиента.',
         },
         {
           title: 'Контент и аналитика',
           href: '/ru/uslugi/',
-          text: 'Контент и аналитика — в той же связке.',
+          text: 'Контент с ИИ и панели, чтобы видеть цифры, а не гадать.',
         },
       ],
     },
@@ -337,7 +330,7 @@ export const HOME = {
       kicker: 'Карта процессов',
       h2Html: 'Где буксует ваш <span class="accent-word">бизнес?</span>',
       // Перевод верифицированного ES-лида секции #mapa (index-es.html)
-      text: 'В каждом бизнесе есть точка, которая его тормозит: погасший процесс, который съедает часы и упускает клиентов. Мы находим её — и зажигаем.',
+      text: 'Где бизнес теряет часы и заявки? Находим узкое место и закрываем его автоматизацией.',
       cta: { label: 'Изучить карту →', href: '/ru/resheniya/' },
       svgTitle: 'Карта процессов бизнеса',
       svgDesc:
@@ -470,7 +463,7 @@ export const HOME = {
         'Цифры — ориентир, без IVA (НДС); точную смету даём после диагностики. Кейсов с цифрами не рисуем — есть пилоты и живые демо. <a href="/ru/tseny/">Подробнее о ценах →</a>',
     },
     cta: {
-      h2Html: 'Напишите нам по-русски. <span class="accent-word">Сегодня</span> и ответим.',
+      h2Html: 'Напишите по-русски — ответим <span class="accent-word">сегодня.</span>',
       primary: { label: 'Обсудить в Telegram', href: TELEGRAM_URL }, // Telegram подтверждён владельцем: litcore_ai
       secondary: { label: 'Оставить заявку', href: '/ru/kontakty/' }, // короткая форма (home/ru.md §Финальный CTA)
     },
@@ -487,14 +480,11 @@ export const HOME = {
       kicker: 'Automation · Engineering · EU',
       /* Короче: бюджет ≤3 строки в общем hero (patch-promt2) */
       h1Html: 'AI automation,<br>engineered for the <span class="accent-word">EU.</span>',
-      lead: 'One team covers the cycle: process analysis, AI automation, web and app interfaces, support. Based in Spain, built for EU compliance.',
+      lead: 'Spain-based team for EU companies: process automation, AI interfaces, and dedicated capacity — without the hiring cycle.',
       primary: { label: 'Book an intro call', href: '/en/contact/' },
       secondary: { label: 'See collaboration models', href: '/en/about/' },
     },
-    trust: {
-      aria: 'Where and how we work',
-      items: ['Spain · EU', 'EN / ES / RU', 'GDPR · AI Act', 'Full cycle'],
-    },
+    trust: TRUST_STRIP.en,
     services: {
       kicker: 'Services',
       h2: 'What we build',
@@ -510,9 +500,9 @@ export const HOME = {
           text: 'ETL, external APIs, internal tooling — data moves without manual steps.',
         },
         {
-          title: 'AI assistants & agents',
+          title: 'AI assistants',
           href: '/en/services/ai-assistants/',
-          text: 'LLM-based assistants with RAG: they answer, triage and prepare work for your team.',
+          text: 'Assistants that answer, triage and draft replies — grounded in your docs and workflows.',
         },
         {
           title: 'Chatbots & reception bots',
@@ -522,19 +512,19 @@ export const HOME = {
         {
           title: 'AI document workflows',
           href: '/en/services/ai-documents/',
-          text: 'Quotes, invoices, letters and proposals drafted by AI, approved by people.',
+          text: 'Quotes, invoices and proposals drafted by AI, approved by your team.',
         },
         {
-          title: 'Business software (CRM/ERP/BPM)',
+          title: 'Business software (CRM/ERP)',
           href: '/en/services/business-software/',
-          text: 'Sales, service and back-office automation on top of your systems.',
+          text: 'Sales and back-office automation on top of the systems you already run.',
         },
       ],
     },
     mapa: {
       kicker: 'Process map',
       h2Html: 'Where does your <span class="accent-word">business</span> stall?',
-      text: 'Every business has a dim process that burns hours and leaks customers. We find it — and ignite it.',
+      text: 'Find the process that burns hours and leaks revenue — then automate it end to end.',
     },
     models: {
       kicker: 'Collaboration models',
@@ -546,14 +536,14 @@ export const HOME = {
         },
         {
           title: 'Team augmentation',
-          text: 'Our engineers inside your team: AI/LLM integrations, backend, data, DevOps.',
+          text: 'Our engineers inside your squad: AI integrations, backend, data, DevOps.',
         },
         {
           title: 'White label',
-          text: "Automation and bots delivered under your agency's brand, including reception bots for your clients.",
+          text: "Automation and bots under your agency's brand — including reception bots for your clients.",
         },
       ],
-      footHtml: 'Also: product from scratch / MVP. <a href="/en/about/">Details →</a>',
+      footHtml: 'Also: product from scratch / MVP. <a href="/en/about/">How we work →</a>',
     },
     cta: {
       h2: 'An EU engineering team, without the hiring cycle.',

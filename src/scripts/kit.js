@@ -78,4 +78,76 @@
       if (e.matches) setOpen(false);
     });
   }
+
+  /* Splash: скрыть после load / max 2.6s (только первый визит в сессии) */
+  (function initSplash() {
+    var el = document.querySelector('[data-splash]');
+    var pending = document.documentElement.classList.contains('lc-splash-pending');
+    if (!el || !pending) {
+      if (el) el.setAttribute('aria-busy', 'false');
+      return;
+    }
+    var minMs = 700;
+    var maxMs = 2400;
+    var start = Date.now();
+    var done = false;
+    function hide() {
+      if (done) return;
+      done = true;
+      try {
+        sessionStorage.setItem('lc_splash_seen', '1');
+      } catch (err) {}
+      el.classList.add('is-leaving');
+      el.setAttribute('aria-busy', 'false');
+      setTimeout(function () {
+        document.documentElement.classList.remove('lc-splash-pending');
+        el.classList.add('is-done');
+      }, 400);
+    }
+    function tryHide() {
+      var wait = minMs - (Date.now() - start);
+      if (wait > 0) setTimeout(hide, wait);
+      else hide();
+    }
+    if (document.readyState === 'complete') tryHide();
+    else addEventListener('load', tryHide);
+    setTimeout(hide, maxMs);
+  })();
+
+  /* Смена языка: лёгкий fade вместо резкой перезагрузки */
+  var reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var fadeEl = document.querySelector('[data-lang-fade]');
+
+  if (document.documentElement.classList.contains('lc-lang-entering')) {
+    try {
+      sessionStorage.removeItem('lc_lang_fade');
+    } catch (err) {}
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        document.documentElement.classList.add('is-ready');
+        setTimeout(function () {
+          document.documentElement.classList.remove('lc-lang-entering', 'is-ready');
+        }, 360);
+      });
+    });
+  }
+
+  document.querySelectorAll('[data-lang-switch]').forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || a.getAttribute('aria-current') === 'true') {
+        return;
+      }
+      var href = a.getAttribute('href');
+      if (!href || href === '#') return;
+      if (reducedMotion || !fadeEl) return; /* обычный переход */
+      e.preventDefault();
+      try {
+        sessionStorage.setItem('lc_lang_fade', '1');
+      } catch (err) {}
+      fadeEl.classList.add('is-on');
+      setTimeout(function () {
+        window.location.href = href;
+      }, 220);
+    });
+  });
 })();

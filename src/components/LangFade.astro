@@ -1,0 +1,39 @@
+---
+/** Оверлей fade при смене языка — логика в kit.js + /lc-boot.js. Без inline. */
+---
+
+<div id="lc-lang-fade" class="lc-lang-fade" aria-hidden="true" data-lang-fade></div>
+
+<style is:global>
+  .lc-lang-fade {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    pointer-events: none;
+    background: var(--lc-bg, #f6f4ef);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 280ms var(--lc-ease, cubic-bezier(0.22, 1, 0.36, 1)),
+      visibility 280ms;
+  }
+  .lc-lang-fade.is-on {
+    opacity: 1;
+    visibility: visible;
+  }
+  html.lc-lang-entering .lc-lang-fade {
+    opacity: 1;
+    visibility: visible;
+    transition: none;
+  }
+  html.lc-lang-entering.is-ready .lc-lang-fade {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 320ms var(--lc-ease, cubic-bezier(0.22, 1, 0.36, 1)),
+      visibility 320ms;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .lc-lang-fade {
+      transition: none;
+    }
+  }
+</style>
